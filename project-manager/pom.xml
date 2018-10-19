@@ -7,6 +7,11 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <modules>
+    <module>project-web-springmvc</module>
+    <module>project-service-springcloud</module>
+  </modules>
+
   <name>project-manager</name>
   <url>http://maven.apache.org</url>
 
@@ -15,6 +20,7 @@
 
     <org.springframework.version>4.3.18.RELEASE</org.springframework.version>
     <org.jboss.resteasy.version>3.1.4.Final</org.jboss.resteasy.version>
+    <org.apache.tomcat.version>8.0.11</org.apache.tomcat.version>
     <org.slf4j.version>1.7.5</org.slf4j.version>
   </properties>
 
@@ -24,7 +30,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.11</version>
+        <version>4.12</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -88,6 +94,17 @@
         <artifactId>json-lib</artifactId>
         <version>2.3</version>
         <classifier>jdk15</classifier>
+      </dependency>
+      <!-- servlet开发依赖 -->
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-servlet-api</artifactId>
+        <version>${org.apache.tomcat.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jsp-api</artifactId>
+        <version>${org.apache.tomcat.version}</version>
       </dependency>
       <!-- Spring Dependency Begin -->
       <dependency>
@@ -182,6 +199,24 @@
         <version>${org.springframework.version}</version>
       </dependency>
       <!-- Spring Dependency End -->
+      <!-- Spring Boot -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>1.5.9.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>
