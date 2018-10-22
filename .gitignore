@@ -227,3 +227,4 @@ target/
 .project
 .settings/
 .classpath
+*/.idea
