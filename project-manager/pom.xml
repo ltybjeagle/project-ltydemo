@@ -8,6 +8,7 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>project-common-entity</module>
     <module>project-service-springcloud</module>
     <module>project-web-springmvc</module>
     <module>project-web-springmvc-xml</module>
@@ -207,6 +208,12 @@
         <version>1.5.9.RELEASE</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <!-- Oracle数据库驱动 -->
+      <dependency>
+        <groupId>com.oracle</groupId>
+        <artifactId>ojdbc14</artifactId>
+        <version>10.2.0.4.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
