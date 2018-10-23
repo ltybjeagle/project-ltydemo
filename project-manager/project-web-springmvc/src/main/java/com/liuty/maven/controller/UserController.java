@@ -3,6 +3,8 @@ package com.liuty.maven.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -32,5 +34,15 @@ public class UserController {
     public String getUser(@PathVariable("userid") String id) {
         System.out.println("oneuser, id = " + id);
         return "oneuser";
+    }
+
+    /**
+     * 注册用户
+     * @param multipartFile
+     * @return
+     */
+    @RequestMapping(value = "/register", method = POST)
+    public String registerUser(@RequestPart("profilePicture")MultipartFile multipartFile) {
+        return "listuser";
     }
 }

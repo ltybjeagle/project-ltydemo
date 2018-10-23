@@ -2,8 +2,13 @@ package com.liuty.maven.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.MultipartConfigElement;
+
+import javax.servlet.ServletRegistration.Dynamic;
+
 /**
  * 借助servlet3.0，加载DispatcherServlet
+ * 同web.xml
  */
 public class DemoWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
@@ -27,5 +32,16 @@ public class DemoWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
     @Override
     protected String[] getServletMappings() {
         return new String[] { "/" };
+    }
+
+    /**
+     * 上传文件支持(文件最大字节、请求最大字节)
+     * @param registration
+     */
+    @Override
+    protected void customizeRegistration(Dynamic registration) {
+        registration.setMultipartConfig(
+                new MultipartConfigElement("/tmp/uploads",
+                        2097152, 4194304, 0));
     }
 }
