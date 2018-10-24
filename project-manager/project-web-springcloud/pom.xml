@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>project-manager</artifactId>
+        <groupId>com.liuty.maven</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>project-web-springcloud</artifactId>
+    <packaging>war</packaging>
+    <name>project-web-springcloud Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <!-- 内部依赖包 -->
+        <dependency>
+            <groupId>com.liuty.maven</groupId>
+            <artifactId>project-common-entity</artifactId>
+            <version>${project-common-entity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>project-web-springcloud</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.5.9.RELEASE</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

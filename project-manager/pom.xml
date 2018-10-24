@@ -8,10 +8,12 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>project-common-tools</module>
     <module>project-common-entity</module>
     <module>project-service-springcloud</module>
     <module>project-web-springmvc</module>
     <module>project-web-springmvc-xml</module>
+    <module>project-web-springcloud</module>
   </modules>
 
   <name>project-manager</name>
@@ -19,6 +21,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <project-common-entity.version>1.0-SNAPSHOT</project-common-entity.version>
 
     <org.springframework.version>4.3.18.RELEASE</org.springframework.version>
     <org.jboss.resteasy.version>3.1.4.Final</org.jboss.resteasy.version>
@@ -206,6 +210,14 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
         <version>1.5.9.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 引入spring cloud的依赖 -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>Camden.SR4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
