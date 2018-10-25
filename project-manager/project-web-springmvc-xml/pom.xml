@@ -85,6 +85,10 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc-portlet</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-webflow</artifactId>
+        </dependency>
         <!-- Spring Dependency End -->
     </dependencies>
     <build>
