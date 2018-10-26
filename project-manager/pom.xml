@@ -46,6 +46,12 @@
         <version>1.10.19</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-core</artifactId>
+        <version>1.19</version>
+        <scope>test</scope>
+      </dependency>
       <!-- 日志 -->
       <dependency>
         <groupId>org.slf4j</groupId>
