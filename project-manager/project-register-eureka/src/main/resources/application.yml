@@ -1,37 +1,44 @@
 #单实例配置
-#server:
-#  port: 8761
-#eureka:
-#  client:
-#    register-with-eureka: false
-#    fetch-registry: false
-#    service-url:
-#      default-zone: http://localhost:8761/eureka/
-#高可用集群配置
-spring:
-  application:
-    name: microservice-discovery-eureka-ha
----
-spring:
-  profiles: peer1
 server:
   port: 8761
 eureka:
-  instance:
-    hostname: peer1
   client:
-    #register-with-eureka: false  默认注册服务也作为服务注册到注册服务
-    #fetch-registry: false
+    register-with-eureka: false
+    fetch-registry: false
     service-url:
-      default-zone: http://peer2:8762/eureka/
----
-spring:
-  profiles: peer2
-server:
-  port: 8762
-eureka:
-  instance:
-    hostname: peer2
-  client:
-    service-url:
-      default-zone: http://peer1:8761/eureka/
+      default-zone: http://localhost:8761/eureka/
+# 使用用户名、密码登陆注册中心
+#security:
+#  basic:
+#    enabled: true
+#  user:
+#    name: user
+#    password: password123
+#高可用集群配置
+#spring:
+#  application:
+#    name: microservice-discovery-eureka-ha
+#---
+#spring:
+#  profiles: peer1
+#server:
+#  port: 8761
+#eureka:
+#  instance:
+#    hostname: peer1
+#  client:
+#    #register-with-eureka: false  默认注册服务也作为服务注册到注册服务
+#    #fetch-registry: false
+#    service-url:
+#      default-zone: http://peer2:8762/eureka/
+#---
+#spring:
+#  profiles: peer2
+#server:
+#  port: 8762
+#eureka:
+#  instance:
+#    hostname: peer2
+#  client:
+#    service-url:
+#      default-zone: http://peer1:8761/eureka/

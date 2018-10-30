@@ -23,8 +23,12 @@ logging:
 eureka:
   client:
     service-url:
-      default-zone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+      #default-zone: http://peer1:8761/eureka/,http://peer2:8762/eureka/   高可用注册中心配置
+      #defaultZone: http://user:password123@localhost:8761/eureka/    #使用用户名、密码注册注册中心
+      defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-
-
+    # 自定义元数据
+    metadata-map:
+      my-metadata: 自定义元数据
+    ip-address: localhost   # 绑定注册地址
