@@ -15,6 +15,7 @@
     <module>project-web-springmvc-xml</module>
     <module>project-web-springcloud</module>
     <module>project-register-eureka</module>
+      <module>project-service-springcloud-copy</module>
   </modules>
 
   <name>project-manager</name>
@@ -28,6 +29,7 @@
     <org.springframework.version>4.3.18.RELEASE</org.springframework.version>
     <org.jboss.resteasy.version>3.1.4.Final</org.jboss.resteasy.version>
     <org.apache.tomcat.version>8.0.11</org.apache.tomcat.version>
+    <org.openjdk.jmh.version>1.19</org.openjdk.jmh.version>
     <org.slf4j.version>1.7.5</org.slf4j.version>
   </properties>
 
@@ -49,8 +51,13 @@
       <dependency>
         <groupId>org.openjdk.jmh</groupId>
         <artifactId>jmh-core</artifactId>
-        <version>1.19</version>
-        <scope>test</scope>
+        <version>${org.openjdk.jmh.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-generator-annprocess</artifactId>
+        <version>${org.openjdk.jmh.version}</version>
+        <scope>provided</scope>
       </dependency>
       <!-- 日志 -->
       <dependency>
@@ -67,6 +74,12 @@
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.17</version>
+      </dependency>
+      <!-- 时间组件 -->
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>2.9.9</version>
       </dependency>
       <!-- Apache Http Client -->
       <dependency>

@@ -1,4 +1,5 @@
 server:
   port: 8080
-
-
+microservice-provider-user:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
