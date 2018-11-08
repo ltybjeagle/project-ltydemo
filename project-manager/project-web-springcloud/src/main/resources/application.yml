@@ -3,3 +3,6 @@ server:
 microservice-provider-user:
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+logging:
+  level:
+    com.liuty.maven.feignclient.DemoUserFeignClient: DEBUG
