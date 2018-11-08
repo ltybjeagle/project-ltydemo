@@ -6,3 +6,6 @@ microservice-provider-user:
 logging:
   level:
     com.liuty.maven.feignclient.DemoUserFeignClient: DEBUG
+feign:
+  hystrix:
+    enabled: true

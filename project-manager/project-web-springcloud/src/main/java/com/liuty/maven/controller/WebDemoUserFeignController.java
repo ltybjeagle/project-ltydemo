@@ -2,6 +2,8 @@ package com.liuty.maven.controller;
 
 import com.liuty.maven.entity.DemoUser;
 import com.liuty.maven.feignclient.DemoUserFeignClient;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import feign.Client;
 import feign.Contract;
 import feign.Feign;
@@ -9,6 +11,7 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.netflix.feign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +23,31 @@ public class WebDemoUserFeignController {
     @Autowired
     private DemoUserFeignClient demoUserFeignClient;
 
-    //@GetMapping("/feignUser/{id}")
-    @RequestMapping(value = "/feignUser/{id}", method = RequestMethod.GET)
+//    @HystrixCommand(fallbackMethod = "findByIdUserFallBack", commandProperties = {
+//            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000"),
+//            @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "1000")
+//    }, threadPoolProperties = {
+//            @HystrixProperty(name = "coreSize", value = "1"),
+//            @HystrixProperty(name = "maxQueueSize", value = "10")
+//    })
+    @GetMapping("/feignUser/{id}")
     public DemoUser findByIdUser(@PathVariable(value = "id") String id) {
         return this.demoUserFeignClient.findById(id);
     }
+
+    /**
+     * Hystrix断路器开启，提供默认方法
+     * @param id
+     * @return
+     */
+    /*
+    public DemoUser findByIdUserFallBack(String id) {
+        DemoUser demoUser = new DemoUser();
+        demoUser.setGuid("-1");
+        demoUser.setName("默认用户");
+        demoUser.setCode("000000");
+        return demoUser;
+    }*/
 
     /*
     private DemoUserFeignClient userUserFeignClient;
