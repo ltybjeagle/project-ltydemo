@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @FeignClient(name = "microservice-provider-user",
         configuration = {FeignConfiguration.class, FeignLogConfiguration.class},
-        fallback = FeignClientFallBack.class)
+        fallbackFactory = FeignClientFallbackFactory.class)
 public interface DemoUserFeignClient {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
