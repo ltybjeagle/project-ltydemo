@@ -3,12 +3,13 @@ package com.liuty.maven.lambda;
 import com.liuty.maven.lambda.entity.Dish;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public class StreamDemo {
     private static List<Dish> list = Arrays.asList(
@@ -53,5 +54,14 @@ public class StreamDemo {
 
         Stream<String> stringStream = Stream.of("Java 8 ", "Lambdas ", "In ", "Action");
         stringStream.map(String::toUpperCase).forEach(System.out::println);
+        Comparator<Dish> dishCaloriesComparator = Comparator.comparing(Dish::getCalories);
+        Optional<Dish> mostCalorieDish = list.stream().collect(maxBy(dishCaloriesComparator));
+        mostCalorieDish.ifPresent(System.out::println);
+        // 1、热量求和
+        System.out.println(list.stream().collect(summingInt(Dish::getCalories)));
+        // 2、热量求和，等价上面
+        //System.out.println(list.stream().collect(reducing(0, Dish::getCalories, (i, j) -> i + j)));
+        System.out.println(list.stream().collect(groupingBy(Dish::getType)));
+        System.out.println(list.stream().collect(partitioningBy(Dish::isVegetarian)));
     }
 }
