@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -63,5 +64,35 @@ public class StreamDemo {
         //System.out.println(list.stream().collect(reducing(0, Dish::getCalories, (i, j) -> i + j)));
         System.out.println(list.stream().collect(groupingBy(Dish::getType)));
         System.out.println(list.stream().collect(partitioningBy(Dish::isVegetarian)));
+        System.out.println("******************************parallel 并行************************");
+        System.out.println(ParallelStreams.parallelSum(50));
+        System.out.println("parallelSum sum done in : "
+                + measureSumPerf(ParallelStreams::parallelSum, 10000000) + "msecs");
+        System.out.println("sequentialSum sum done in : "
+                + measureSumPerf(ParallelStreams::sequentialSum, 10000000) + "msecs");
+        System.out.println("iterativeSum sum done in : "
+                + measureSumPerf(ParallelStreams::iterativeSum, 10000000) + "msecs");
+
+    }
+
+    /**
+     * 测试函数
+     * @param function 测试行为
+     * @param n 测试数据
+     * @return
+     */
+    public static long measureSumPerf(Function<Long, Long> function, long n) {
+        long fastTest = Long.MAX_VALUE;
+        for (int i = 0; i < 10; i++) {
+            long start = System.nanoTime();
+            long sum = function.apply(n);
+            long end = System.nanoTime();
+            long duration = (end - start) / 1000000;
+            System.out.println("sum=" + sum);
+            if (fastTest > duration) {
+                fastTest = duration;
+            }
+        }
+        return fastTest;
     }
 }
