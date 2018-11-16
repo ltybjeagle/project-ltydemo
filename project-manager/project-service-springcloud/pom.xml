@@ -11,6 +11,12 @@
     <name>project-service-springcloud Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
+        <!-- 内部依赖包 -->
+        <dependency>
+            <groupId>com.liuty.maven</groupId>
+            <artifactId>project-common-tools</artifactId>
+            <version>${project-common-tools.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

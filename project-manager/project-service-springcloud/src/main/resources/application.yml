@@ -24,12 +24,11 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
   instance:
-    prefer-ip-address: true
     lease-renewal-interval-in-seconds: 30 #eureka客户端需要多长时间发送心跳给eureka服务器，表明他仍然或者，默认30秒
     lease-expiration-duration-in-seconds: 90 #eureka服务器在接受到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除
     metadata-map:
       my-metadata: 自定义元数据
-    ip-address: localhost   # 绑定注册地址
+    instance-id: ${spring.application.name}:${random.int} #实例ID
 ####################################[eureka集群连接配置]##################################
 #eureka:
 #  client:

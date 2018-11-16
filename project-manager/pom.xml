@@ -25,6 +25,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <project-common-entity.version>1.0-SNAPSHOT</project-common-entity.version>
+    <project-common-tools.version>1.0-SNAPSHOT</project-common-tools.version>
 
     <org.springframework.version>4.3.18.RELEASE</org.springframework.version>
     <org.jboss.resteasy.version>3.1.4.Final</org.jboss.resteasy.version>
