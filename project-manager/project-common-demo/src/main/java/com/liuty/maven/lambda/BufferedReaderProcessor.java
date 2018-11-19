@@ -9,4 +9,14 @@ import java.io.IOException;
 @FunctionalInterface
 public interface BufferedReaderProcessor {
     String process(BufferedReader br) throws IOException;
+
+    /**
+     * 默认函数
+     * @param br
+     * @return
+     * @throws IOException
+     */
+    default String defaultProcess(BufferedReader br) throws IOException {
+        return br.readLine();
+    }
 }

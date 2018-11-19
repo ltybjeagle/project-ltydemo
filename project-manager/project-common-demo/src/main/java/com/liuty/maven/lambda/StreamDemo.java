@@ -72,7 +72,16 @@ public class StreamDemo {
                 + measureSumPerf(ParallelStreams::sequentialSum, 10000000) + "msecs");
         System.out.println("iterativeSum sum done in : "
                 + measureSumPerf(ParallelStreams::iterativeSum, 10000000) + "msecs");
-
+        List<Integer> InNumbers = Arrays.asList(2, 3, 4, 5);
+        InNumbers.stream()
+                .peek(x -> System.out.println("from Stream :" + x))
+                .map(x -> x + 17)
+                .peek(x -> System.out.println("after map :" + x))
+                .filter(x -> x % 2 == 0)
+                .peek(x -> System.out.println("after filter :" + x))
+                .limit(3)
+                .peek(x -> System.out.println("after limit :" + x))
+                .forEach(System.out::println);
     }
 
     /**
