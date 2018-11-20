@@ -23,9 +23,9 @@ public class LoggerUtil {
      * @param obj 输出变量
      */
     public static void logger(LoggerLevel level, Supplier<String> msgSupplier, Object ...obj) {
-        Stream<String> classNames = Arrays.stream(Thread.currentThread().getStackTrace()).limit(1)
+        Stream<String> classNames = Arrays.stream(Thread.currentThread().getStackTrace()).limit(3)
                 .map(StackTraceElement::getClassName);
-        String className = classNames.collect(toList()).get(0);
+        String className = classNames.collect(toList()).get(2);
         String msg = "[{}] @@@ " + msgSupplier.get();
         switch (level) {
             case INFO:
