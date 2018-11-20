@@ -1,7 +1,9 @@
 package com.liuty.maven.lambda;
 
 import com.liuty.maven.lambda.entity.Dish;
+import org.omg.IOP.IOR;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +26,7 @@ public class StreamDemo {
             new Dish("prawns", false, 300, Dish.Type.FISH),
             new Dish("salmon", false, 450, Dish.Type.FISH));
 
-    public static void main(String ...args) {
+    public static void main(String ...args) throws Exception {
         List<String> threeHighCaloricDishNames = list.stream().filter(d -> d.getCalories() > 300)
                 .map(Dish::getName).limit(3).collect(toList());
         System.out.println(threeHighCaloricDishNames);
@@ -73,6 +75,7 @@ public class StreamDemo {
         System.out.println("iterativeSum sum done in : "
                 + measureSumPerf(ParallelStreams::iterativeSum, 10000000) + "msecs");
         List<Integer> InNumbers = Arrays.asList(2, 3, 4, 5);
+        // peek函数式调试信息
         InNumbers.stream()
                 .peek(x -> System.out.println("from Stream :" + x))
                 .map(x -> x + 17)
@@ -82,6 +85,15 @@ public class StreamDemo {
                 .limit(3)
                 .peek(x -> System.out.println("after limit :" + x))
                 .forEach(System.out::println);
+        Optional<Dish> dishOpt = Optional.empty() ; // null对象
+        Dish dishOptNotNull = new Dish("pork", false, 800, Dish.Type.MEAT);
+        dishOpt = Optional.of(dishOptNotNull) ; // 非空对象，如果为空，抛空指针异常
+        dishOpt = Optional.ofNullable(dishOptNotNull) ; // 可以为空对象
+        Optional<String> dishName = dishOpt.map(Dish::getName);
+        dishName.get(); //获取数据
+        dishName.orElse("other"); //获取数据，如果不存在返回other
+        dishName.orElseThrow(Exception::new); //获取数据，如果不存在抛出异常
+        dishName.ifPresent(System.out::println);//输出数据
     }
 
     /**
