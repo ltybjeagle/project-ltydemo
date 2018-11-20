@@ -1,6 +1,6 @@
 package com.liuty.maven.entity;
 
-public class DemoUser {
+public class UserEntity {
     /**
      * 用户主键
      */
@@ -29,6 +29,19 @@ public class DemoUser {
      * 备注
      */
     private String remark;
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "guid='" + guid + '\'' +
+                ", code='" + code + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", status=" + status +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 
     public String getGuid() {
         return guid;
