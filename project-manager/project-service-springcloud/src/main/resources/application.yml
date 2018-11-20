@@ -28,6 +28,7 @@ eureka:
     lease-expiration-duration-in-seconds: 90 #eureka服务器在接受到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除
     metadata-map:
       my-metadata: 自定义元数据
+      zone: test1
     instance-id: ${spring.application.name}:${random.int} #实例ID
 ####################################[eureka集群连接配置]##################################
 #eureka:

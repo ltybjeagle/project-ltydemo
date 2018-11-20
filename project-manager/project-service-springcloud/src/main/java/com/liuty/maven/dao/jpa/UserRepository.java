@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * 用户持久化对象
  */
 @Repository
-public interface DemoUserRepository extends JpaRepository<Fasp_T_Causer, String> {
+public interface UserRepository extends JpaRepository<Fasp_T_Causer, String> {
 }

@@ -1,4 +1,4 @@
 package com.liuty.maven.service;
 
-public class DemoUserService {
+public class UserService {
 }
