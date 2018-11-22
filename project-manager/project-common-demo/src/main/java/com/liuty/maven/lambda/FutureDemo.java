@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FutureDemo {
     private static List<Shop> shops = Arrays.asList(new Shop("BestPrice"),
@@ -45,6 +46,15 @@ public class FutureDemo {
         System.out.println(findPricesByCompletableFuture("myPhone27S"));
         duration = (System.nanoTime() - start) / 1_000_000;
         System.out.println("Done in " + duration + " msecs");
+        System.out.println("################################[2]#############################");
+        long startTimes = System.nanoTime();
+        CompletableFuture[] futures = findPricesStream("myPhone27S")
+                .map(f -> f.thenAccept(s ->
+                        System.out.println(s + "(done in" + ((System.nanoTime() - startTimes) / 1_000_000)
+                                + " msecs)"))).toArray(size -> new CompletableFuture[size]);
+        CompletableFuture.allOf(futures).join();
+        System.out.println("All shops have now responded in "
+                + ((System.nanoTime() - startTimes) / 1_000_000) + " msecs");
     }
 
     public static List<String> findPrices(String product) {
@@ -59,6 +69,12 @@ public class FutureDemo {
                         -> String.format("%s price is %.2f", shop.getName(), shop.getPrice(product)), executor))
                 .collect(Collectors.toList());
         return priceFutures.stream().map(CompletableFuture::join).collect(Collectors.toList());
+    }
+
+    public static Stream<CompletableFuture<String>> findPricesStream(String product) {
+        return shops.stream()
+                .map(shop -> CompletableFuture.supplyAsync(
+                        () -> String.format("%s price is %.2f", shop.getName(), shop.getPrice(product)), executor));
     }
 
     public static void doSomeTingElse() {
@@ -124,8 +140,9 @@ class Shop {
     }
 
     public static void delay() {
+        int delay = 500 + random.nextInt(2000);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(delay);
         } catch (InterruptedException ex) {
             throw new RuntimeException(ex);
         }
