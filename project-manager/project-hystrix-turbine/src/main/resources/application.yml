@@ -1,0 +1,7 @@
+server:
+  port: 8989
+spring:
+  application:
+    name: microservice-hystrix-turbine
+management:
+  port: 8990
