@@ -15,6 +15,6 @@ public class WebUserController {
 
     @GetMapping("/ribbon-user/{id}")
     public UserEntity findById(@PathVariable String id) {
-        return userService.findById(id);
+        return userService.findUserEntityById(id);
     }
 }
