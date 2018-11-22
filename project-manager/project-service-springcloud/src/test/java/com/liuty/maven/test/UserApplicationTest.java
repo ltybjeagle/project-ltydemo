@@ -34,7 +34,7 @@ public class UserApplicationTest {
     @Test
     public void findByIdTest() throws Exception {
         MvcResult mvcResult = mockMvc.perform(
-                MockMvcRequestBuilders.get("/844463533D391D932801CA8806F60516")
+                MockMvcRequestBuilders.get("/user/findbyid/844463533D391D932801CA8806F60516")
                         .accept(MediaType.APPLICATION_JSON)).andReturn();
         int status = mvcResult.getResponse().getStatus();
         String content = mvcResult.getResponse().getContentAsString();

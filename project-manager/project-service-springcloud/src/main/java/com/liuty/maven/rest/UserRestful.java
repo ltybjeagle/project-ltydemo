@@ -13,7 +13,7 @@ public class UserRestful {
     @Autowired
     private UserRepository demoUserRepository;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/findbyid/{id}", method = RequestMethod.GET)
     public Fasp_T_Causer findById(@PathVariable String id) throws Exception {
         //LoggerUtil.logger(LoggerLevel.INFO, () -> "======================》服务调用");
         System.out.println(Thread.currentThread().getName() + "======================》服务调用");
