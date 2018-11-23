@@ -5,3 +5,11 @@ spring:
     name: microservice-hystrix-turbine
 management:
   port: 8990
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+turbine:
+  app-config: microservice-ribbon-consumer
+  cluster-name-expression: new String('default')
+  combine-host-port: true
