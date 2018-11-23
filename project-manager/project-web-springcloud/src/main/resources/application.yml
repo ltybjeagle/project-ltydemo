@@ -11,13 +11,17 @@ spring:
     loadbalancer:
       retry:
         enabled: true  #开启ribbon重试
+  application:
+    name: microservice-feign-consumer
 ribbon:
   NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
-  ConnectTimeout: 250 #请求连接的超时时间
-  ReadTimeout: 1000 #请求处理的超时时间
-  OkToRetryOnAllOperations: true #对所有请求进行重试
-  MaxAutoRetriesNextServer: 2 #切换其他实例重试次数
-  MaxAutoRetries: 1 #同一实例重试次数
+#ribbon:
+#  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+#  ConnectTimeout: 250 #请求连接的超时时间
+#  ReadTimeout: 1000 #请求处理的超时时间
+#  OkToRetryOnAllOperations: true #对所有请求进行重试
+#  MaxAutoRetriesNextServer: 2 #切换其他实例重试次数
+#  MaxAutoRetries: 1 #同一实例重试次数
 #logging:
 #  level:
 #    com.liuty.maven.feignclient.DemoUserFeignClient: DEBUG

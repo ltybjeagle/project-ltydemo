@@ -13,7 +13,7 @@ public class WebUserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/ribbon-user/{id}")
+    @GetMapping("/feign-user/{id}")
     public UserEntity findById(@PathVariable String id) {
         return userService.findUserEntityById(id);
     }
