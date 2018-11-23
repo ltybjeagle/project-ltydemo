@@ -3,7 +3,13 @@ package com.liuty.maven.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 服务日志切面
@@ -11,6 +17,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class LogAspect {
+
+    private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     /**
      * 拦截此包下的所有请求
@@ -24,12 +32,15 @@ public class LogAspect {
      */
     @Before("serviceLog()")
     public void serviceBefore(JoinPoint joinPoint) {
+        logger.info("======================》服务调用");
         // 函数名称
-        joinPoint.getSignature().getName();
+        String name = joinPoint.getSignature().getName();
         // 类路径
-        joinPoint.getSignature().getDeclaringTypeName();
+        String pkg = joinPoint.getSignature().getDeclaringTypeName();
         // 函数参数
-        joinPoint.getArgs();
+        Object[] args = joinPoint.getArgs();
+        List<String> argNames = Arrays.stream(args).map(arg -> arg.getClass().getName()).collect(Collectors.toList());
+        logger.info("函数：{} :: {} ( {} )", pkg, name, argNames.toString());
     }
 
     /**
@@ -67,7 +78,10 @@ public class LogAspect {
     @Around("serviceLog()")
     public Object serviceAround(ProceedingJoinPoint proceedingJoinPoint) {
         try {
+            long startTime = System.currentTimeMillis();
             Object obj = proceedingJoinPoint.proceed();
+            long endTime = System.currentTimeMillis();
+            logger.info("服务执行耗时：{} ms", (endTime - startTime));
             return obj;
         } catch (Throwable ex) {
             ex.printStackTrace();

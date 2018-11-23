@@ -1,25 +1,30 @@
 package com.liuty.maven.rest;
 
-import com.liuty.maven.dao.jpa.UserRepository;
 import com.liuty.maven.dto.Fasp_T_Causer;
+import com.liuty.maven.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Random;
 
 @RestController
 public class UserRestful {
 
     @Autowired
-    private UserRepository demoUserRepository;
+    private UserService userService;
 
     @RequestMapping(value = "/user/findbyid/{id}", method = RequestMethod.GET)
-    public Fasp_T_Causer findById(@PathVariable String id) throws Exception {
-        //LoggerUtil.logger(LoggerLevel.INFO, () -> "======================》服务调用");
-        System.out.println(Thread.currentThread().getName() + "======================》服务调用");
-        int sleepTime = new Random().nextInt(3000);
-        Thread.sleep(sleepTime);
-        Fasp_T_Causer user = demoUserRepository.findOne(id);
+    public Fasp_T_Causer findUserById(@PathVariable String id) throws Exception {
+        Fasp_T_Causer user = userService.findUserById(id);
         return user;
+    }
+
+    @RequestMapping(value = "/user/findbyid/reqh", method = RequestMethod.GET)
+    public Fasp_T_Causer findUserByRequestHeader(@RequestHeader String id) throws Exception {
+        Fasp_T_Causer user = userService.findUserById(id);
+        return user;
+    }
+
+    @RequestMapping(value = "/user/modifyoneuser", method = RequestMethod.POST)
+    public String modifyOneUser(@RequestBody Fasp_T_Causer user) {
+        return "success";
     }
 }
