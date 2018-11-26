@@ -18,6 +18,11 @@
             <version>${project-common-entity.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.liuty.maven</groupId>
+            <artifactId>project-common-serviceapi</artifactId>
+            <version>${project-common-serviceapi.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>

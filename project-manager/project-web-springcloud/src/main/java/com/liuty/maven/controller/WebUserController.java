@@ -15,6 +15,12 @@ public class WebUserController {
 
     @GetMapping("/feign-user/{id}")
     public UserEntity findById(@PathVariable String id) {
-        return userService.findUserEntityById(id);
+        UserEntity userEntity = null;
+        try {
+            userEntity = userService.findUserEntityById(id);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        return userEntity;
     }
 }
