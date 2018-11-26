@@ -18,6 +18,7 @@
     <module>project-service-springcloud-copy</module>
     <module>project-hystrix-dashboard</module>
     <module>project-hystrix-turbine</module>
+    <module>project-common-serviceapi</module>
   </modules>
 
   <name>project-manager</name>
@@ -28,6 +29,7 @@
 
     <project-common-entity.version>1.0-SNAPSHOT</project-common-entity.version>
     <project-common-tools.version>1.0-SNAPSHOT</project-common-tools.version>
+    <project-common-serviceapi.version>1.0-SNAPSHOT</project-common-serviceapi.version>
 
     <org.springframework.version>4.3.18.RELEASE</org.springframework.version>
     <org.jboss.resteasy.version>3.1.4.Final</org.jboss.resteasy.version>
@@ -94,6 +96,11 @@
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
         <version>4.5.2</version>
+      </dependency>
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>3.2.5</version>
       </dependency>
       <!-- Dubbo分布式远程接口调用-->
       <dependency>
