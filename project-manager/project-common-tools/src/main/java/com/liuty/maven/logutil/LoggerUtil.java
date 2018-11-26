@@ -1,4 +1,4 @@
-package com.liuty.maven.log;
+package com.liuty.maven.logutil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

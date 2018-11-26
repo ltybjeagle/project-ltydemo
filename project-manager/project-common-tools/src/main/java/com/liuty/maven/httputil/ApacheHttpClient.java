@@ -1,7 +1,7 @@
-package com.liuty.maven.httpclient;
+package com.liuty.maven.httputil;
 
-import com.liuty.maven.log.LoggerLevel;
-import com.liuty.maven.log.LoggerUtil;
+import com.liuty.maven.logutil.LoggerLevel;
+import com.liuty.maven.logutil.LoggerUtil;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

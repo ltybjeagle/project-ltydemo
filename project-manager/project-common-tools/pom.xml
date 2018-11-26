@@ -36,6 +36,10 @@
             <artifactId>json-lib</artifactId>
             <classifier>jdk15</classifier>
         </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

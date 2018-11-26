@@ -1,4 +1,4 @@
-package com.liuty.maven.log;
+package com.liuty.maven.logutil;
 
 /**
  * 日志级别

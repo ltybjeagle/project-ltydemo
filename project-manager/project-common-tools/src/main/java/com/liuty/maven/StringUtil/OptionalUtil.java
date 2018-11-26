@@ -1,4 +1,4 @@
-package com.liuty.maven.StringUtil;
+package com.liuty.maven.Stringutil;
 
 import java.util.Optional;
 
