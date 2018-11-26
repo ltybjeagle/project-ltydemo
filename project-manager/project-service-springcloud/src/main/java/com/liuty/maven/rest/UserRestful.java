@@ -1,30 +1,31 @@
 package com.liuty.maven.rest;
 
-import com.liuty.maven.dto.Fasp_T_Causer;
+import com.liuty.maven.entity.UserEntity;
 import com.liuty.maven.service.UserService;
+import com.liuty.maven.serviceapi.UserRestApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserRestful {
+public class UserRestful implements UserRestApi {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/user/findbyid/{id}", method = RequestMethod.GET)
-    public Fasp_T_Causer findUserById(@PathVariable String id) throws Exception {
-        Fasp_T_Causer user = userService.findUserById(id);
+    public UserEntity findUserById(@PathVariable("id") String id) throws Exception {
+        UserEntity user = userService.findUserById(id);
         return user;
     }
 
-    @RequestMapping(value = "/user/findbyid/reqh", method = RequestMethod.GET)
-    public Fasp_T_Causer findUserByRequestHeader(@RequestHeader String id) throws Exception {
-        Fasp_T_Causer user = userService.findUserById(id);
+    public UserEntity findUserByRequestHeader(@RequestHeader("id") String id) throws Exception {
+        UserEntity user = userService.findUserById(id);
         return user;
     }
 
-    @RequestMapping(value = "/user/modifyoneuser", method = RequestMethod.POST)
-    public String modifyOneUser(@RequestBody Fasp_T_Causer user) {
+    public String modifyOneUser(@RequestBody UserEntity user) {
         return "success";
     }
 }
