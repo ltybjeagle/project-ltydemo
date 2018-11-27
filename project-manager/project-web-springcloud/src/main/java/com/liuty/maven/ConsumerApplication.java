@@ -10,9 +10,9 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients
 @ServletComponentScan(basePackages = {"com.liuty.maven.filter"})
-public class ConsumerUserApplication {
+public class ConsumerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerUserApplication.class, args);
+        SpringApplication.run(ConsumerApplication.class, args);
     }
 }

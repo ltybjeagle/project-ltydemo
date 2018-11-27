@@ -68,7 +68,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.liuty.maven.ProviderUserApplication</mainClass>
+                            <mainClass>com.liuty.maven.ProviderApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

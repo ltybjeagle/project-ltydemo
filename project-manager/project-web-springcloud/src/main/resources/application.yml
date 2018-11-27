@@ -6,6 +6,10 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     fetch-registry: true #从注册中心拉去服务清单
     registry-fetch-interval-seconds: 30 #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒
+  instance:
+      lease-renewal-interval-in-seconds: 30
+      lease-expiration-duration-in-seconds: 90
+      instance-id: ${spring.application.name}:${random.int}
 spring:
   cloud:
     loadbalancer:
@@ -29,4 +33,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 3500
+            timeoutInMilliseconds: 9000
+logging:
+  level:
+    com.liuty.maven.service.feign.UserFeignClient: debug

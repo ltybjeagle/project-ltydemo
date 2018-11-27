@@ -1,0 +1,28 @@
+server:
+  port: 8005
+spring:
+  application:
+    name: microservice-gateway-zuul
+zuul:
+  routes:
+    service-consumer-api:
+      path: /service-consumer/**
+      serviceId: microservice-feign-consumer
+    service-local-api:
+      path: /service-local/**
+      url: forward:/local
+  ignored-patterns: /**/testurl/**  #过滤匹配,匹配上的请求不做路由转发
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true #从注册中心拉去服务清单
+    registry-fetch-interval-seconds: 30 #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒
+  instance:
+      lease-renewal-interval-in-seconds: 30
+      lease-expiration-duration-in-seconds: 90
+      instance-id: ${spring.application.name}:${random.int}
+logging:
+  level: info
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger] >>> %msg%n"

@@ -1,6 +1,6 @@
 package com.liuty.maven.test;
 
-import com.liuty.maven.ProviderUserApplication;
+import com.liuty.maven.ProviderApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = ProviderUserApplication.class)
+@SpringBootTest(classes = ProviderApplication.class)
 public class UserApplicationTest {
 
     private static final Logger logger = LoggerFactory.getLogger(UserApplicationTest.class);

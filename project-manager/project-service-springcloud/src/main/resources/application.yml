@@ -2,7 +2,7 @@ server:
   port: 8000
 spring:
   application:
-    name: microservice-provider-user
+    name: microservice-rest-provider
   jap:
     generate-ddl: false
     show-sql: true
@@ -17,7 +17,7 @@ spring:
 logging:
   level: info
   pattern:
-    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] >>> %msg%n"
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger] >>> %msg%n"
 eureka:
   client:
     registry-fetch-interval-seconds: 30 #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒

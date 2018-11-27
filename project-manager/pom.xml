@@ -19,6 +19,7 @@
     <module>project-hystrix-dashboard</module>
     <module>project-hystrix-turbine</module>
     <module>project-common-serviceapi</module>
+      <module>project-gateway-zuul</module>
   </modules>
 
   <name>project-manager</name>

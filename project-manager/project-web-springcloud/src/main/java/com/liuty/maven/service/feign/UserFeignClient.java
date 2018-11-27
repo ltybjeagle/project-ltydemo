@@ -4,7 +4,7 @@ import com.liuty.maven.config.FeignLogConfiguration;
 import com.liuty.maven.serviceapi.UserRestApi;
 import org.springframework.cloud.netflix.feign.FeignClient;
 
-@FeignClient(value = "microservice-provider-user"
+@FeignClient(value = "microservice-rest-provider"
         , configuration = FeignLogConfiguration.class
         , fallbackFactory = UserFeignClientFallbackFactory.class)
 public interface UserFeignClient extends UserRestApi {
