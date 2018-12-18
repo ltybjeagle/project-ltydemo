@@ -19,8 +19,8 @@
     <module>project-hystrix-dashboard</module>
     <module>project-hystrix-turbine</module>
     <module>project-common-serviceapi</module>
-      <module>project-gateway-zuul</module>
-      <module>project-config-server</module>
+    <module>project-gateway-zuul</module>
+    <module>project-config-server</module>
   </modules>
 
   <name>project-manager</name>
@@ -38,6 +38,7 @@
     <org.apache.tomcat.version>8.0.11</org.apache.tomcat.version>
     <org.openjdk.jmh.version>1.19</org.openjdk.jmh.version>
     <org.slf4j.version>1.7.5</org.slf4j.version>
+    <metrics.version>3.1.2</metrics.version>
   </properties>
 
   <dependencyManagement>
@@ -103,6 +104,22 @@
         <groupId>cglib</groupId>
         <artifactId>cglib</artifactId>
         <version>3.2.5</version>
+      </dependency>
+      <!-- 系统监控 -->
+      <dependency>
+        <groupId>io.dropwizard.metrics</groupId>
+        <artifactId>metrics-core</artifactId>
+        <version>${metrics.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.dropwizard.metrics</groupId>
+        <artifactId>metrics-annotation</artifactId>
+        <version>${metrics.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>1.9.1</version>
       </dependency>
       <!-- Dubbo分布式远程接口调用-->
       <dependency>

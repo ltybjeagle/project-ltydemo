@@ -1,5 +1,7 @@
 package com.liuty.maven.service;
 
+import com.codahale.metrics.annotation.Counted;
+import com.codahale.metrics.annotation.Timed;
 import com.liuty.maven.beanutil.BeanCopyUtil;
 import com.liuty.maven.dao.jpa.UserRepository;
 import com.liuty.maven.dto.Fasp_T_Causer;
@@ -22,6 +24,8 @@ public class UserService {
      * @return
      * @throws Exception
      */
+    @Timed
+    @Counted
     public UserEntity findUserById(String id) throws Exception {
         int sleepTime = new Random().nextInt(3000);
         Thread.sleep(sleepTime);
