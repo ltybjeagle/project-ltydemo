@@ -11,9 +11,5 @@
 
     <dubbo:registry address="${dubbo.application.registry.address}"/>
 
-    <dubbo:protocol name="${dubbo.application.protocol.name}" port="${dubbo.application.protocol.port}" />
-    
-    <dubbo:service interface="com.liuty.maven.dubbofacade.UserFacade" ref="userFacade"/>
-
-    <bean id="userFacade" class="com.liuty.maven.facade.UserFacadeImpl"/>
+    <dubbo:reference id="userFacade" interface="com.liuty.maven.dubbofacade.UserFacade" check="false"/>
 </beans>

@@ -1,6 +1,8 @@
 package com.liuty.maven.entity;
 
-public class UserEntity {
+import java.io.Serializable;
+
+public class UserEntity implements Serializable {
     /**
      * 用户主键
      */

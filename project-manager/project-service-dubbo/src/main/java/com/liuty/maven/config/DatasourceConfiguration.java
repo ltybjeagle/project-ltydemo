@@ -33,7 +33,7 @@ public class DatasourceConfiguration {
         dataSource.setMaxActive(20);
         dataSource.setMinIdle(0);
         dataSource.setMaxWait(60000);
-        dataSource.setValidationQuery("select 1");
+        dataSource.setValidationQuery("select 1 from dual");
         dataSource.setTestOnBorrow(false);
         dataSource.setTestWhileIdle(true);
         dataSource.setPoolPreparedStatements(true);

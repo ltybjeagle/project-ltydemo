@@ -1,0 +1,13 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: microservice-consumer-dubbo
+logging:
+  level:
+    root: INFO
+dubbo:
+  application:
+    name: ${spring.application.name}
+    registry:
+      address: multicast://224.5.6.7:1234
