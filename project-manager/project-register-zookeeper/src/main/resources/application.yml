@@ -1,0 +1,8 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: microservice-register-zookeeper
+  cloud:
+    zookeeper:
+      enabled: true

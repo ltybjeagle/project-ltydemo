@@ -1,0 +1,19 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: microservice-provider-dubbo
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@192.168.3.6:1521:orcl
+    username: pay_lhc170119
+    password: 1
+logging:
+  level:
+    root: INFO
+dubbo:
+  application:
+    name: ${spring.application.name}
+    protocol:
+      name: dubbo
+      port: 20880
