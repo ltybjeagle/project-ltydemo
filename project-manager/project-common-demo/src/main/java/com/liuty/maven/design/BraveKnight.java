@@ -1,8 +1,8 @@
-package com.liuty.maven.demo.impl;
+package com.liuty.maven.design;
 
-import com.liuty.maven.demo.Knight;
-import com.liuty.maven.demo.Quest;
-
+/**
+ * 策略模式
+ */
 public class BraveKnight implements Knight {
 
     private Quest quest;
@@ -15,4 +15,12 @@ public class BraveKnight implements Knight {
     public void embarkOnQuest() {
         quest.embark();
     }
+}
+
+interface Knight {
+    void embarkOnQuest();
+}
+
+interface Quest {
+    void embark();
 }

@@ -15,12 +15,14 @@
     <module>project-web-springmvc-xml</module>
     <module>project-web-springcloud</module>
     <module>project-register-eureka</module>
-    <module>project-service-springcloud-copy</module>
+    <module>project-service-dubbo</module>
     <module>project-hystrix-dashboard</module>
     <module>project-hystrix-turbine</module>
     <module>project-common-serviceapi</module>
     <module>project-gateway-zuul</module>
     <module>project-config-server</module>
+    <module>project-common-dubbo</module>
+      <module>project-register-zookeeper</module>
   </modules>
 
   <name>project-manager</name>
@@ -126,6 +128,12 @@
         <groupId>com.alibaba</groupId>
         <artifactId>dubbo</artifactId>
         <version>2.6.3</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <!-- Zookeeper 用于分布式服务管理 -->
       <dependency>
@@ -286,6 +294,12 @@
         <groupId>com.oracle</groupId>
         <artifactId>ojdbc14</artifactId>
         <version>10.2.0.4.0</version>
+      </dependency>
+      <!-- 连接池 -->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid</artifactId>
+        <version>1.1.10</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

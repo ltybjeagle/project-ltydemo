@@ -1,7 +1,7 @@
-package com.liuty.maven.demo;
+package com.liuty.maven.design;
 
-import com.liuty.maven.demo.impl.BraveKnight;
 import org.junit.Test;
+
 import static org.mockito.Mockito.*;
 
 public class BraveKnightTest {
