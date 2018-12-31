@@ -71,6 +71,18 @@
         <version>${org.openjdk.jmh.version}</version>
         <scope>provided</scope>
       </dependency>
+      <!-- 字节码 -->
+      <dependency>
+        <groupId>javassist</groupId>
+        <artifactId>javassist</artifactId>
+        <version>3.12.1.GA</version>
+      </dependency>
+      <!-- 缓存 -->
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>18.0</version>
+      </dependency>
       <!-- 日志 -->
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -86,6 +98,11 @@
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.17</version>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.2</version>
       </dependency>
       <!-- 时间组件 -->
       <dependency>
