@@ -1,7 +1,10 @@
 package com.liuty.maven.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class UserEntity implements Serializable {
     /**
      * 用户主键
@@ -31,73 +34,4 @@ public class UserEntity implements Serializable {
      * 备注
      */
     private String remark;
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "guid='" + guid + '\'' +
-                ", code='" + code + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", status=" + status +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
-
-    public String getGuid() {
-        return guid;
-    }
-
-    public void setGuid(String guid) {
-        this.guid = guid;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 }

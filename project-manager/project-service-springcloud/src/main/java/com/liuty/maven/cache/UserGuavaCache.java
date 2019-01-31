@@ -29,7 +29,7 @@ public class UserGuavaCache extends SuperBaseGuavaCache<String, UserEntity> {
         } catch (InterruptedException e) {
         }
         UserEntity userEntity = null;
-        Fasp_T_Causer user = demoUserRepository.findOne(key);
+        Fasp_T_Causer user = demoUserRepository.getOne(key);
         if (user != null) {
             userEntity = bcu.getCopyObject(user, userEntity);
         }

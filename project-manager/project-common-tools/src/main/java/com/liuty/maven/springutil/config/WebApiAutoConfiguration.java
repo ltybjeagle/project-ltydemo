@@ -4,10 +4,9 @@ import com.fasterxml.classmate.TypeResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 @Configuration
 @EnableSwagger2
 @AutoConfigureAfter(WebMvcAutoConfiguration.class)
-public class WebApiAutoConfiguration extends WebMvcConfigurerAdapter {
+public class WebApiAutoConfiguration {
 
     @Value("${springfox.api.group:[your api group name]}")
     private String apiGroupName;
