@@ -7,7 +7,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/ltybjeagle/project-ltydemo
-          search-paths: project-manager/project-register-eureka
+          uri: https://github.com/ltybjeagle/project-config
+          search-paths: project-register-eureka
           username:
           password:

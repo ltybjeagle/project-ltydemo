@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: project-register-eureka
+  cloud:
+    config:
+      label: master
+      uri: http://localhost:7001
