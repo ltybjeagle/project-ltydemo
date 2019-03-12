@@ -12,7 +12,6 @@
     <module>project-common-entity</module>
     <module>project-service-springcloud</module>
     <module>project-web-springmvc</module>
-    <module>project-web-springmvc-xml</module>
     <module>project-web-springcloud</module>
     <module>project-register-eureka</module>
     <module>project-service-dubbo</module>
@@ -78,6 +77,12 @@
         <groupId>javassist</groupId>
         <artifactId>javassist</artifactId>
         <version>3.12.1.GA</version>
+      </dependency>
+      <!-- 注解 -->
+      <dependency>
+        <groupId>javax.annotation</groupId>
+        <artifactId>javax.annotation-api</artifactId>
+        <version>1.3.2</version>
       </dependency>
       <!-- 缓存 -->
       <dependency>
@@ -212,11 +217,13 @@
         <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-servlet-api</artifactId>
         <version>${org.apache.tomcat.version}</version>
+        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-jsp-api</artifactId>
         <version>${org.apache.tomcat.version}</version>
+        <scope>provided</scope>
       </dependency>
       <!-- Spring Dependency Begin -->
       <dependency>
@@ -339,6 +346,17 @@
         <groupId>com.alibaba</groupId>
         <artifactId>druid-spring-boot-starter</artifactId>
         <version>${druid.version}</version>
+      </dependency>
+      <!-- O/RM 框架 -->
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+        <version>3.5.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis-spring</artifactId>
+        <version>1.2.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
