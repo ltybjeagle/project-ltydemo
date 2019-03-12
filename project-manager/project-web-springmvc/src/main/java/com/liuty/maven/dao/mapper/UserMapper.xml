@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuty.maven.dao.UserMybatisDao">
+    <sql id="user_table">fasp_t_causer</sql>
+
+    <select id="findUserById" parameterType="string" resultType="UserEntity">
+        select * from <include refid="user_table"/> where guid = #{id}
+    </select>
+</mapper>
