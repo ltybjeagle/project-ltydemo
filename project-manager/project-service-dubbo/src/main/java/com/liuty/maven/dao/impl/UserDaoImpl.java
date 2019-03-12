@@ -21,20 +21,19 @@ public class UserDaoImpl implements UserDao {
         return this.jdbcTemplate.queryForObject("select t.* from fasp_t_causer t where t.guid = ?"
                 , new Object[]{id}, new UserRowMapper());
     }
-}
 
-class UserRowMapper implements RowMapper<UserEntity> {
-
-    @Override
-    public UserEntity mapRow(ResultSet resultSet, int i) throws SQLException {
-        UserEntity user = new UserEntity();
-        user.setGuid(resultSet.getString("guid"));
-        user.setCode(resultSet.getString("code"));
-        user.setPassword(resultSet.getString("password"));
-        user.setName(resultSet.getString("name"));
-        user.setEmail(resultSet.getString("email"));
-        user.setStatus(resultSet.getInt("status"));
-        user.setRemark(resultSet.getString("remark"));
-        return user;
+    class UserRowMapper implements RowMapper<UserEntity> {
+        @Override
+        public UserEntity mapRow(ResultSet resultSet, int i) throws SQLException {
+            UserEntity user = new UserEntity();
+            user.setGuid(resultSet.getString("guid"));
+            user.setCode(resultSet.getString("code"));
+            user.setPassword(resultSet.getString("password"));
+            user.setName(resultSet.getString("name"));
+            user.setEmail(resultSet.getString("email"));
+            user.setStatus(resultSet.getInt("status"));
+            user.setRemark(resultSet.getString("remark"));
+            return user;
+        }
     }
 }
