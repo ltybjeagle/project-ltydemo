@@ -1,6 +1,7 @@
 package com.liuty.maven.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.liuty.maven.dao.filter.ConnectionFilter;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -77,6 +78,11 @@ public class DataSourceConfig {
     @Bean
     public SqlSessionTemplate getSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
+    }
+
+    @Bean
+    public ConnectionFilter getConnectionFilter() {
+        return new ConnectionFilter();
     }
 
     /**
