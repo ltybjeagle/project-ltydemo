@@ -356,11 +356,20 @@
       <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis-spring</artifactId>
-        <version>1.2.0</version>
+        <version>2.0.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
   <build>
+    <resources>
+      <!-- 注册JAVA类路径中的XML文件，使编辑器将XML配置文件也编辑到编辑路径（否则编辑器不编译配置文件） -->
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+    </resources>
     <pluginManagement>
       <plugins>
         <plugin>

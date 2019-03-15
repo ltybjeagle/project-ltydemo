@@ -17,10 +17,11 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     public WebAppInitializer() {
         logger.info("应用启动......");
     }
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[] {
-                RootConfig.class, MyBatisConfig.class, DataSourceConfig.class};
+                RootConfig.class, MyBatisConfig.class, DataSourceConfig.class, TransactionManagementConfig.class};
     }
 
     /**
