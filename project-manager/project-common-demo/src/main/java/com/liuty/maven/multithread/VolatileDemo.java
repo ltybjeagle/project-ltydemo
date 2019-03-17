@@ -2,7 +2,7 @@ package com.liuty.maven.multithread;
 
 /**
  * volatile：解决共享变量的可见性，但是不保证原子性
- * 处理方式：总线锁
+ * 处理方式：总线锁、缓存一致性协议
  */
 public class VolatileDemo {
 
