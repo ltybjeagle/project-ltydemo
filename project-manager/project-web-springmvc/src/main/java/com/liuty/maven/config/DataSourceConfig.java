@@ -20,10 +20,18 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * @Configuration 配置类
- * @PropertySource 加载properties配置文件
- * @Order(5) 存在多配置类的时候，可以使用此注解进行配置类排序加载顺序
- * 系统启动初始化持久层配置
+ * 类注解说明：
+ *      1、注解@Configuration：标注此类是配置类
+ *      2、注解@PropertySource：加载properties配置文件
+ *      3、注解@Order(5)：存在多配置类的时候，可以使用此注解进行配置类排序加载顺序
+ *
+ * @Description: 系统启动初始化持久层配置
+ *
+ * 初始化实体：
+ *      1、DataSource
+ *      2、SqlSessionFactory
+ *      3、SqlSessionTemplate
+ *      4、ConnectionFilter
  */
 @Configuration
 @PropertySource("classpath:jdbc.properties")
@@ -46,11 +54,12 @@ public class DataSourceConfig {
     /**
      * 初始化Mybatis SqlSessionFactory
      * 初始化加载项：
-     * 1、Mybatis全局配置信息；;
-     * 2、注入数据源bean;
-     * 3、类型别名包路径（自动扫描加载路径下的实体类）;
-     * 4、加载持久层接口的映射配置文件
-     * @param dataSource
+     *      1、Mybatis全局配置信息;
+     *      2、注入数据源bean;
+     *      3、加载类型别名包路径（自动扫描加载路径下的实体类），映射数据库结果与JAVABEAN字段对应;
+     *      4、加载持久层接口的映射配置文件
+     *
+     * @param dataSource 数据源
      * @return
      */
     @Bean(name = "sqlSessionFactory")
@@ -80,6 +89,10 @@ public class DataSourceConfig {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
+    /**
+     * 实例化过滤器Bean
+     * @return
+     */
     @Bean
     public ConnectionFilter getConnectionFilter() {
         return new ConnectionFilter();
@@ -87,7 +100,17 @@ public class DataSourceConfig {
 
     /**
      * 使用Druid初始化数据源（连接池化）
-     * 1、设置setFilters(),可以对数据源、连接添加过滤器。
+     * 特性：
+     *      1、设置setFilters()，添加数据源、连接过滤器。
+     *          Druid数据源实现默认过滤器：
+     *              stat:监控统计过滤器;
+     *              wall:防注入过滤器;
+     *              log4j:日志过滤器。
+     *      2、可以继承FilterEventAdapter实现自己的过滤器，
+     *          加载自定义过滤器：
+     *              继承FilterEventAdapter类，实现自己的逻辑
+     *              在META-INF/druid-filter.properties文件里配置，配置方式：druid.filters.别名=过滤器类全路径
+     *              在setFilters()里配置加载的过滤器别名
      *
      * 多数据源情况：可以使用注解@Primary标注优先使用
      * @return

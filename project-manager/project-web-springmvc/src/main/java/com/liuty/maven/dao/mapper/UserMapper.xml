@@ -3,8 +3,43 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liuty.maven.dao.UserMybatisDao">
     <sql id="user_table">fasp_t_causer</sql>
+    <sql id="column_list">guid, code, name, email, status, remark</sql>
+    <!-- 动态拼装where条件语句 -->
+    <sql id="where_clause">
+        <!--
+            属性说明
+            prefix：动态补充前缀
+            prefixOverrides：删除第一个and或or
+        -->
+        <trim prefix="where" prefixOverrides="and |or">
+            <if test="guid != null and guid.length() > 0">
+                guid = #{guid}
+            </if>
+            <if test="code != null and code.length() > 0">
+                and code = #{code}
+            </if>
+            <if test="name != null and name.length() > 0">
+                <bind name="pattern" value="'%' + _parameter.name + '%'"/>
+                and name like #{pattern}
+            </if>
+            <if test="password != null and password.length() > 0">
+                and password = #{password}
+            </if>
+            <if test="email != null and email.length() > 0">
+                and email = #{email}
+            </if>
+            <if test="status != null and status.length() > 0">
+                and status = #{status}
+            </if>
+        </trim>
+    </sql>
 
     <select id="findUserById" parameterType="string" resultType="UserEntity">
-        select * from <include refid="user_table"/> where guid = #{id}
+        select <include refid="column_list"/> from <include refid="user_table"/> where guid = #{id}
+    </select>
+
+    <select id="findUserByNameAndPassword" parameterType="UserEntity" resultType="UserEntity">
+        select <include refid="column_list"/> from <include refid="user_table"/>
+        <include refid="where_clause"/>
     </select>
 </mapper>

@@ -7,10 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Configuration 配置类
- * 系统启动初始化MyBatis映射文件对应的接口信息，通过MapperScannerConfigurer自动扫描路径加载多个接口类
- * MapperScannerConfigurer类实现了BeanDefinitionRegistryPostProcessor接口，优先其他配置类初始化，
- * 因此提取出来单独初始化
+ * 类注解说明：
+ *      1、注解@Configuration：标注此类是配置类
+ *
+ * 初始化实体：
+ *      1、MapperScannerConfigurer
+ *
+ * 注：
+ *      1、MapperScannerConfigurer类实现了BeanDefinitionRegistryPostProcessor接口，优先其他配置类初始化，
+ *      因此单独出来初始化
  */
 @Configuration
 public class MyBatisConfig {
@@ -20,8 +25,9 @@ public class MyBatisConfig {
     }
 
     /**
-     * 注册Mapper Bean自动扫描DAO映射接口类（可使用注解@Mapper形式替代）
-     * 接口类跟mapper映射配合文件对应
+     * MapperScannerConfigurer：启动初始化MyBatis加载接口类，通过MapperScannerConfigurer自动扫描加载所有接口类
+     *      1、注册Mapper Bean自动扫描DAO映射接口类（可使用注解@Mapper形式替代）
+     *      2、接口类跟mapper映射配合文件对应
      */
     @Bean
     public MapperScannerConfigurer getMapperScannerConfigurer() {

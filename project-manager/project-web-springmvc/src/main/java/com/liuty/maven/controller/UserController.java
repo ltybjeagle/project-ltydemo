@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -28,8 +30,12 @@ public class UserController {
     @RequestMapping(value = "/listuser", method = GET)
     public String listUser() {
         System.out.println("listuser");
-        UserEntity userEntity = userService.findUserById("844463533D391D932801CA8806F60516");
-        System.out.println(userEntity);
+        Optional<UserEntity> userEntity = userService.findUserByNameAndPassword("15ysadmin", "11");
+        if (userEntity.isPresent()) {
+            System.out.println(userEntity.get());
+        } else {
+            System.out.println("no User");
+        }
         return "listuser";
     }
 
@@ -40,8 +46,14 @@ public class UserController {
      */
     @RequestMapping(value = "/getuser/{userid}", method = GET)
     public String getUser(@PathVariable("userid") String id) {
-        System.out.println("oneuser, id = " + id);
-        return "oneuser";
+        System.out.println("id = " + id);
+        Optional<UserEntity> userEntity = userService.findUserById("844463533D391D932801CA8806F60516");
+        if (userEntity.isPresent()) {
+            System.out.println(userEntity.get());
+        } else {
+            System.out.println("no User");
+        }
+        return "listuser";
     }
 
     /**
