@@ -7,12 +7,22 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
- * RxJava实现观察者模式
+ * 观察者模式
+ * 结构：
+ *      1、设置主题
+ *      2、观察者订阅主题
+ *      3、提供主题信息
+ *      4、主题推送消息到各个观察者
  */
-public class ObservableDesign {
+public class ObservableDesignDemo {
 
     public static void main(String ...args) {
-        // 被观察者（主题）
+        /**
+         * RxJava（异步编程）实现观察者模式
+         *      1、Observable<String> 实例化被观察者（主题）
+         *      2、Observer<String> 实例化观察者
+         *      3、observable.subscribe(observer) 订阅观察主题
+         */
         Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> observableEmitter) throws Exception {
@@ -20,7 +30,6 @@ public class ObservableDesign {
                 observableEmitter.onComplete();
             }
         });
-        // 观察者
         Observer<String> observer = new Observer<String>() {
             @Override
             public void onSubscribe(Disposable disposable) {
@@ -38,7 +47,6 @@ public class ObservableDesign {
             public void onComplete() {
             }
         };
-        // 订阅观察主题
         observable.subscribe(observer);
     }
 }
