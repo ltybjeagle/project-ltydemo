@@ -8,9 +8,9 @@ spring:
     url: jdbc:oracle:thin:@192.168.3.6:1521:orcl
     username: pay_lhc170119
     password: 1
-logging:
-  level:
-    root: INFO
+  output:
+    ansi:
+      enabled: always #日志高亮颜色
 dubbo:
   application:
     name: ${spring.application.name}
@@ -19,3 +19,24 @@ dubbo:
       port: 20880
     registry:
       address: multicast://224.5.6.7:1234
+##################################################################################################
+####druid数据源配置
+#spring:
+#  datasource:
+#    druid:
+#      connection-properties: config.decrypt=true;config.decrypt.key=${public-key} #设置数据库连接密码使用加密密码，秘钥：public-key
+#public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALS8ng1XvgHrdOgm4pxrnUdt3sXtu/E8My9KzX8sXlz+mXRZQCop7NVQLne25pXHtZoDYuMh3bzoGj6v5HvvAQ8CAwEAAQ==
+##################################################################################################
+####多数据源配置信息
+###one datasource
+#foo:
+#  datasource:
+#    url: jdbc:h2:mem:foo
+#    username: sa
+#    password:
+###second datasource
+#bar:
+#  datasource:
+#    url: jdbc:h2:mem:bar
+#    username: sa
+#    password:
