@@ -46,6 +46,7 @@ public class UserService {
         UserEntity userEntity = new UserEntity();
         userEntity.setCode(userCode);
         userEntity.setPassword(password);
+        userEntity.setStatus(1);
         return Optional.ofNullable(userMybatisDao.findUserByNameAndPassword(userEntity));
     }
 }

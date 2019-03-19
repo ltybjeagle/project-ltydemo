@@ -28,7 +28,7 @@
             <if test="email != null and email.length() > 0">
                 and email = #{email}
             </if>
-            <if test="status != null and status.length() > 0">
+            <if test="status != null">
                 and status = #{status}
             </if>
         </trim>
