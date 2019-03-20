@@ -1,0 +1,80 @@
+系统分析:
+    1、ps -ef|grep java      查看所有JAVA进程，找到要分析进程。
+    2、top                   查看监控进程的总统资源占用情况。
+    3、top -H -p 进程号      查看监控进程内的线程资源占用情况。
+    4、jstack 进程号         查看监控进程内的线程执行情况（根据上一步的线程ID的找到线程执行情况）。
+    5、jmap -histo 进程号    查看内存存储对象情况（列出存活对象类型）
+    6、jmap -dump:format=b,file=文件名 进程号   导出当前进程的内存转储文件
+    7、jstat -gcutil 进程号  查看监控进程的堆使用情况(堆内存使用情况、GC执行情况)。
+        jstat说明：jstat -gc <pid 进程号>  [time 间隔时间输出] [count 输出次数]
+        S0C  survivor0区的总容量       S1C  survivor1区的总容量       S0U  survivor0区已使用的容量
+        S1C  survivor1区已使用的容量   EC   Eden区的总容量            EU   Eden区已使用的容量
+        OC   Old区的总容量             OU   Old区已使用的容量         PC   当前perm的容量 (KB)
+        PU   perm的使用 (KB)           YGC  新生代垃圾回收次数        YGCT 新生代垃圾回收时间
+        FGC  老年代垃圾回收次数        FGCT 老年代垃圾回收时间        GCT  垃圾回收总消耗时间
+    8、jstat -gcutil <pid 进程号>  [time 间隔时间输出] [count 输出次数]
+    输出信息同gc一样，输出的是已使用空间占总空间的百分比
+    9、jstat -gccause <pid 进程号>  [time 间隔时间输出] [count 输出次数]
+    输出信息同gcutil一样，输出增加最近两次垃圾回收事件的原因
+        LGCC 最近垃圾回收的原因        GCC  当前垃圾回收的原因
+    10、lsof -i :端口号      查看对应端口的占用情况
+        TCP连接状态详解
+        LISTEN：侦听来自远方的TCP端口的连接请求
+        SYN-SENT：再发送连接请求后等待匹配的连接请求
+        SYN-RECEIVED：再收到和发送一个连接请求后等待对方对连接请求的确认
+        ESTABLISHED：代表一个打开的连接，表示正常数据传输状态；
+        CLOSE-WAIT：等待从本地用户发来的连接中断请求(被动关闭，另一端关闭连接，被动方未响应关闭请求。)
+        CLOSED:没有任何连接状态
+
+性能监控:
+    1、vmstat 1       监控CPU使用情况
+    2、iostat -xm 5   监控磁盘IO情况
+    3、netstat        监控网络情况
+
+shell命令脚本:
+命令行访问url：
+    1、GET请求     curl http://地址:端口/描述符
+    2、POST请求    curl http://地址:端口/描述符 -X POST
+
+CentOS6.5安装:
+vmware tools安装（使用root用户）：
+    [root@localhost ~]# cd /
+    [root@localhost /]# ls
+    [root@localhost /]# cd /media
+    [root@localhost media]# ls
+    [root@localhost media]# cd VMware\ Tools/
+    [root@localhost VMware Tools]# ls
+    [root@localhost VMware Tools]# cp VMwareTools-8.1.3-203739.tar.gz    /tmp
+    [root@localhost VMware Tools]# cd /tmp
+    [root@localhost tmp]# ls
+    [root@localhost tmp]# tar -zxf VMwareTools-8.1.3-203739.tar.gz
+    [root@localhost tmp]# ls
+    [root@localhost tmp]# cd vmware-tools-distrib/
+    [root@localhost vmware-tools-distrib]# ls
+    [root@localhost vmware-tools-distrib]# ./vmware-install.pl
+
+网络设置：
+    [root@localhost ~]# ifconfig   查看网卡设置
+    [root@localhost ~]# vi /etc/sysconfig/network-scripts/ifcfg-eth0  编辑网卡的配置文件
+    添加以下内容：
+    IPADDR=本地IP地址
+    NETMASK=子网掩码
+    GATEWAY=网关
+    修改内容：
+    ONBOOT=no更改为ONBOOT=yes
+    BOOTPROTO=dhcp更改为BOOTPROTO=none
+    [root@localhost ~]# service network restart   重启网卡
+
+其他设置：
+    网络适配器选择：桥接
+    虚拟网络编辑器：选择桥接（设置桥接到连接网络的网卡上）
+    虚拟机网卡DNS设置成宿主机网卡DNS
+
+防火墙开放端口：
+    [root@localhost ~]# vi /etc/sysconfig/iptables
+    添加端口：-A INPUT -m state -state NEW -m tcp -p tcp -dport 80 -j ACCEPT
+    [root@localhost ~]# /etc/init.d/iptables restart       （重启防火墙）
+
+常遇问题：
+    1、执行shell脚本报错：Permission denied
+    没有权限，执行命令chmod 777 service-user.sh
