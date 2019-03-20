@@ -1,2 +1,2 @@
-insert into t_user (guid,code,password,name,sex,age,phone,email,status,remark,create,modify,version)
+insert into t_causer (guid,code,password,name,sex,age,phone,email,status,remark,createTime,modifyTime,version)
 values(1,'15ysadmin','11','系统管理员','1',20,'13012345678','12345678@163.com',1,'系统管理员',sysdate,sysdate,0);

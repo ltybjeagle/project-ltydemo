@@ -1,4 +1,5 @@
-create table t_user (
+drop table if exists t_causer;
+create table t_causer (
 guid int not null primary key auto_increment,
 code varchar(30),
 password varchar(50),
@@ -9,7 +10,7 @@ phone varchar(11),
 email varchar(100),
 status number(1),
 remark varchar(100),
-create data,
-modify data,
+createTime date ,
+modifyTime date ,
 version int
 );

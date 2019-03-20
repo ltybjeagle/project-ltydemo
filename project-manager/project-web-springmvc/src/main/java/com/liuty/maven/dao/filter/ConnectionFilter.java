@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 /**
- * 持久层过滤器：
+ * FilterEventAdapter：持久层过滤器
  *      1、连接获取
  *      2、语句执行
  */

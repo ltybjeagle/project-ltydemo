@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liuty.maven.dao.UserMybatisDao">
-    <sql id="user_table">fasp_t_causer</sql>
-    <sql id="column_list">guid, code, name, email, status, remark</sql>
+    <sql id="user_table">t_causer</sql>
+    <sql id="column_list">guid, code, name, sex, age, phone, email, status, remark, createTime, version</sql>
     <!-- 动态拼装where条件语句 -->
     <sql id="where_clause">
         <!--
@@ -12,7 +12,7 @@
             prefixOverrides：删除第一个and或or
         -->
         <trim prefix="where" prefixOverrides="and |or">
-            <if test="guid != null and guid.length() > 0">
+            <if test="guid != null and guid > 0">
                 guid = #{guid}
             </if>
             <if test="code != null and code.length() > 0">
@@ -25,11 +25,24 @@
             <if test="password != null and password.length() > 0">
                 and password = #{password}
             </if>
+            <if test="sex != null and sex.length() > 0">
+                and sex = #{sex}
+            </if>
+            <if test="age != null and age > 0">
+                and age = #{age}
+            </if>
+            <if test="phone != null and phone.length() > 0">
+                <bind name="pattern" value="'%' + _parameter.phone + '%'"/>
+                and phone like #{pattern}
+            </if>
             <if test="email != null and email.length() > 0">
                 and email = #{email}
             </if>
             <if test="status != null">
                 and status = #{status}
+            </if>
+            <if test="version != null and version > 0">
+                and version = #{version}
             </if>
         </trim>
     </sql>

@@ -13,8 +13,7 @@ import org.springframework.core.annotation.Order;
 @ComponentScan(basePackages = {
         "com.liuty.maven.aspect",
         "com.liuty.maven.handler",
-        "com.liuty.maven.service",
-        "com.liuty.maven.dao"
+        "com.liuty.maven.service"
 })
 @Order(3)
 public class RootConfig {

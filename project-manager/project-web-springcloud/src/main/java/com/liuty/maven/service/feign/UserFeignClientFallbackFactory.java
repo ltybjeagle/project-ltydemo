@@ -36,7 +36,7 @@ public class UserFeignClientFallbackFactory implements FallbackFactory<UserFeign
     private static class DefaultUserEntity {
         private static UserEntity defaultUser = new UserEntity();
         static {
-            defaultUser.setGuid("-1");
+            defaultUser.setGuid(-1);
             defaultUser.setName("默认用户");
             defaultUser.setCode("000000");
         }

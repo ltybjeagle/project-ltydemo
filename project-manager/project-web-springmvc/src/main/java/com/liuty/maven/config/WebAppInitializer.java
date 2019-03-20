@@ -21,7 +21,8 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[] {
-                RootConfig.class, MyBatisConfig.class, DataSourceConfig.class, TransactionManagementConfig.class};
+                RootConfig.class, MyBatisConfig.class, DataSourceConfig.class,
+                TransactionManagementConfig.class, PropertiesConfiguration.class};
     }
 
     /**
