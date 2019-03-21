@@ -1,6 +1,24 @@
 package com.liuty.maven.multithread;
 
 /**
+ * ThreadLocal为变量在每个线程中都创建一个副本，所以每个线程都可以访问自己内部的副本变量，
+ * 不同线程之间不会相互干扰。
+ *      1、ThreadLocal是变量在不同线程间的隔离性，子线程不能访问父线程的变量副本。
+ *      2、每个线程内部都包含一个对ThreadLocalMap实例的引用threadLocals（MAP）变量，
+ *      存储变量副本（key:ThreadLocal变量值，value：副本值）。
+ *      3、ThreadLocal通过当前线程会去线程的threadLocals变量，获取变量副本
+ *
+ * ThreadLocalMap实例相当于线程的局部变量空间，存储着线程各自的数据。通过ThreadLocalMap可以获取entry数组，
+ * 数组里存储的线程的变量数据。
+ *      1、size：数组元素的数量。
+ *      2、threshold：数组阀值、临界值（一般为长度的2/3）。
+ *          size >= threshold时遍历数组，删除KEY为null的元素
+ *          size >= threshold*3/4时需要对数据进行扩容，一般扩容是在原数组长度乘以2。
+ *
+ * InheritableThreadLocal类：允许子线程可以从父线程中获取值。
+ *
+ * 内存泄露问题：ThreadLocal的key是弱引用，value是强引用。
+ *
  * Created by liutianyang on 2018/11/11.
  */
 public class ThreadLocalDemo {
@@ -16,12 +34,6 @@ public class ThreadLocalDemo {
     static ThreadLocal<String> inheritableThreadLocal = new InheritableThreadLocal<>();
 
     public static void main(String ...args) {
-        /*
-         * ThreadLocal : 线程私有变量，每个线程保存变量的一个副本，使用时线程使用自己的副本变量
-         * 子线程不能访问父线程的变量副本
-         * Thread里有threadLocals变量（MAP），存储变量副本（key:ThreadLocal变量值，value：副本值）
-         * ThreadLocal通过当前线程回去线程的threadLocals变量，获取变量副本
-         */
         Thread threadOne = new Thread(() -> {
             localVariable.set("threadOne local variable");
             print("threadOne");
