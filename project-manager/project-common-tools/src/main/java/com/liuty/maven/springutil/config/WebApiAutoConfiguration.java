@@ -22,6 +22,7 @@ import java.util.ArrayList;
 @AutoConfigureAfter(WebMvcAutoConfiguration.class)
 public class WebApiAutoConfiguration {
 
+
     @Value("${springfox.api.group:[your api group name]}")
     private String apiGroupName;
 
@@ -30,7 +31,6 @@ public class WebApiAutoConfiguration {
 
     @Value("${springfox.api.description:[add your api description via 'springfox.api.description']}")
     private String desc;
-
     @Value("${springfox.api.version:[set specific api version via 'springfox.api.version']}")
     private String version;
 

@@ -3,35 +3,52 @@ server:
 spring:
   application:
     name: microservice-rest-provider
-  jap:
-    generate-ddl: false
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:liuty
+    username: sa
+    password:
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: none
-      show-sql: true
-  datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@192.168.3.6:1521:orcl
-    username: pay_lhc170119
-    password: 1
-logging:
-  level: info
-  pattern:
-    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger] >>> %msg%n"
-eureka:
-  client:
-    registry-fetch-interval-seconds: 30 #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    lease-renewal-interval-in-seconds: 30 #eureka客户端需要多长时间发送心跳给eureka服务器，表明他仍然或者，默认30秒
-    lease-expiration-duration-in-seconds: 90 #eureka服务器在接受到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除
-    metadata-map:
-      my-metadata: 自定义元数据
-      zone: test1
-    instance-id: ${spring.application.name}:${random.int} #实例ID
+      ddl-auto: update
+####################################[Spring Boot 日志配置]##################################
+#logging:
+#  level: info
+#  pattern:
+#    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger] >>> %msg%n"
+####################################[eureka注册客户端配置]##################################
+#eureka:
+#  client:
+#    registry-fetch-interval-seconds: 30 #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    lease-renewal-interval-in-seconds: 30 #eureka客户端需要多长时间发送心跳给eureka服务器，表明他仍然或者，默认30秒
+#    lease-expiration-duration-in-seconds: 90 #eureka服务器在接受到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除
+#    metadata-map:
+#      my-metadata: 自定义元数据
+#      zone: test1
+#    instance-id: ${spring.application.name}:${random.int} #实例ID
 ####################################[eureka集群连接配置]##################################
 #eureka:
 #  client:
 #    service-url:
 #      default-zone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+#####################################[多数据源配置信息]##################################
+###one datasource
+#foo:
+#  datasource:
+#    url: jdbc:h2:mem:foo
+#    username: sa
+#    password:
+###second datasource
+#bar:
+#  datasource:
+#    url: jdbc:h2:mem:bar
+#    username: sa
+#    password:

@@ -1,34 +1,12 @@
 package com.liuty.maven.aspect;
 
-import com.codahale.metrics.Counter;
-import com.codahale.metrics.Meter;
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.Timer;
-import com.codahale.metrics.annotation.Counted;
-import com.codahale.metrics.annotation.ExceptionMetered;
-import com.codahale.metrics.annotation.Metered;
-import com.codahale.metrics.annotation.Timed;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
-import static com.codahale.metrics.MetricRegistry.name;
-
 /**
  * 系统性能监控
- */
 @Aspect
 @Component
+ */
 public class AutoMetricsAspect {
-
+/*
     private static final Logger logger = LoggerFactory.getLogger(AutoMetricsAspect.class);
 
     protected ConcurrentMap<String, Meter> meters = new ConcurrentHashMap<>();
@@ -37,11 +15,12 @@ public class AutoMetricsAspect {
     protected ConcurrentMap<String, Counter> counters = new ConcurrentHashMap<>();
 
     @Autowired
-    public MetricRegistry metricRegistry;
+    public MetricRegistry metricRegistry;*/
 
     /**
      * 拦截此包下的所有请求
      */
+    /*
     @Pointcut("execution(* com.liuty.maven.service.*.*(..))")
     public void serviceMethods() {}
 
@@ -89,4 +68,5 @@ public class AutoMetricsAspect {
                     , timer.getFiveMinuteRate(), timer.getFifteenMinuteRate());
         }
     }
+    */
 }

@@ -1,2 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.liuty.maven.config.DropwizardMetricsMBeansAutoConfiguration
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+#  com.liuty.maven.config.DropwizardMetricsMBeansAutoConfiguration

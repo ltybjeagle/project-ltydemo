@@ -1,11 +1,13 @@
 系统分析:
-    1、ps -ef|grep java      查看所有JAVA进程，找到要分析进程。
-    2、top                   查看监控进程的总统资源占用情况。
-    3、top -H -p 进程号      查看监控进程内的线程资源占用情况。
-    4、jstack 进程号         查看监控进程内的线程执行情况（根据上一步的线程ID的找到线程执行情况）。
-    5、jmap -histo 进程号    查看内存存储对象情况（列出存活对象类型）
+    1、ps -ef|grep java        查看所有JAVA进程，找到要分析进程。
+    2、top                     查看监控进程的总统资源占用情况。
+    3、top -H -p 进程号        查看监控进程内的线程资源占用情况。
+    4、top -p 进程号           查看监控进程的内存、CPU、负载情况。
+    5、jstack 进程号           查看监控进程内的线程执行情况（根据上一步的线程ID的找到线程执行情况）。
+    6、jstack 进程号 | 线程号  查看监控进程内对应线程的栈信息。
+    5、jmap -histo 进程号      查看内存存储对象情况（列出存活对象类型）
     6、jmap -dump:format=b,file=文件名 进程号   导出当前进程的内存转储文件
-    7、jstat -gcutil 进程号  查看监控进程的堆使用情况(堆内存使用情况、GC执行情况)。
+    7、jstat -gcutil 进程号    查看监控进程的堆使用情况(堆内存使用情况、GC执行情况)。
         jstat说明：jstat -gc <pid 进程号>  [time 间隔时间输出] [count 输出次数]
         S0C  survivor0区的总容量       S1C  survivor1区的总容量       S0U  survivor0区已使用的容量
         S1C  survivor1区已使用的容量   EC   Eden区的总容量            EU   Eden区已使用的容量
@@ -17,7 +19,7 @@
     9、jstat -gccause <pid 进程号>  [time 间隔时间输出] [count 输出次数]
     输出信息同gcutil一样，输出增加最近两次垃圾回收事件的原因
         LGCC 最近垃圾回收的原因        GCC  当前垃圾回收的原因
-    10、lsof -i :端口号      查看对应端口的占用情况
+    10、lsof -i :端口号        查看对应端口的占用情况
         TCP连接状态详解
         LISTEN：侦听来自远方的TCP端口的连接请求
         SYN-SENT：再发送连接请求后等待匹配的连接请求
