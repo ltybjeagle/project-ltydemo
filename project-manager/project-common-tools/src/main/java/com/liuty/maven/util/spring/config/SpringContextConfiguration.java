@@ -1,6 +1,6 @@
-package com.liuty.maven.springutil.config;
+package com.liuty.maven.util.spring.config;
 
-import com.liuty.maven.springutil.SpringContextUtil;
+import com.liuty.maven.util.spring.SpringContextUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

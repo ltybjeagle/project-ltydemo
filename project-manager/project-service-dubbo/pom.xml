@@ -16,13 +16,8 @@
     <dependencies>
         <dependency>
             <groupId>com.liuty.maven</groupId>
-            <artifactId>project-common-entity</artifactId>
-            <version>${project-common-entity.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.liuty.maven</groupId>
-            <artifactId>project-common-serviceapi</artifactId>
-            <version>${project-common-serviceapi.version}</version>
+            <artifactId>project-common-tools</artifactId>
+            <version>${project-common-tools.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

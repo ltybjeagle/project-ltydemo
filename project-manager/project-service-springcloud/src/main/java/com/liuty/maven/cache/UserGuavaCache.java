@@ -1,6 +1,6 @@
 package com.liuty.maven.cache;
 
-import com.liuty.maven.beanutil.BeanCopyUtil;
+import com.liuty.maven.util.bean.BeanCopyUtil;
 import com.liuty.maven.dao.jpa.UserRepository;
 import com.liuty.maven.dto.CauserDTO;
 import com.liuty.maven.entity.UserEntity;

@@ -1,4 +1,4 @@
-package com.liuty.maven.springutil.config;
+package com.liuty.maven.util.spring.config;
 
 import com.fasterxml.classmate.TypeResolver;
 import org.springframework.beans.factory.annotation.Autowired;

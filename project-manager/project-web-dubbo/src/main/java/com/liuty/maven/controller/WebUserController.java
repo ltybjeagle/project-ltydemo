@@ -1,8 +1,8 @@
 package com.liuty.maven.controller;
 
-import com.liuty.maven.dubbofacade.UserFacade;
+import com.liuty.maven.facade.dubbo.UserFacade;
 import com.liuty.maven.entity.UserEntity;
-import com.liuty.maven.springutil.SpringContextUtil;
+import com.liuty.maven.util.spring.SpringContextUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;

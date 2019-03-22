@@ -1,4 +1,4 @@
-package com.liuty.maven.dubbofacade;
+package com.liuty.maven.facade.dubbo;
 
 import com.liuty.maven.entity.UserEntity;
 

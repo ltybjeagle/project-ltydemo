@@ -11,5 +11,5 @@
 
     <dubbo:registry address="${dubbo.application.registry.address}"/>
 
-    <dubbo:reference id="userFacade" interface="com.liuty.maven.dubbofacade.UserFacade" check="false"/>
+    <dubbo:reference id="userFacade" interface="com.liuty.maven.facade.dubbo.UserFacade" check="false"/>
 </beans>

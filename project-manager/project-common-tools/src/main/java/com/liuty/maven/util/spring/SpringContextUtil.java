@@ -1,4 +1,4 @@
-package com.liuty.maven.springutil;
+package com.liuty.maven.util.spring;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

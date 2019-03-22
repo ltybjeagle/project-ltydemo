@@ -9,7 +9,6 @@
 
   <modules>
     <module>project-common-tools</module>
-    <module>project-common-entity</module>
     <module>project-service-springcloud</module>
     <module>project-web-springmvc</module>
     <module>project-web-springcloud</module>
@@ -17,7 +16,6 @@
     <module>project-service-dubbo</module>
     <module>project-hystrix-dashboard</module>
     <module>project-hystrix-turbine</module>
-    <module>project-common-serviceapi</module>
     <module>project-gateway-zuul</module>
     <module>project-config-server</module>
     <module>project-common-dubbo</module>
@@ -31,9 +29,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <project-common-entity.version>1.0-SNAPSHOT</project-common-entity.version>
     <project-common-tools.version>1.0-SNAPSHOT</project-common-tools.version>
-    <project-common-serviceapi.version>1.0-SNAPSHOT</project-common-serviceapi.version>
 
     <org.springframework.version>5.1.3.RELEASE</org.springframework.version>
     <org.jboss.resteasy.version>4.0.0.Beta6</org.jboss.resteasy.version>
@@ -314,6 +310,7 @@
         <version>2.5.0.RELEASE</version>
       </dependency>
       <!-- Spring Dependency End -->
+      <!-- 版本对应 spring boot 2.* 对应 spring cloud Finchley.* -->
       <!-- Spring Boot -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -326,7 +323,7 @@
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>Edgware.SR3</version>
+        <version>Finchley.SR3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

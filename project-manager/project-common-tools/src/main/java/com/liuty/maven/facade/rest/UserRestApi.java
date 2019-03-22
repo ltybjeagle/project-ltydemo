@@ -1,4 +1,4 @@
-package com.liuty.maven.serviceapi;
+package com.liuty.maven.facade.rest;
 
 import com.liuty.maven.entity.UserEntity;
 import org.springframework.web.bind.annotation.*;

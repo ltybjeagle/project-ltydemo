@@ -13,7 +13,7 @@
 
     <dubbo:protocol name="${dubbo.application.protocol.name}" port="${dubbo.application.protocol.port}" />
     
-    <dubbo:service interface="com.liuty.maven.dubbofacade.UserFacade" ref="userFacade"/>
+    <dubbo:service interface="com.liuty.maven.facade.dubbo.UserFacade" ref="userFacade"/>
 
     <bean id="userFacade" class="com.liuty.maven.facade.UserFacadeImpl"/>
 </beans>

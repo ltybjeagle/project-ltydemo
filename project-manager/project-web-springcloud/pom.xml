@@ -14,13 +14,8 @@
         <!-- 内部依赖包 -->
         <dependency>
             <groupId>com.liuty.maven</groupId>
-            <artifactId>project-common-entity</artifactId>
-            <version>${project-common-entity.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.liuty.maven</groupId>
-            <artifactId>project-common-serviceapi</artifactId>
-            <version>${project-common-serviceapi.version}</version>
+            <artifactId>project-common-tools</artifactId>
+            <version>${project-common-tools.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -32,11 +27,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <!--
         <dependency>

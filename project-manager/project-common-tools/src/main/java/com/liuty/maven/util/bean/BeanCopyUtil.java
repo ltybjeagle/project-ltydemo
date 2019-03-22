@@ -1,4 +1,4 @@
-package com.liuty.maven.beanutil;
+package com.liuty.maven.util.bean;
 
 import net.sf.cglib.beans.BeanCopier;
 

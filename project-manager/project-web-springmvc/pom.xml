@@ -13,8 +13,8 @@
     <dependencies>
         <dependency>
             <groupId>com.liuty.maven</groupId>
-            <artifactId>project-common-entity</artifactId>
-            <version>${project-common-entity.version}</version>
+            <artifactId>project-common-tools</artifactId>
+            <version>${project-common-tools.version}</version>
         </dependency>
         <!-- 单元测试 -->
         <dependency>

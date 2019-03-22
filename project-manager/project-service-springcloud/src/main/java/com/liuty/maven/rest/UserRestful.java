@@ -2,7 +2,7 @@ package com.liuty.maven.rest;
 
 import com.liuty.maven.entity.UserEntity;
 import com.liuty.maven.service.UserService;
-import com.liuty.maven.serviceapi.UserRestApi;
+import com.liuty.maven.facade.rest.UserRestApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
