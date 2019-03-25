@@ -13,7 +13,7 @@ spring:
       enabled: always #日志高亮颜色
 dubbo:
   application:
-    name: ${spring.application.name}
+    name: ${spring.application.name}  #引用其他配置信息，格式：${配置名}
     protocol:
       name: dubbo
       port: 20880

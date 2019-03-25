@@ -26,11 +26,11 @@ import javax.sql.DataSource;
  */
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class
 //        , DataSourceTransactionManagerAutoConfiguration.class, JdbcTemplateAutoConfiguration.class})
-public class MultiDSProviderApplication {
-    private static final Logger logger = LoggerFactory.getLogger(MultiDSProviderApplication.class);
+public class MultiDSMainApplication {
+    private static final Logger logger = LoggerFactory.getLogger(MultiDSMainApplication.class);
 
     public static void main(String ...args) {
-        SpringApplication.run(MultiDSProviderApplication.class, args);
+        SpringApplication.run(MultiDSMainApplication.class, args);
     }
 
     /**

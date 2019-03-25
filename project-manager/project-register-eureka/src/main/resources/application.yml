@@ -1,17 +1,22 @@
 ################################[单实例配置]#######################################
 server:
-  port: 8761
+  port: 7000
+###配置解析
+#register-with-eureka：服务是否注册到注册中心，默认true，因此服务是注册中心服务所以修改配置为false
+#fetch-registry：服务注册中心是维护服务的，不需要检查服务，修改配置为false
+#enable-self-preservation：是否开启自我保护模式
+#eviction-interval-timer-in-ms：清理无效节点，默认60*1000毫秒,即60秒
 eureka:
   instance:
     hostname: localhost
   client:
-    register-with-eureka: false  #服务是否注册到注册中心，默认true
+    register-with-eureka: false
     fetch-registry: false
     service-url:
       default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
-    enable-self-preservation: false #开启自我保护模式
-    eviction-interval-timer-in-ms: 60000 #清理无效节点,默认60*1000毫秒,即60秒
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 60000
 ####################################[高可用集群配置]##################################
 #spring:
 #  application:

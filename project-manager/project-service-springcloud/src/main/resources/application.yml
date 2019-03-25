@@ -30,6 +30,13 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+###Spring Boot 2.0之后actuator监控模块默认启动health、info，其他模块要启动的话需要下面这段配置
+management:
+  endpoint:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 ####################################[Spring Boot 日志配置]##################################
 #logging:
 #  level: info
