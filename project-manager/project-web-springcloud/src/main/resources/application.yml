@@ -1,39 +1,56 @@
+spring:
+  application:
+    name: springcloud-rest-consumer
 server:
-  port: 8080
+  port: 9000
+####################################[eureka注册客户端配置]##################################
+#eureka.client.service-url.defaultZone：注册中心服务地址
+#eureka.client.registry-fetch-interval-seconds：表示客户端间隔多久去拉取服务器注册信息，默认为30秒
+#eureka.instance.lease-renewal-interval-in-seconds：客户端每隔多长时间发送心跳，告诉服务器他仍”存活“，默认30秒
+#eureka.instance.lease-expiration-duration-in-seconds：告诉服务端，客户端多久没有发送心跳，就将客户端剔除掉，默认90秒
 eureka:
   client:
+    registry-fetch-interval-seconds: 30
     service-url:
-      defaultZone: http://localhost:8761/eureka/
-    fetch-registry: true #从注册中心拉去服务清单
-    registry-fetch-interval-seconds: 30 #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒
+      defaultZone: http://localhost:7000/eureka/
   instance:
-      lease-renewal-interval-in-seconds: 30
-      lease-expiration-duration-in-seconds: 90
-      instance-id: ${spring.application.name}:${random.int}
-spring:
-  cloud:
-    loadbalancer:
-      retry:
-        enabled: true  #开启ribbon重试
-  application:
-    name: microservice-feign-consumer
-ribbon:
-  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
-  ConnectTimeout: 500 #请求连接的超时时间
-  ReadTimeout: 3000 #请求处理的超时时间
-  OkToRetryOnAllOperations: true #对所有请求进行重试
-  MaxAutoRetriesNextServer: 2 #切换其他实例重试次数
-  MaxAutoRetries: 1 #同一实例重试次数
-feign:
-  hystrix:
-    enabled: true
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 9000
-logging:
-  level:
-    com.liuty.maven.service.feign.UserFeignClient: debug
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+############################################################################################
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#    fetch-registry: true #从注册中心拉去服务清单
+#    registry-fetch-interval-seconds: 30 #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒
+#  instance:
+#      lease-renewal-interval-in-seconds: 30
+#      lease-expiration-duration-in-seconds: 90
+#      instance-id: ${spring.application.name}:${random.int}
+#spring:
+#  cloud:
+#    loadbalancer:
+#      retry:
+#        enabled: true  #开启ribbon重试
+#  application:
+#    name: microservice-feign-consumer
+#ribbon:
+#  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+#  ConnectTimeout: 500 #请求连接的超时时间
+#  ReadTimeout: 3000 #请求处理的超时时间
+#  OkToRetryOnAllOperations: true #对所有请求进行重试
+#  MaxAutoRetriesNextServer: 2 #切换其他实例重试次数
+#  MaxAutoRetries: 1 #同一实例重试次数
+#feign:
+#  hystrix:
+#    enabled: true
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 9000
+#logging:
+#  level:
+#    com.liuty.maven.service.feign.UserFeignClient: debug

@@ -1,11 +1,16 @@
 ################################[单实例配置]#######################################
+spring:
+  application:
+    name: eureka-server
 server:
   port: 7000
 ###配置解析
-#register-with-eureka：服务是否注册到注册中心，默认true，因此服务是注册中心服务所以修改配置为false
-#fetch-registry：服务注册中心是维护服务的，不需要检查服务，修改配置为false
-#enable-self-preservation：是否开启自我保护模式
-#eviction-interval-timer-in-ms：清理无效节点，默认60*1000毫秒,即60秒
+#eureka.client.register-with-eureka：服务是否注册到注册中心，默认true，因此服务是注册中心服务所以修改配置为false，
+#集群模式下，此参数要设置为true
+#eureka.client.fetch-registry：服务注册中心是维护服务的，不需要检查服务，修改配置为false
+#eureka.server.enable-self-preservation：是否开启自我保护模式，开启保护模式后，服务端会监控客户端心跳成功率，
+15分钟内低于85%的话，服务端会启动保护模式，让这些注册信息不回过期（这样系统出现故障的时候，无法剔除）
+#eureka.server.eviction-interval-timer-in-ms：清理无效节点，默认60*1000毫秒,即60秒
 eureka:
   instance:
     hostname: localhost
@@ -15,30 +20,36 @@ eureka:
     service-url:
       default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
-    enable-self-preservation: true
+    enable-self-preservation: false
     eviction-interval-timer-in-ms: 60000
 ####################################[高可用集群配置]##################################
+##通过jar包启动：java -jar eureka-server.jar --spring.profiles.active=peer1
+##通过启动命令行指定启用那个配置文件，实现多进程部署
+###application-peer1.yml配置文件：
 #spring:
 #  application:
-#    name: microservice-discovery-eureka-ha
-#---
+#    name: eureka-server-ha
 #server:
-#  port: 8761
+#  port: 7001
 #eureka:
 #  instance:
 #    hostname: peer1
 #  client:
 #    service-url:
-#      default-zone: http://peer2:8762/eureka/
-#---
+#      default-zone: http://peer2:7002/eureka/
+#
+###application-peer2.yml配置文件：
+#spring:
+#  application:
+#    name: eureka-server-ha
 #server:
-#  port: 8762
+#  port: 7002
 #eureka:
 #  instance:
 #    hostname: peer2
 #  client:
 #    service-url:
-#      default-zone: http://peer1:8761/eureka/
+#      default-zone: http://peer1:7001/eureka/
 ####################################[使用用户名、密码登陆注册中心]##################################
 #security:
 #  basic:

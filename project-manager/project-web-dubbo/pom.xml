@@ -12,7 +12,7 @@
     <artifactId>project-web-dubbo</artifactId>
     <packaging>jar</packaging>
 
-    <name>project-web-dubbo Maven Webapp</name>
+    <name>project-web-dubbo</name>
     <url>http://www.example.com</url>
 
     <properties>

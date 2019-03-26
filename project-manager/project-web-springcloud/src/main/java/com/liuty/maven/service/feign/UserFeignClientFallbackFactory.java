@@ -1,13 +1,12 @@
 package com.liuty.maven.service.feign;
 
 import com.liuty.maven.entity.UserEntity;
-import feign.hystrix.FallbackFactory;
-import org.springframework.stereotype.Component;
 
-@Component
-public class UserFeignClientFallbackFactory implements FallbackFactory<UserFeignClient> {
+//@Component
+public class UserFeignClientFallbackFactory {
+        //implements FallbackFactory<UserFeignClient> {
 
-    @Override
+    //@Override
     public UserFeignClient create(Throwable throwable) {
         System.out.println("发生异常：" + throwable.getMessage());
         return new UserFeignClient() {

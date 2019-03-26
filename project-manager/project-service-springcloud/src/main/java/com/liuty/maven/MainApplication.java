@@ -2,10 +2,12 @@ package com.liuty.maven;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 类注解说明：
  *      1、注解@SpringBootApplication：标注此应用是SPRING BOOT应用
+ *      2、注解@EnableDiscoveryClient：标注为eureka客户端，激活eureka注册中心DiscoveryClient对象，可以获取注册中心信息
  *
  * @Description: Spring Boot应用
  *      1、application.yml配置文件里的属性信息，可以通过命令行JAR包执行的时候动态指定，
@@ -27,6 +29,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 //@EnableEurekaClient
+@EnableDiscoveryClient
 public class MainApplication {
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class, args);
