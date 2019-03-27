@@ -30,7 +30,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-###Spring Boot 2.0之后actuator监控模块默认启动health、info，其他模块要启动的话需要下面这段配置
+###启用监控模块
 management:
   endpoint:
   endpoints:
@@ -38,10 +38,6 @@ management:
       exposure:
         include: "*"
 ####################################[eureka注册客户端配置]##################################
-#eureka.client.service-url.defaultZone：注册中心服务地址
-#eureka.client.registry-fetch-interval-seconds：表示客户端间隔多久去拉取服务器注册信息，默认为30秒
-#eureka.instance.lease-renewal-interval-in-seconds：客户端每隔多长时间发送心跳，告诉服务器他仍”存活“，默认30秒
-#eureka.instance.lease-expiration-duration-in-seconds：告诉服务端，客户端多久没有发送心跳，就将客户端剔除掉，默认90秒
 eureka:
   client:
     registry-fetch-interval-seconds: 30
@@ -50,6 +46,7 @@ eureka:
   instance:
     lease-renewal-interval-in-seconds: 30
     lease-expiration-duration-in-seconds: 90
+    instance-id: ${spring.application.name}:${random.int}
 ####################################[Spring Boot 日志配置]##################################
 #logging:
 #  level: info
@@ -57,17 +54,10 @@ eureka:
 #    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger] >>> %msg%n"
 ####################################[eureka注册客户端配置]##################################
 #eureka:
-#  client:
-#    registry-fetch-interval-seconds: 30 #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
 #  instance:
-#    lease-renewal-interval-in-seconds: 30 #eureka客户端需要多长时间发送心跳给eureka服务器，表明他仍然或者，默认30秒
-#    lease-expiration-duration-in-seconds: 90 #eureka服务器在接受到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除
 #    metadata-map:
 #      my-metadata: 自定义元数据
 #      zone: test1
-#    instance-id: ${spring.application.name}:${random.int} #实例ID
 ####################################[eureka集群连接配置]##################################
 #eureka:
 #  client:

@@ -9,7 +9,7 @@ server:
 #集群模式下，此参数要设置为true
 #eureka.client.fetch-registry：服务注册中心是维护服务的，不需要检查服务，修改配置为false
 #eureka.server.enable-self-preservation：是否开启自我保护模式，开启保护模式后，服务端会监控客户端心跳成功率，
-15分钟内低于85%的话，服务端会启动保护模式，让这些注册信息不回过期（这样系统出现故障的时候，无法剔除）
+#15分钟内低于85%的话，服务端会启动保护模式，让这些注册信息不回过期（这样系统出现故障的时候，无法剔除）
 #eureka.server.eviction-interval-timer-in-ms：清理无效节点，默认60*1000毫秒,即60秒
 eureka:
   instance:

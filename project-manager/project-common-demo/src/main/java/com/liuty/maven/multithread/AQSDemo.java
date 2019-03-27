@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.*;
 
 /**
- * @描述: 抽象同步队列，
+ * @描述: JUC并发包实现逻辑，AQS抽象同步队列。
  * AbstractQueuedSynchronizer: FIFO双向队列，并发锁底层实现逻辑基础
  *      1、阻塞队列，获取锁失败后存入阻塞队列，两个节点信息指向头节点和为节点，进入阻塞队列的线程使用
  *      LockSupport.park()方法阻塞，释放锁的时候使用LockSupport.unpark(线程)方法激活队列里的一个线程
@@ -69,13 +69,13 @@ public class AQSDemo {
         /*
          * 读写锁
          */
-        ReentrantReadWriteLock rwlock = new ReentrantReadWriteLock();
+        new ReentrantReadWriteLock();
 
         /*
          * ReentrantLock使用同自定义锁类似
          */
-        ReentrantLock rlock = new ReentrantLock();
-
+        new ReentrantLock();
+        /******************************[生产者-消费者模型]****************************************/
         /*
          * 生产者-消费者模型(同wait、notify)
          * await：阻塞
@@ -112,7 +112,7 @@ public class AQSDemo {
         });
         producer.start();
         consumer.start();
-
+        /******************************[并发锁依赖类LockSupport]****************************************/
         /*
          * LockSupport测试
          */
@@ -216,7 +216,7 @@ public class AQSDemo {
     }
 
     /**
-     * 使用读写锁封装安全性列表
+     * 使用读写锁封装安全性列表，提高性能
      */
     static class ReentrantLockList {
         private ArrayList<String> array = new ArrayList<>();

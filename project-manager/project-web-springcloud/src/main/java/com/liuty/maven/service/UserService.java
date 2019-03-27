@@ -22,7 +22,7 @@ public class UserService {
         long startTime = System.currentTimeMillis();
         //UserEntity userEntity = this.userFeignClient.findUserById(id);
         UserEntity userEntity = this.restTemplate.getForObject(
-                "http://springcloud-rest-provider/userRest/user/findbyid/" + id, UserEntity.class);
+                "http://springcloud-rest-provider/userRest/user/findbyid/{1}", UserEntity.class, id);
         long endTime = System.currentTimeMillis();
         System.out.println("springcloud-rest-provider服务调用时间：" + (endTime - startTime) + "ms");
         return userEntity;

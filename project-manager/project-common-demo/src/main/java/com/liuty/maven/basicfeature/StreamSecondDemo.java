@@ -1,7 +1,7 @@
-package com.liuty.maven.features;
+package com.liuty.maven.basicfeature;
 
-import com.liuty.maven.features.entity.Trader;
-import com.liuty.maven.features.entity.Transaction;
+import com.liuty.maven.basicfeature.entity.Trader;
+import com.liuty.maven.basicfeature.entity.Transaction;
 
 import java.util.Arrays;
 import static java.util.Comparator.comparing;

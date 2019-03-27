@@ -1,4 +1,4 @@
-package com.liuty.maven.features;
+package com.liuty.maven.basicfeature;
 
 /**
  * HotSpot VM是32位JVM，内存地址空间限制在4G

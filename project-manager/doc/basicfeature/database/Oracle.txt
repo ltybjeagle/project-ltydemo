@@ -1,0 +1,110 @@
+###################################[基础概念]####################################################################
+游标设置：
+    1、查看当前打开的游标数目。select count(*) from v$open_cursor;
+    2、修改ORACLE最大游标数。alter system set open_cursors=1000 scope=both;
+
+SQL语句执行顺序：先执行from语句，在执行where语句，在执行select语句
+
+递归查询：一般基于树形结构的表数据，使用下面递归查询方式，获取主子结构数据。
+    select t.* from t_pubagency t start with t.itemid = 1 connect by prior t.itemid = t.superitemid;
+
+删除操作：
+    1、delete：语句每次删除一行，并在事务日志中为所删除的每行记录一项。
+    2、truncate：删除内容、释放空间但不删除定义（truncate table 比 delete 速度快，且使用的系统和事务日志资源少。
+    truncate table 通过释放存储表数据所用的数据页来删除数据，并且只在事务日志中记录页的释放）。
+
+更新操作：
+    1、视图View执行update更新操作（需要视图里的语句没有约束条件，如：分组、汇总等操作）
+
+###################################[系统分析]####################################################################
+临时表空问题：
+查询临时表空间占用情况：
+select username,session_addr,sql_id,contents,segtype,blocks*8/1024/1024 gb from v$sort_usage order by blocks desc;
+查询真实临时表空空间：
+select tablespace_name, tablespace_size/1024/1024 totalmb ,allocated_space/1024/1024 allmb , free_space/1024/1024
+freemb  from dba_temp_free_space;
+查询临时表空间占用语句：
+select se.username,se.sid,su.extents,su.blocks,tablespace,segtype,s.sql_text from v$sort_usage su, v$parameter p,
+v$session se, v$sql s where p.name = 'db_block_size' and su.session_addr = se.saddr and s.hash_value = su.sqlhash
+order by blocks
+
+查询数据库连接池泄露：
+    1、查询数据库会话
+    select count(*) from v$session t ;
+    select count(*) from v$process;
+    2、查询那台主机连接占比大
+    select count(*),schemaname,machine from v$session group by schemaname,machine;
+    3、查询占比大的执行语句
+    select count(*),v.prev_sql_addr,v.prev_hash_value from v$session v group by v.prev_sql_addr,v.prev_hash_value
+    order by count(*) desc ;
+    4、根据第三步的结果查询到具体的语句
+    select * from v$sql s where s.address='000000017C9B0610' and s.hash_value='32127143';
+
+查看数据库服务器执行的语句日志：
+select t.sql_text, t.first_load_time from v$sqlarea t where t.first_load_time like '2017-11-15%'
+order by t.first_load_time desc;
+
+###################################[系统编程]####################################################################
+跨库连接：
+    1、创建DBLINK。
+    create database link test_link connect to faspstd_test identified by "1" using 'ORCL_192.168.3.8';
+    test_link：连接名。
+    faspstd_test/1：连接远程数据库 名称/密码
+    ORCL_192.168.3.8：tnsnames.ora文件连接配置
+    2、删除DBLINK。
+    drop database link test_link;
+    3、查询远程数据库数据
+    select t.* from t_pavouchertype@test_link t where t.vchcode = '30807';
+
+定时任务：
+    1、启动定时任务。
+    dbms_job.submit(jobno,'test_job;',sysdate,'sysdate+1/360');
+    jobno：任务编号
+    test_job：定时执行的任务（过程）
+    sysdate：起始时间
+    sysdate+1/360：间隔时间
+    2、停止定时任务。
+    dbms_job.remove(jobno);
+    3、查看定时任务
+    select * from user_jobs;
+
+存储过程：
+    存储过程内部使用下面函数抛出异常，终止执行：raise_application_error(0, '异常信息');
+    存储过程内部使用下面函数输出信息：dbms_output.put_line(‘输出信息’);
+
+###################################[常用函数]####################################################################
+语句函数：
+两组记录差异判断（minus）：查询出第一结果集的数据不存在第二个结果集中的数据。
+select key,tablecode,pagenum from p#busfw_t_uitable t
+minus
+select key,tablecode,pagenum from busfw_t_uitable_setbak t;
+
+查询结果行转列（unpivot）：将一行记录里的tablecode,pagenum两列值按两行记录展示。
+    1、行转列的字段类型需要保存一致。
+    select key,columnname,columnval from
+    (select key,tablecode,pagenum||''as pagenum from busfw_t_uitable_setbak t)
+    unpivot(columnval for columnname in(tablecode,pagenum));
+
+分组统计（group by）：
+    1、按照inditext3字段进行汇总统计。
+    select inditext3,sum(amt) from t_bdgsub t where t.inditext3 is not null group by t.inditext3;
+    2、按照inditext3字段进行汇总统计，统计分组后大于1条记录汇总的数据。
+    select inditext3,sum(amt) from t_bdgsub t where t.inditext3 is not null
+    group by t.inditext3 having count(billid)>1;
+
+四舍五入函数（round）：传回一个数值，该数值是按照指定的小数位元数进行四舍五入运算的结果。
+    1、select round(123.456, 0) from dual;          回传 123
+    2、select round(123.456, 1) from dual;          回传 123.5
+
+计算随机数：
+    1、下面语句查询一个1到999999范围内的随机数（可能是浮点数）。
+    select dbms_random.value(1,999999) from dual;
+    2、下面使用四舍五入函数将浮点数转成整数。
+    select round(dbms_random.value(1,999999)) from dual;
+    3、下面语句使用lpad函数控制固定6位字符，不满足位数的左侧补0。
+    select lpad(round(dbms_random.value(1,999999)),6,0) from dual;
+
+任意类型转换字符类型（to_char）：
+    1、时间（date）类型转成字符类型。
+        a、select to_char(SYSDATE, 'yyyy/mm/dd hh24:mm:ss') from dual;  24小时制
+        b、select to_char(SYSDATE, 'yyyy/mm/dd hh:mm:ss') from dual;  12小时制

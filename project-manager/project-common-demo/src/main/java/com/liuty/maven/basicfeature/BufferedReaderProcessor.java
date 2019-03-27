@@ -1,4 +1,4 @@
-package com.liuty.maven.features;
+package com.liuty.maven.basicfeature;
 
 import java.io.BufferedReader;
 import java.io.IOException;

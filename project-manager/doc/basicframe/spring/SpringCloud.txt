@@ -1,0 +1,25 @@
+###################################[基础概念]####################################################################
+注解说明：
+@EnableEurekaServer：标注为eureka服务端，此应用为注册中心服务端
+@EnableDiscoveryClient：标注为eureka客户端，激活eureka注册中心DiscoveryClient对象，可以获取注册中心信息
+@LoadBalanced：基于ribbon组件，提供负载均衡策略，默认采用轮训的策略
+
+###################################[eureka注册中心]##############################################################
+eureka注册客户端配置:
+eureka.client.service-url.defaultZone：注册中心服务地址
+eureka.client.registry-fetch-interval-seconds：表示客户端间隔多久去拉取服务器注册信息，默认为30秒
+eureka.instance.lease-renewal-interval-in-seconds：客户端每隔多长时间发送心跳，告诉服务器他仍”存活“，默认30秒
+eureka.instance.lease-expiration-duration-in-seconds：告诉服务端，客户端多久没有发送心跳，就将客户端剔除掉，默认90秒
+eureka.instance.instance-id：实例ID，用于区分同一应用的不同实例（${spring.application.name}:${random.int}//随机数）
+
+eureka健康检查可以结合spring-boot-starter-actuator组件来做
+
+###################################[Ribbon负载均衡组件]############################################################
+基础：
+    1、属于客户端负载均衡，服务的健康检查结合eureka注册中心实现。
+    2、使用：在RestTemplate上加上注解@LoadBalanced，即可实现负载均衡。
+        GET请求：RestTemplate.getForEntity、RestTemplate.getForObject
+        POST请求：RestTemplate.postForEntity、RestTemplate.postForObject、RestTemplate.postForLocation
+        PUT请求：RestTemplate.put
+        DELETE请求：RestTemplate.delete
+    3、负载均衡器里维护服务实例列表，根据服务名获取具体实例，实例里包含服务具体信息（地址、端口等）。

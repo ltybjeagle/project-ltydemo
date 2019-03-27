@@ -1,4 +1,4 @@
-package com.liuty.maven.features.entity;
+package com.liuty.maven.basicfeature.entity;
 
 public class Trader {
     private final String name;

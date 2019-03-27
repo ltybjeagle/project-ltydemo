@@ -9,14 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * 类注解说明：
- *      1、注解@SpringBootApplication：标注此应用是SPRING BOOT应用
- *      2、注解@EnableDiscoveryClient：标注为eureka客户端
- *      3、注解@ServletComponentScan：WEB应用注解，自动扫描加载servlet组件
- *      4、注解@LoadBalanced：基于ribbon组件，提供负载均衡策略，默认采用轮训的策略
- *
- * @Description: Spring Boot应用
- *
+ * @Description: 微服务应用，spring cloud服务消费方
  */
 
 @SpringBootApplication

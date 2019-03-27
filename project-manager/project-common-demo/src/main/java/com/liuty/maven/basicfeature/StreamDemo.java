@@ -1,6 +1,6 @@
-package com.liuty.maven.features;
+package com.liuty.maven.basicfeature;
 
-import com.liuty.maven.features.entity.Dish;
+import com.liuty.maven.basicfeature.entity.Dish;
 
 import java.util.Arrays;
 import java.util.Comparator;

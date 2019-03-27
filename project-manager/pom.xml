@@ -114,11 +114,17 @@
         <version>${org.openjdk.jmh.version}</version>
         <scope>provided</scope>
       </dependency>
-      <!-- 字节码 -->
+      <!-- 字节码操作 -->
       <dependency>
         <groupId>javassist</groupId>
         <artifactId>javassist</artifactId>
         <version>3.12.1.GA</version>
+      </dependency>
+      <!-- 基于ASM字节码类库 -->
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>3.2.5</version>
       </dependency>
       <!-- 注解 -->
       <dependency>
@@ -148,11 +154,6 @@
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
         <version>4.5.6</version>
-      </dependency>
-      <dependency>
-        <groupId>cglib</groupId>
-        <artifactId>cglib</artifactId>
-        <version>3.2.5</version>
       </dependency>
       <!-- 系统监控 -->
       <dependency>
