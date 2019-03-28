@@ -47,6 +47,8 @@ eureka:
     lease-renewal-interval-in-seconds: 30
     lease-expiration-duration-in-seconds: 90
     instance-id: ${spring.application.name}:${random.int}
+    metadata-map:
+      zone: beijing
 ####################################[Spring Boot 日志配置]##################################
 #logging:
 #  level: info

@@ -13,6 +13,15 @@ package com.liuty.maven.basicfeature;
  *      1、CLASS常量池：字节码文件包含类的常量池（字面量、符号引用），供运行时使用
  *      2、字符串常量池
  *
+ * 对象创建：
+ *      1、类加载检查
+ *      2、分配内存：
+ *          分配方式：指针碰撞、空闲列表，采用方式是根据堆内存情况决定，同时根据垃圾收集算法有关
+ *          并发分配问题：CAS + 重试、TLAB(线程私有)
+ *      3、初始化零值
+ *      4、设置对象头
+ *      5、init方法
+ *
  * JVM参数：
  *      -XX:+TraceClassLoading  输出类加载信息
  *      -XX:+HeapDumpOnOutOfMemoryError  堆内存溢出时导出堆信息（可以用MAT工具分析问题）

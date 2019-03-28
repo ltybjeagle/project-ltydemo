@@ -1,8 +1,15 @@
 ###################################[基础概念]####################################################################
 注解说明：
+用于类注解：
 @EnableEurekaServer：标注为eureka服务端，此应用为注册中心服务端
 @EnableDiscoveryClient：标注为eureka客户端，激活eureka注册中心DiscoveryClient对象，可以获取注册中心信息
 @LoadBalanced：基于ribbon组件，提供负载均衡策略，默认采用轮训的策略
+@EnableCircuitBreaker：标注启用断路器组件
+@SpringCloudApplication：注解同@SpringBootApplication、@EnableDiscoveryClient、@EnableCircuitBreaker三个组合功能
+用于函数注解：
+@HystrixCommand：标注函数启用断路器，请求失败的话调用配置的默认方法
+    注解属性
+    fallbackMethod：设置默认方法，函数请求失败会走默认方法，返回默认值
 
 ###################################[eureka注册中心]##############################################################
 eureka注册客户端配置:
@@ -11,15 +18,45 @@ eureka.client.registry-fetch-interval-seconds：表示客户端间隔多久去�
 eureka.instance.lease-renewal-interval-in-seconds：客户端每隔多长时间发送心跳，告诉服务器他仍”存活“，默认30秒
 eureka.instance.lease-expiration-duration-in-seconds：告诉服务端，客户端多久没有发送心跳，就将客户端剔除掉，默认90秒
 eureka.instance.instance-id：实例ID，用于区分同一应用的不同实例（${spring.application.name}:${random.int}//随机数）
+eureka.instance.metadata-map：服务元数据信息，可自定义信息，结构：key: value
 
 eureka健康检查可以结合spring-boot-starter-actuator组件来做
 
 ###################################[Ribbon负载均衡组件]############################################################
-基础：
+负载均衡逻辑组件：
+    1、负载均衡器
+    2、健康检查组件，结合eureka注册中心的话，使用eureka注册中心的健康检查机制
+    3、负载均衡算法组件
+    4、服务列表组件，结合eureka注册中心的话，使用eureka注册中心服务列表机制
+    5、服务列表过滤组件
+负载均衡器：
     1、属于客户端负载均衡，服务的健康检查结合eureka注册中心实现。
+        负载均衡器定时任务定时检查服务是否可用
     2、使用：在RestTemplate上加上注解@LoadBalanced，即可实现负载均衡。
         GET请求：RestTemplate.getForEntity、RestTemplate.getForObject
         POST请求：RestTemplate.postForEntity、RestTemplate.postForObject、RestTemplate.postForLocation
         PUT请求：RestTemplate.put
         DELETE请求：RestTemplate.delete
-    3、负载均衡器里维护服务实例列表，根据服务名获取具体实例，实例里包含服务具体信息（地址、端口等）。
+    3、负载均衡器里维护服务实例列表，服务列表通过eureka注册中心获取。
+        定时任务，定时
+        服务实例列表：全部服务列表、可用服务列表、不可用服务列表
+        均衡器内部组合均衡策略，根据服务名获取具体实例列表，使用策略获取一个实例，实例里包含服务信息（地址、端口等）
+        获取实例列表可以使用“区域感知”过滤器：元数据配置区域信息，根据元数据区域信息匹配同区域的服务实例
+            例外：如果服务实例达到一些阀值，就停止使用区域感知过滤器
+负载均衡策略：
+    1、随机
+    2、轮训，设置计数器count，控制10次不能获取到服务实例，就结束获取，提示没有服务
+    3、轮训重试，设置超时阀值，在阀值内重试获取，超过阀值结束获取，返回空实例
+    4、权重轮训，定时任务定时计算权重，根据个实例节点的响应时间计算权重区间
+    5、并发负载最优，获取并发最小的实例
+    6、过滤清单轮训，在轮训的基础上增加了一层过滤功能
+参数配置：
+    1、全局配置
+    参考：如下配置基于cloud版本1.5.9
+    ribbon.NFLoadBalancerRuleClassName: 设置负载均衡策略，如：com.netflix.loadbalancer.RoundRobinRule
+    ribbon.ConnectTimeout：设置请求连接的超时时间，如：500
+    ribbon.ReadTimeout：设置请求处理的超时时间，如：3000
+    ribbon.OkToRetryOnAllOperations：设置对所有请求进行重试，如：true
+    ribbon.MaxAutoRetriesNextServer：设置切换其他实例重试次数，如：2
+    ribbon.MaxAutoRetries：设置同一实例重试次数，如：1
+    2、单个服务配置
