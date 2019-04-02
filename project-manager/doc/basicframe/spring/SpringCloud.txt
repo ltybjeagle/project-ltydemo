@@ -60,3 +60,24 @@ eureka健康检查可以结合spring-boot-starter-actuator组件来做
     ribbon.MaxAutoRetriesNextServer：设置切换其他实例重试次数，如：2
     ribbon.MaxAutoRetries：设置同一实例重试次数，如：1
     2、单个服务配置
+
+###################################[Hystrix断路器]############################################################
+调用逻辑：
+    1、Hystrix使用命令模式调用服务，实现解耦(异步编程、响应式编程、RxJava)
+    2、Hystrix封装了两个命令对象：
+        HystrixCommand:
+            execute()：同步执行，返回单一结果
+            queue()：异步执行，直接返回一个Future对象，其中包含了一个执行结果后要返回的一个结果对象
+        HystrixObservableCommand:
+            observe()：返回Hot Observable对象,代表对个结果，没有订阅者也要发布事件
+            toObservable()：返回Cold Observable对象,代表对个结果，没有订阅者不发布事件
+        命令调用实现：最终都是调用toObservable方法执行命令，其他方法在此基础上控制异步、同步调用
+                execute()——>queue()——>toObservable()
+                queue()——>toObservable()
+                observe()——>toObservable()
+                toObservable()
+    3、Hystrix内部每个命令都对应一个断路器，以实现熔断功能。
+        断路器开关（默认10s）：阀值范围内请求总数（默认20）、阀值范围内失败百分比（默认值50）、参数配置强制打开
+        断路器关闭：打开时间 + 休眠时间（默认值5s） 是否小于当前时间，是的话尝试请求，如果请求成功，关闭断路器
+        ，否则继续打开断路器，等待下次休眠时间在试
+    4、Hystrix执行命令方式：线程池隔离、信号量
