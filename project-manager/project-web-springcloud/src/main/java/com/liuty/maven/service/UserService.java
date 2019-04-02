@@ -19,7 +19,9 @@ public class UserService {
      * @param id
      * @return
      */
-    @HystrixCommand(fallbackMethod = "findUserEntityByIdFallback", commandKey = "userByIdKey")
+    @HystrixCommand(fallbackMethod = "findUserEntityByIdFallback", ignoreExceptions = {},
+            commandKey = "userByIdKey", groupKey = "userGroup", threadPoolKey = "userThreadPool",
+            commandProperties = {})
     public UserEntity findUserEntityById(String id) throws Exception {
         long startTime = System.currentTimeMillis();
         //UserEntity userEntity = this.userFeignClient.findUserById(id);
@@ -30,7 +32,12 @@ public class UserService {
         return userEntity;
     }
 
-    public UserEntity findUserEntityByIdFallback() {
+    /**
+     * Hystrix补偿方法
+     * @param e 异常对象
+     * @return
+     */
+    public UserEntity findUserEntityByIdFallback(Throwable e) {
         UserEntity defaultUser = new UserEntity();
         defaultUser.setGuid(-1);
         defaultUser.setName("默认用户");

@@ -6,10 +6,28 @@
 @LoadBalanced：基于ribbon组件，提供负载均衡策略，默认采用轮训的策略
 @EnableCircuitBreaker：标注启用断路器组件
 @SpringCloudApplication：注解同@SpringBootApplication、@EnableDiscoveryClient、@EnableCircuitBreaker三个组合功能
+@EnableHystrixDashboard：启用断路器仪表盘功能，图表展示服务运行状态
 用于函数注解：
 @HystrixCommand：标注函数启用断路器，请求失败的话调用配置的默认方法
     注解属性
     fallbackMethod：设置默认方法，函数请求失败会走默认方法，返回默认值
+    ignoreExceptions：设置异常信息，函数执行抛出的异常正好是设置的异常信息时，不执行失败补偿方法
+    ，并且将异常信息包装成HystrixBadRequestException抛出
+    commandKey：设置命令名称
+    groupKey：设置命令组，Hystrix默认按命令组分配线程池，同一个组的命令使用一个线程池（默认）
+    threadPoolKey：设置线程池名称，同一个线程池名称使用一个线程池（建议使用）
+    commandProperties：设置命令属性，集体配置：@HystrixProperty(name ="", value = "")
+@CacheResult：必须和@HystrixCommand组合使用，标注命令函数返回的结果被缓存
+    注解属性
+    cacheKeyMethod：设置缓存key生成策略，配置一个方法实现生成key
+@CacheRemove：清楚缓存
+    注解属性
+    commandKey：命令名称，根据命令名称匹配缓存清除
+@HystrixCollapser：合并请求注解，将在一个时间窗口内的同一个命令请求合并成一个批量请求
+    注解属性
+    batchMethod：批量请求函数
+    collapserProperties：属性配置，提供合并注解的过个属性配置
+        @HystrixProperty(name ="timerDelayInMilliseconds", value = "100")：设置合并请求时间窗口100毫秒
 
 ###################################[eureka注册中心]##############################################################
 eureka注册客户端配置:
@@ -81,3 +99,41 @@ eureka健康检查可以结合spring-boot-starter-actuator组件来做
         断路器关闭：打开时间 + 休眠时间（默认值5s） 是否小于当前时间，是的话尝试请求，如果请求成功，关闭断路器
         ，否则继续打开断路器，等待下次休眠时间在试
     4、Hystrix执行命令方式：线程池隔离、信号量
+    5、Hystrix实现的补偿方法参数里，可以增加Throwable e参数，在补偿方法里获取正常调用的异常信息
+    6、可以使用缓存提高效率
+    7、Hystrix支持在一个时间窗口内将多个请求合并成一个批量请求处理，但是会增加单笔请求的延迟
+调用事例：
+1、同步调用：
+@HystrixCommand
+public UserEntity findUserEntityById(String id) {
+    return restTemplate.getForObject(url, clazz, String);
+}
+2、异步调用：
+@HystrixCommand
+public Future<UserEntity> findUserEntityById(final String id) {
+    return new AsyncResult() {
+        @Override
+        public UserEntity invoke() {
+            return restTemplate.getForObject(url, clazz, String);
+        }
+    };
+}
+3、响应式调用：
+@HystrixCommand
+public Observable<UserEntity> findUserEntityById(final String id) {
+    return Observable.create(new ObservableOnSubscribe<UserEntity>() {
+        @Override
+        public void subscribe(ObservableEmitter<UserEntity> observableEmitter) throws Exception {
+            try {
+                UserEntity user = restTemplate.getForObject(url, clazz, String);
+                observableEmitter.onNext(user);
+                observableEmitter.onComplete();
+            } catch (Exception e) {
+                observableEmitter.onError(e);
+            }
+        }
+    });
+}
+响应模式：
+@HystrixCommand(observableExecutionMode = ObservableExecutionMode.EAGER)使用observe()方式执行
+@HystrixCommand(observableExecutionMode = ObservableExecutionMode.LAZY)使用toObservable()方式执行
