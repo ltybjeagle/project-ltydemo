@@ -1,15 +1,17 @@
 server:
-  port: 8989
+  port: 6001
 spring:
   application:
-    name: microservice-hystrix-turbine
+    name: springcloud-hystrix-turbine
 management:
-  port: 8990
+  server:
+    port: 6002
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:7000/eureka/
+#turbine.app-config：监控服务的服务名
 turbine:
-  app-config: microservice-ribbon-consumer
+  app-config: springcloud-rest-consumer
   cluster-name-expression: new String('default')
   combine-host-port: true

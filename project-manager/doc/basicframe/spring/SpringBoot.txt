@@ -3,6 +3,7 @@
 用于类注解：
 @SpringBootApplication：标注此应用是SPRING BOOT应用
 @ServletComponentScan：WEB应用注解，自动扫描加载servlet组件
+@Component：标注类为组件bean，交于Spring管理
 
 配置说明：
 application.yml配置文件里的属性信息，可以通过命令行JAR包执行的时候动态指定。

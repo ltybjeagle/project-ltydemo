@@ -1,6 +1,10 @@
 spring:
   application:
     name: springcloud-rest-consumer
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true #开启ribbon重试
 server:
   port: 9000
 ####################################[eureka注册客户端配置]##################################
@@ -15,17 +19,17 @@ eureka:
     instance-id: ${spring.application.name}:${random.int}
     metadata-map:
       zone: beijing
+feign:
+  hystrix:
+    enabled: true #开启熔断器
+  compression: #开启请求、响应GZIP压缩
+    request:
+      enabled: true
+      mime-types: ["text/xml", "application/xml", "application/json"]   #压缩类型
+      min-request-size: 2048    #超过设置大小的进行压缩
+    response:
+      enabled: true
 ############################################################################################
-#spring:
-#  cloud:
-#    loadbalancer:
-#      retry:
-#        enabled: true  #开启ribbon重试
-#  application:
-#    name: microservice-feign-consumer
-#feign:
-#  hystrix:
-#    enabled: true
 #hystrix:
 #  command:
 #    default:
@@ -33,6 +37,3 @@ eureka:
 #        isolation:
 #          thread:
 #            timeoutInMilliseconds: 9000
-#logging:
-#  level:
-#    com.liuty.maven.service.feign.UserFeignClient: debug

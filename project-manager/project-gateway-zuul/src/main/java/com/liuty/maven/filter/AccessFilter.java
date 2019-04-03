@@ -39,6 +39,10 @@ public class AccessFilter extends ZuulFilter {
         return true;
     }
 
+    /**
+     * 校验逻辑
+     * @return
+     */
     @Override
     public Object run() {
         RequestContext requestContext = RequestContext.getCurrentContext();

@@ -1,26 +1,27 @@
 package com.liuty.maven.service.feign;
 
 import com.liuty.maven.entity.UserEntity;
+import feign.hystrix.FallbackFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-//@Component
-public class UserFeignClientFallbackFactory {
-        //implements FallbackFactory<UserFeignClient> {
+@Component
+public class UserFeignClientFallbackFactory implements FallbackFactory<UserFeignClient> {
+    private static final Logger logger = LoggerFactory.getLogger(UserFeignClientFallbackFactory.class);
 
-    //@Override
+    @Override
     public UserFeignClient create(Throwable throwable) {
-        System.out.println("发生异常：" + throwable.getMessage());
+        logger.info("服务调用异常，异常信息：{} ", throwable.getMessage());
         return new UserFeignClient() {
-
             @Override
             public UserEntity findUserById(String id) throws Exception {
                 return UserFeignClientFallbackFactory.getDefaultUserEntity();
             }
-
             @Override
             public UserEntity findUserByRequestHeader(String id) throws Exception {
                 return UserFeignClientFallbackFactory.getDefaultUserEntity();
             }
-
             @Override
             public String modifyOneUser(UserEntity user) {
                 return "error";

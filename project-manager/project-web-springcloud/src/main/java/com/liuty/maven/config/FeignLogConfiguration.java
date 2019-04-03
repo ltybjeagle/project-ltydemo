@@ -1,10 +1,8 @@
 package com.liuty.maven.config;
 
-//@Configuration
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class FeignLogConfiguration {
 
-//    @Bean
-//    Logger.Level feignLoggerLevel() {
-//        return Logger.Level.FULL;
-//    }
 }

@@ -8,8 +8,8 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableTurbine
-public class TurbineApplication {
+public class MainApplication {
     public static void main(String ...args) {
-        SpringApplication.run(TurbineApplication.class);
+        SpringApplication.run(MainApplication.class);
     }
 }

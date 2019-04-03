@@ -1,26 +1,14 @@
 server:
-  port: 8005
+  port: 5000
 spring:
   application:
-    name: microservice-gateway-zuul
-zuul:
-  routes:
-    service-consumer-api:
-      path: /service-consumer/**
-      serviceId: microservice-feign-consumer
-    service-local-api:
-      path: /service-local/**
-      url: forward:/local
-  ignored-patterns: /**/testurl/** #过滤匹配,匹配上的请求不做路由转发
-  add-host-header: true #路由转发前设置HOST头信息
-  retryable: false #关闭重试机制
-  servlet-path: /zuul/* #设置请求路径绕过spring DispatchServlet,使用ZuulServlet处理
+    name: springcloud-gateway-zuul
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
-    fetch-registry: true #从注册中心拉去服务清单
-    registry-fetch-interval-seconds: 30 #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒
+      defaultZone: http://localhost:7000/eureka/
+    fetch-registry: true
+    registry-fetch-interval-seconds: 30
   instance:
       lease-renewal-interval-in-seconds: 30
       lease-expiration-duration-in-seconds: 90
@@ -29,13 +17,22 @@ logging:
   level: info
   pattern:
     console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger] >>> %msg%n"
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 9000 #断路器包装请求转发，超时时间
-ribbon:
-  ConnectTimeout: 500 #请求连接的超时时间
-  ReadTimeout: 3000 #请求处理的超时时间
+zuul:
+  routes:
+    service-consumer-api:
+      path: /service-consumer/**
+      serviceId: springcloud-rest-consumer
+  ignored-patterns: /**/testurl/**     #过滤匹配,匹配上的请求不做路由转发
+##########################################################################################################
+#zuul:
+#  routes:
+#    service-consumer-api:
+#      path: /service-consumer/**
+#      serviceId: microservice-feign-consumer
+#    service-local-api:
+#      path: /service-local/**
+#      url: forward:/local
+#  ignored-patterns: /**/testurl/** #过滤匹配,匹配上的请求不做路由转发
+#  add-host-header: true #路由转发前设置HOST头信息
+#  retryable: false #关闭重试机制
+#  servlet-path: /zuul/* #设置请求路径绕过spring DispatchServlet,使用ZuulServlet处理

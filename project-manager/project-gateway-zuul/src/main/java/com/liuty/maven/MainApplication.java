@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableZuulProxy
-public class ZuulApplication {
+public class MainApplication {
 
     /**
      * 网关请求过滤器
@@ -24,6 +24,7 @@ public class ZuulApplication {
 
     /**
      * 服务路径映射，匹配不上按默认映射
+     * 按版本映射，如：serviceName-v1对应到v1/serviceName
      * @return
      */
     @Bean
@@ -33,7 +34,7 @@ public class ZuulApplication {
     }
 
     public static void main(String ...args) {
-        SpringApplication.run(ZuulApplication.class);
+        SpringApplication.run(MainApplication.class);
         FilterProcessor.setProcessor(new MyFilterProcessor());
     }
 }

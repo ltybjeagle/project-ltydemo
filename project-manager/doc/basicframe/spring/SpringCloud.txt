@@ -7,9 +7,19 @@
 @EnableCircuitBreaker：标注启用断路器组件
 @SpringCloudApplication：注解同@SpringBootApplication、@EnableDiscoveryClient、@EnableCircuitBreaker三个组合功能
 @EnableHystrixDashboard：启用断路器仪表盘功能，图表展示服务运行状态
+@EnableTurbine：启用集群状态监控，将收集的集群状态信息提供Dashboard图表展示
+@EnableFeignClients：注解同@EnableCircuitBreaker、@EnableDiscoveryClient两个组合功能，主要用于服务调用
+    注解属性：
+    basePackages：扫描加载类路径
+@FeignClient：标注服务接口，用于服务调用
+    注解属性：
+    value：调用服务名
+    configuration：配置类
+    fallbackFactory：服务调用失败，补偿处理类
+@EnableZuulProxy：启用网关服务
 用于函数注解：
 @HystrixCommand：标注函数启用断路器，请求失败的话调用配置的默认方法
-    注解属性
+    注解属性：
     fallbackMethod：设置默认方法，函数请求失败会走默认方法，返回默认值
     ignoreExceptions：设置异常信息，函数执行抛出的异常正好是设置的异常信息时，不执行失败补偿方法
     ，并且将异常信息包装成HystrixBadRequestException抛出
@@ -18,13 +28,13 @@
     threadPoolKey：设置线程池名称，同一个线程池名称使用一个线程池（建议使用）
     commandProperties：设置命令属性，集体配置：@HystrixProperty(name ="", value = "")
 @CacheResult：必须和@HystrixCommand组合使用，标注命令函数返回的结果被缓存
-    注解属性
+    注解属性：
     cacheKeyMethod：设置缓存key生成策略，配置一个方法实现生成key
 @CacheRemove：清楚缓存
-    注解属性
+    注解属性：
     commandKey：命令名称，根据命令名称匹配缓存清除
 @HystrixCollapser：合并请求注解，将在一个时间窗口内的同一个命令请求合并成一个批量请求
-    注解属性
+    注解属性：
     batchMethod：批量请求函数
     collapserProperties：属性配置，提供合并注解的过个属性配置
         @HystrixProperty(name ="timerDelayInMilliseconds", value = "100")：设置合并请求时间窗口100毫秒
