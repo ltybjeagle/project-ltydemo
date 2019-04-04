@@ -1,0 +1,10 @@
+安装步骤：
+1、官网：http://tomcat.apache.org/download-70.cgi
+2、上传linux服务器
+3、解压缩：tar -zxvf apache-tomcat-7.0.82.tar.gz
+4、重命名：mv apache-tomcat-7.0.82 admin-tomcat
+5、开启防火墙：vi /etc/sysconfig/iptables
+    添加：-A INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+6、重启防火墙：service iptables restart
+7、启动服务：./admin-tomcat/bin/startip.sh
+8、关闭服务：./admin-tomcat/bin/shutdown.sh

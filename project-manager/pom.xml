@@ -8,6 +8,7 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>project-common-demo</module>
     <module>project-common-tools</module>
     <module>project-service-springcloud</module>
     <module>project-web-springmvc</module>

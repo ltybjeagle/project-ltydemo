@@ -1,0 +1,11 @@
+启动参数设置：
+1、服务启动类设置(setDomainEnv文件)：
+    PRODUCTION_MODE属性：是否服务器模式
+    set PRODUCTION_MODE=true  //服务器模式运行
+    set PRODUCTION_MODE=      //客户端模式运行
+
+控制台设置：
+1、勾选保留时测试连接，对未使用连接进行周期测试，未通过的连接将被关闭
+
+异常类分析：
+1、异常：Forcibly releasing inactive/harvested connection 连接池泄露

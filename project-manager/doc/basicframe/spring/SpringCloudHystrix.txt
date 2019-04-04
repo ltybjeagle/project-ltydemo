@@ -1,0 +1,64 @@
+熔断器调用逻辑：
+1、使用命令模式调用服务，实现解耦(异步编程、响应式编程、RxJava)
+2、封装了两个命令对象：
+    HystrixCommand:
+        execute()：同步执行，返回单一结果
+        queue()：异步执行，直接返回一个Future对象，其中包含了一个执行结果后要返回的一个结果对象
+    HystrixObservableCommand:
+        observe()：返回Hot Observable对象,代表对个结果，没有订阅者也要发布事件
+        toObservable()：返回Cold Observable对象,代表对个结果，没有订阅者不发布事件
+3、命令调用实现：最终都是调用toObservable方法执行命令，其他方法在此基础上控制异步、同步调用
+        execute()——>queue()——>toObservable()
+        queue()——>toObservable()
+        observe()——>toObservable()
+        toObservable()
+4、每个命令都对应一个断路器，以实现熔断功能。
+    断路器开关（默认10s）：
+        a、阀值范围内请求总数（默认20）
+        b、阀值范围内失败百分比（默认值50）
+        c、参数配置强制打开
+    断路器关闭：打开时间 + 休眠时间（默认值5s） 是否小于当前时间，是的话尝试请求，如果请求成功，关闭断路器，
+    否则继续打开断路器，等待下次休眠时间在试
+5、执行命令方式：
+    a、线程池隔离
+    b、信号量
+6、补偿方法参数里，可以增加Throwable e参数，在补偿方法里获取服务方法调用的异常信息
+7、可以使用缓存提高效率
+8、支持在一个时间窗口内将多个请求合并成一个批量请求处理，但是会增加单笔请求的延迟
+
+调用事例：
+1、同步调用：
+@HystrixCommand
+public UserEntity findUserEntityById(String id) {
+    return restTemplate.getForObject(url, clazz, String);
+}
+2、异步调用：
+@HystrixCommand
+public Future<UserEntity> findUserEntityById(final String id) {
+    return new AsyncResult() {
+        @Override
+        public UserEntity invoke() {
+            return restTemplate.getForObject(url, clazz, String);
+        }
+    };
+}
+3、响应式调用：
+@HystrixCommand
+public Observable<UserEntity> findUserEntityById(final String id) {
+    return Observable.create(new ObservableOnSubscribe<UserEntity>() {
+        @Override
+        public void subscribe(ObservableEmitter<UserEntity> observableEmitter) throws Exception {
+            try {
+                UserEntity user = restTemplate.getForObject(url, clazz, String);
+                observableEmitter.onNext(user);
+                observableEmitter.onComplete();
+            } catch (Exception e) {
+                observableEmitter.onError(e);
+            }
+        }
+    });
+}
+
+响应模式：
+@HystrixCommand(observableExecutionMode = ObservableExecutionMode.EAGER)使用observe()方式执行
+@HystrixCommand(observableExecutionMode = ObservableExecutionMode.LAZY)使用toObservable()方式执行

@@ -1,0 +1,61 @@
+设计目标：
+1、一站式轻量级企业应用解决方案（框架、平台），基于POJO。
+2、解耦（对象——>IOC容器——>对象）。
+3、基于接口开发理念。
+
+层级关系：
+1、核心（IOC、AOP）
+IOC容器：
+    a、控制反转：对象的创建、依赖、撤销由容器管理（生命周期），解耦
+    b、依赖注入（DI）：接口注入、属性注入、构造器注入
+    c、容器实现：
+        BeanFactory
+            BeanDefinition：定义形式，如XML文件
+            FactoryBean：工厂Bean
+            scope生命周期：singleton、prototype
+            实现类：DefaultListableBeanFactory、XmlBeanFactory
+        ApplicationContext
+            实现类：FileSystemXmlApplicationContext，方法：refresh()
+    d、容器初始化：
+        Resource定位
+        BeanDefinition载入、解析
+        向IOC容器注册BeanDefinition，注册到HashMap里
+        根据Bean生命周期实例化对象，注入依赖，由populateBean实现Bean注入操作
+            注入时机如下：
+            第一次使用getBean方法获取Bean的时候注入依赖
+            lazy-init属性设置可以预实例化过程，在初始化的时候注入
+        定义BEAN实现了InitializingBean接口，会在初始化的时候执行afterPropertiesSet方法
+        短生命周期的Bean注入长生命周期的Bean，需特殊处理：
+            短生命周期Bean加入配置：<aop:scoped-proxy/>，此配置是注入一个代理对象
+            到真正使用的时候在实例化一个Bean
+AOP切面：ProxyFactoryBean生成代理对象
+    代理工厂模式:
+    a、JDK动态代理（反射）：实现invocationHandler接口
+    b、第三方类库CGLIB字节码：基于字节码
+    基于框架实现：
+    c、集成AspectJ框架：
+        Advice通知：
+            BeforeAdvice前置通知
+            AfterAdvice后置通知
+            ThrowsAdvice异常通知
+        Pointcut切点：正则表达式
+        Advisor通知器：
+            连接Advice通知和Pointcut切点
+            使用Adapter适配
+2、组件（事务、MVC、JDBC、ORM、远程调用）
+SpringMVC相关：
+    DispatcherServlet前置处理器：
+    a、HandlerMapping映射关系、HandlerExecutionChain对象
+    b、HandlerAdapter、HandlerInterceptor
+    c、ViewResolver
+事务管理：基于AOP实现
+    a、TransactionAttributeSourceAdvisor：
+        TransactionAttribute
+    b、TransactionInterceptor
+    事务管理器（TransactionManager）：
+        a、TransactionDefinition
+        b、TransactionInfo
+            TransactionStatus
+    事务传播特性：
+    事务隔离特性：
+3、应用

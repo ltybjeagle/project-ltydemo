@@ -1,0 +1,16 @@
+客户端配置:
+##注册中心服务地址
+eureka.client.service-url.defaultZone：
+##表示客户端间隔多久去拉取服务器注册信息，默认为30秒
+eureka.client.registry-fetch-interval-seconds：
+##客户端每隔多长时间发送心跳，告诉服务器他仍”存活“，默认30秒
+eureka.instance.lease-renewal-interval-in-seconds：
+##告诉服务端，客户端多久没有发送心跳，就将客户端剔除掉，默认90秒
+eureka.instance.lease-expiration-duration-in-seconds：
+##实例ID，用于区分同一应用的不同实例（${spring.application.name}:${random.int}//随机数）
+eureka.instance.instance-id：
+##服务元数据信息，可自定义信息，结构：key: value
+eureka.instance.metadata-map：
+
+健康检查:
+1、eureka健康检查可以结合spring-boot-starter-actuator组件来做
