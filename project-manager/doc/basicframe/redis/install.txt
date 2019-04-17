@@ -1,0 +1,64 @@
+编译安装（需要gcc）：更新安装redis：其它同安装，只是最后make install 之前需要把正在运行的老版本redis 关闭。
+1、$ wget http://download.redis.io/redis-stable.tar.gz
+2、$ tar -zxvf redis-stable.tar.gz
+3、$ cd redis-stable
+4、$ make
+5、$ make install # 编译好的文件将被复制到/usr/local/bin 下
+
+文件说明：
+1、#redis-server：Redis 服务器启动程序
+2、#redis-cli：Redis 命令行操作工具。当然，也可以用 telnet 根据其纯文本协议来操作
+3、#redis-benchmark：Redis 性能测试工具，测试 Redis的读写性能，
+	如：$redis-benchmark -n 100000 –c 50 #模拟同时由50 个客户端发送100000 个SETs/GETs 查询
+4、#redis-check-aof：更新日志检查
+5、#redis-check-dump：本地数据库检查
+6、#redis-sentinel：Sentinel服务器（2.8版本之后）
+
+启动redis：
+1、直接启动，适用开发环境。
+	$redis-server   #默认端口：6379
+	$redis-server --port 6380    #使用6380端口启动服务
+	$redis-server /path/to/redis.conf    #使用配置文件配置启动服务
+2、脚本启动，适用生产环境。
+	绑定系统自动启动
+
+修改配置文件，并将其复制到etc 目录下
+1、vi redis.conf
+2、$cp redis.conf /etc/redis.conf
+
+配置文件基本说明
+1、daemonize： #是否以后台守护进程方式运行
+2、pidfile： #pid 文件位置
+3、port： #监听的端口号
+4、timeout： #请求超时时间
+5、loglevel： #log 信息级别，总共支持四个级别：debug、verbose、notice、warning，默认为verbose
+6、logfile： #默认为标准输出（stdout），如果配置为守护进程方式运行，而这里又配置为日志记录方式为标准输出
+，则日志将会发送给/dev/null
+7、databases： #开启数据库的数量。使用“SELECT 库ID”方式切换操作各个数据库
+8、save * *： #保存快照的频率，第一个*表示多长时间，第二个*表示执行多少次写操作。
+在一定时间内执行一定数量的写操作时，自动保存快照。可设置多个条件。
+9、rdbcompression：#保存快照是否使用压缩
+10、dbfilename： #数据快照文件名（只是文件名，不包括目录）。默认值为dump.rdb
+11、dir： #数据快照的保存目录（这个是目录）
+12、requirepass： #设置Redis 连接密码，如果配置了连接密码，
+客户端在连接Redis 时需要通过AUTH <password>命令提供密码，默认关闭。
+
+关闭redis：
+1、$ redis-cli shutdown
+2、#关闭指定端口的redis-server $redis-cli -p 6379 shutdown
+
+客户端发送命令两种方式：
+1、作为redis-cli的参数执行
+	$ redis-cli -h 127.0.0.1 -p 6379    连接redis
+	$ redis-cli PING   验证连接是否正常（返回PONG，标识正常）
+2、不带参数执行redis-cli（适合多命令操作）
+	$ redis-cli
+	redis 127.0.0.1：6379> PING 
+	PONG
+
+命令返回值：
+1、返回操作的状态，成功与否。
+2、错误回复，error开头，后面跟错误信息（2.8版本以后，部分错误一具体错误类型开头）。
+3、整数回复。
+4、字符串回复（不存在的字符串显示nil）。
+5、多行字符串回复。

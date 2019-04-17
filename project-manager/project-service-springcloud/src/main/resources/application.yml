@@ -30,6 +30,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  profiles:
+    active: dev  #设置开发模式，加载下面开发模式的配置
 ###启用监控模块
 management:
   endpoint:
@@ -49,6 +51,24 @@ eureka:
     instance-id: ${spring.application.name}:${random.int}
     metadata-map:
       zone: beijing
+
+---
+##开发环境
+spring:
+  profiles: dev
+
+mytest:
+  name: dev
+  value: dev@qq.com
+
+---
+##测试环境
+spring:
+  profiles: test
+
+mytest:
+  name: test
+  value: test@qq.com
 ####################################[Spring Boot 日志配置]##################################
 #logging:
 #  level: info

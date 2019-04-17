@@ -33,6 +33,11 @@ Linux系统安装：系统版本（CentOS6.5）
     [root@localhost ~]# vi /etc/sysconfig/iptables
     添加端口：-A INPUT -m state -state NEW -m tcp -p tcp -dport 80 -j ACCEPT
     [root@localhost ~]# /etc/init.d/iptables restart       （重启防火墙）
+
+    注意：
+    centos7中的防火墙改成了firewall，使用iptables无作用，开放端口的方法如下：
+    firewall-cmd --zone=public --add-port=80/tcp --permanent             返回success为成功
+    重启防火墙：systemctl restart firewalld.service 
 5、常遇问题：
     a、执行shell脚本报错：Permission denied
         没有权限，执行命令chmod 777 service-user.sh

@@ -1,0 +1,7 @@
+vue-devtools安装：
+1、在github上下载压缩包，github下载地址：https://github.com/vuejs/vue-devtools
+2、解压到本地的某盘
+3、npm install   有失败的时候使用，cnpm install   （使用npm需要安装nodejs）
+4、npm run build
+5、修改shells>chrome文件夹下的mainifest.json 中的persistant为true
+6、谷歌浏览器的扩展程序功能，勾选开发者模式，然后我们将插件文件夹里的shells>chorme文件夹直接拖到页面中，完成安装。

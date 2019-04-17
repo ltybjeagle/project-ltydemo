@@ -1,0 +1,25 @@
+1、Nexus服务安装：
+    [root@localhost local]# mkdir nexus
+    [root@localhost local]# cd nexus
+    [root@localhost nexus]# tar -zvxf nexus-2.14.3-02-bundle.tar.gz
+
+2、修改jetty配置：
+    [root@localhost nexus]# cd /nexus-2.14.3-02/bin
+    [root@localhost bin]# vi nexus
+        修改内容：
+        NEXUS_HOME="/usr/local/nexus/nexus-2.14.3-02"
+        RUN_AS_USER=root
+
+3、防火墙开放端口：
+    [root@localhost ~]# vi /etc/sysconfig/iptables
+        -------添加端口
+        -A INPUT -m state --state NEW -m tcp -p tcp --dport 8081 -j ACCEPT
+    [root@localhost ~]# /etc/init.d/iptables restart       （重启防火墙）
+
+4、将nexus设置为开机启动：
+    [root@localhost bin]# cp ./nexus /etc/rc.d/init.d/
+    [root@localhost bin]# cd /etc/rc.d/init.d/
+    [root@localhost init.d]# chkconfig --add nexus
+    [root@localhost init.d]# chkconfig --list | grep nexus
+    [root@localhost init.d]# chkconfig nexus on
+    [root@localhost init.d]# chkconfig --list | grep nexus

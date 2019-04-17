@@ -1,5 +1,6 @@
 package com.liuty.maven.rest;
 
+import com.liuty.maven.config.MyProperties;
 import com.liuty.maven.entity.UserEntity;
 import com.liuty.maven.facade.rest.UserRestApi;
 import com.liuty.maven.service.UserService;
@@ -25,6 +26,9 @@ public class UserRestful implements UserRestApi {
     @Autowired
     private DiscoveryClient client;
 
+    @Autowired
+    private MyProperties myProperties;
+
     public UserEntity findUserById(@PathVariable("id") String id) throws Exception {
         logger.info("DiscoveryClient获取注册信息：");
         List<String> strList = client.getServices();
@@ -36,6 +40,7 @@ public class UserRestful implements UserRestApi {
         });
         UserEntity user = userService.findUserById(id);
         logger.info("findUserById，result = {}", user);
+        logger.info("配置信息： {}", myProperties.toString());
         return user;
     }
 
