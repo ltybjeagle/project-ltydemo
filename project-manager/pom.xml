@@ -33,7 +33,7 @@
     <project-common-tools.version>1.0-SNAPSHOT</project-common-tools.version>
 
     <org.springframework.version>5.1.3.RELEASE</org.springframework.version>
-    <org.jboss.resteasy.version>4.0.0.Beta6</org.jboss.resteasy.version>
+    <org.jboss.resteasy.version>3.1.4.Final</org.jboss.resteasy.version>
     <org.apache.tomcat.version>9.0.14</org.apache.tomcat.version>
     <org.openjdk.jmh.version>1.19</org.openjdk.jmh.version>
     <org.slf4j.version>1.8.0-beta2</org.slf4j.version>
@@ -120,6 +120,11 @@
         <version>${org.openjdk.jmh.version}</version>
         <scope>provided</scope>
       </dependency>
+	  <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-pool2</artifactId>
+        <version>2.6.0</version>
+      </dependency>
       <!-- 字节码操作 -->
       <dependency>
         <groupId>javassist</groupId>
@@ -139,6 +144,16 @@
         <version>1.3.2</version>
       </dependency>
       <!-- 缓存 -->
+	  <dependency>
+        <groupId>javax.cache</groupId>
+        <artifactId>cache-api</artifactId>
+        <version>1.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.ehcache</groupId>
+        <artifactId>ehcache</artifactId>
+        <version>2.10.6</version>
+      </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
@@ -312,7 +327,7 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-oxm</artifactId>
-        <version>${org.springframework.version}</version>
+        <version>5.0.7.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>

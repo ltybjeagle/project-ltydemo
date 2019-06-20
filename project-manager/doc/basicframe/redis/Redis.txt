@@ -33,3 +33,10 @@ Redis类型：
 3、缓存雪崩：统一时间大批缓存失效
     1、使用互斥锁
     2、双缓存，一份缓存有时效，一份缓存没有时效，异步同步缓存信息
+
+主从配置：
+1、从节点redis.conf增加一行配置：replicaof 主节点IP 主节点端口
+	从节点只支持查询操作
+2、哨兵监听，主从切换配置（sentinel.conf）：
+	sentinel monitor mymaster 127.0.0.1 6379 2 #指定要检测的实例，别名+iP地址+端口。2表示至少2个sentinel实例同时检测到redis server异常，才判断为宕机
+	sentinel down-after-milliseconds mymaster 30000 #指定某个sentinel实例监控到某个redis实例持续异常多少时间(毫秒)，才判断状态为down
