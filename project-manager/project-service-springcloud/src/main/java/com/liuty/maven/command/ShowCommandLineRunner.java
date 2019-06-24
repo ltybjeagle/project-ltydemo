@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ import java.sql.SQLException;
  *
  */
 @Component
+@Order(5)
 public class ShowCommandLineRunner implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(ShowCommandLineRunner.class);
