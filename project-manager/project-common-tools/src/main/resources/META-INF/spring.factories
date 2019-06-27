@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.liuty.maven.util.spring.config.SpringContextConfiguration,\
-  com.liuty.maven.util.spring.config.WebApiAutoConfiguration
+  com.liuty.maven.util.spring.config.WebApiAutoConfiguration,\
+  com.liuty.maven.util.apm.DropwizardMetricsMBeansAutoConfiguration

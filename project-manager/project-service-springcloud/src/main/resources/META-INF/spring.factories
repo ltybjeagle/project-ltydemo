@@ -1,5 +1,3 @@
-#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-#  com.liuty.maven.config.DropwizardMetricsMBeansAutoConfiguration
 org.springframework.boot.SpringApplicationRunListener=\
   com.liuty.maven.command.DemoSpringApplicationRunListener
 org.springframework.context.ApplicationEvent=\
