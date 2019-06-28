@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.liuty.maven.config.DubboAutoConfiguration
+  com.liuty.maven.config.DubboAutoConfiguration,\
+  com.liuty.maven.config.DubboHealthIndicatorConfiguration
