@@ -27,7 +27,7 @@ public class StratetyDesignDemo {
         void embarkOnQuest();
     }
 
-    public class BraveKnightDemo implements Knight {
+    public static class BraveKnightDemo implements Knight {
         private Quest quest;
         public BraveKnightDemo(Quest quest) {
             this.quest = quest;

@@ -1,16 +1,14 @@
 package com.liuty.maven.structure.leetcode;
 
-import lombok.val;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @描述:
+ * @描述: 数值计算
  * @创建人: Sunny
  * @创建时间: 2019/3/26
  */
-public class Solution {
+public class NumberComputeSolution {
     /**
      * 题目：
      * 给定一个整数数组nums和一个目标值 target，请你在该数组中找出和为目标值的那两个整数
@@ -71,37 +69,56 @@ public class Solution {
      * @return
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        int digit = 0;
-        int val1 = 0;
-        ListNode midNode = l1;
-        while (midNode != null) {
-            val1 += midNode.val * 10 * digit;
-            digit++;
+//        int digit = 0;
+//        int val1 = 0, val2 = 0;
+//        while (l1 != null) {
+//            val1 += l1.val * Math.pow(10, digit);
+//            digit++;
+//            l1 = l1.next;
+//        }
+//        digit = 0;
+//        while (l2 != null) {
+//            val2 += l2.val * Math.pow(10, digit);
+//            digit++;
+//            l2 = l2.next;
+//        }
+//        ListNode firstNode = null,midNode = null;
+//        for (int val = (val1 + val2); val > 0; val = val / 10) {
+//            ListNode resNode = new ListNode(val % 10);
+//            if (firstNode == null) {
+//                firstNode = midNode = resNode;
+//                continue;
+//            }
+//            midNode.next = resNode;
+//            midNode = midNode.next;
+//        }
+//        return firstNode;
+
+        /**
+         * 逐个相加
+         */
+        ListNode firstNode = new ListNode(0);
+        ListNode midNode = firstNode;
+        int carry = 0;
+        while (l1 != null || l2 != null) {
+            int val1 = l1 != null ? l1.val : 0;
+            int val2 = l2 != null ? l2.val : 0;
+            int val = carry + val1 + val2;
+            carry = val / 10;
+            midNode.next = new ListNode(val % 10);
             midNode = midNode.next;
+            if (l1 != null) l1 = l1.next;
+            if (l2 != null) l2 = l2.next;
         }
-        digit = 0;
-        int val2 = 0;
-        midNode = l2;
-        while (midNode != null) {
-            val2 += midNode.val * 10 * digit;
-            digit++;
-            midNode = midNode.next;
+        if (carry > 0) {
+            midNode.next = new ListNode(carry);
         }
-        int val = val1 + val2;
-        ListNode firstNode = null, resNode;
-        do {
-            resNode = new ListNode(val % 10);
-            val = val / 10;
-            if (firstNode == null) {
-                firstNode = resNode;
-            }
-        } while (val > 0);
-        return firstNode;
+        return firstNode.next;
     }
 
     public static void main(String ...args) {
         // 两数之和
-        Solution solution = new Solution();
+        NumberComputeSolution solution = new NumberComputeSolution();
         int[] nums = {2, 7, 11, 15};
         int target = 9;
         System.out.println(solution.twoSum(nums, target));
@@ -110,20 +127,24 @@ public class Solution {
         ListNode l1 = new ListNode(2);
         l1.next = new ListNode(4);
         l1.next.next = new ListNode(3);
-
+        solution.printListNode(l1);
+        ListNode l2 = new ListNode(5);
+        l2.next = new ListNode(6);
+        l2.next.next = new ListNode(4);
+        solution.printListNode(l2);
+        ListNode l3 = solution.addTwoNumbers(l1, l2);
+        solution.printListNode(l3);
     }
 
-    public static void printListNode(ListNode ll) {
-        boolean isBreak = ll != null;
-        while (isBreak) {
-            System.out.println(ll.val);
-            System.out.println(" -> ");
-            ll = ll.next;
-            isBreak = ll != null;
-            if (isBreak) {
-
+    public void printListNode(ListNode ll) {
+        while (ll != null) {
+            System.out.print(ll.val);
+            if (ll.next != null) {
+                System.out.print(" -> ");
             }
+            ll = ll.next;
         }
+        System.out.println();
     }
 
     static class ListNode {
