@@ -221,6 +221,7 @@ pip-log.txt
 
 */target
 *.iml
+*/*.iml
 /.idea
 *.class
 target/
