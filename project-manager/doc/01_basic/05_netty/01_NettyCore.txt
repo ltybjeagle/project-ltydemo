@@ -1,0 +1,28 @@
+核心特性：
+1、Netty产生的背景以及基础入门：
+
+2、NIO通讯原理剖析：
+
+3、深入了解NIO缓冲区Buffer：
+
+4、NIO Selector原理：
+
+5、AIO编程：
+
+6、Netty高性能之道：
+
+7、Netty的HTTP与Socket通信原理：
+
+8、Netty的编码解码：
+
+9、Netty的拆包粘包操作：
+
+10、MsgPack原理：
+
+11、MsgPack与Netty整合：
+
+12、Netty HTTP通信与Spring整合：
+
+13、Netty RPC架构：
+
+14、Netty与各种架构整合以及Netty源码分析：

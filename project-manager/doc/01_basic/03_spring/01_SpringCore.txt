@@ -3,12 +3,12 @@
 2、解耦（对象——>IOC容器——>对象）。
 3、基于接口开发理念。
 
-层级关系：
-1、核心（IOC、AOP）
-IOC容器：
+核心特性：
+1、IOC/DI深入剖析
+IOC容器设计原理及高级特性：
     a、控制反转：对象的创建、依赖、撤销由容器管理（生命周期），解耦
     b、依赖注入（DI）：接口注入、属性注入、构造器注入
-    c、容器实现：
+    c、容器实现(FactoryBean与BeanFactory)：
         BeanFactory
             BeanDefinition：定义形式，如XML文件
             FactoryBean：工厂Bean
@@ -28,6 +28,8 @@ IOC容器：
         短生命周期的Bean注入长生命周期的Bean，需特殊处理：
             短生命周期Bean加入配置：<aop:scoped-proxy/>，此配置是注入一个代理对象
             到真正使用的时候在实例化一个Bean
+
+AOP设计原理及实践：
 AOP切面：ProxyFactoryBean生成代理对象
     代理工厂模式:
     a、JDK动态代理（反射）：实现invocationHandler接口
@@ -42,12 +44,8 @@ AOP切面：ProxyFactoryBean生成代理对象
         Advisor通知器：
             连接Advice通知和Pointcut切点
             使用Adapter适配
-2、组件（事务、MVC、JDBC、ORM、远程调用）
-SpringMVC相关：
-    DispatcherServlet前置处理器：
-    a、HandlerMapping映射关系、HandlerExecutionChain对象
-    b、HandlerAdapter、HandlerInterceptor
-    c、ViewResolver
+
+Spring事务处理机制：
 事务管理：基于AOP实现
     a、TransactionAttributeSourceAdvisor：
         TransactionAttribute
@@ -58,4 +56,16 @@ SpringMVC相关：
             TransactionStatus
     事务传播特性：
     事务隔离特性：
-3、应用
+
+2、组件（事务、MVC、JDBC、ORM、远程调用）
+Spring MVC架构设计原理：
+SpringMVC相关：
+    DispatcherServlet前置处理器：
+    a、HandlerMapping映射关系、HandlerExecutionChain对象
+    b、HandlerAdapter、HandlerInterceptor
+    c、ViewResolver
+SpringMVC与Struts2对比分析：
+
+Spring JDBC设计原理：
+
+3、Spring5新特性
