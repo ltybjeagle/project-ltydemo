@@ -14,6 +14,11 @@ import java.io.PrintStream;
 
 /**
  * @Description: 微服务应用，spring cloud服务提供方
+ * JVM监控：
+ * java instrumentation
+ * java agent
+ *
+ * JVMTI
  */
 @SpringBootApplication
 //@EnableEurekaClient
