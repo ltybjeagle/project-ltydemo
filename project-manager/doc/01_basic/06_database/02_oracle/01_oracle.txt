@@ -1,4 +1,4 @@
-常规操作：
+﻿常规操作：
 1、游标设置：
     a、查看当前打开的游标数目。select count(*) from v$open_cursor;
     b、修改ORACLE最大游标数。alter system set open_cursors=1000 scope=both;
@@ -75,6 +75,8 @@
     select key,columnname,columnval from
     (select key,tablecode,pagenum||''as pagenum from busfw_t_uitable_setbak t)
     unpivot(columnval for columnname in(tablecode,pagenum));
+    b、列转行操作
+    select t.roleguid, listagg(t.userguid, ',') within group(order by t.userguid) from fasp_t_causerrole t where t.roleguid = 'F68755800B97BD4336C3F13EB26A7A28' group by t.roleguid;
 3、分组统计（group by）：
     a、按照inditext3字段进行汇总统计。
     select inditext3,sum(amt) from t_bdgsub t where t.inditext3 is not null group by t.inditext3;

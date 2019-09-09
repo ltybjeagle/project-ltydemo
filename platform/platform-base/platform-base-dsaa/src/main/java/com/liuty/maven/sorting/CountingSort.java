@@ -1,4 +1,4 @@
-package com.liuty.maven.structure;
+package com.liuty.maven.sorting;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,9 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 排序算法
+ * @description: 计数排序
+ * @author: Sunny
+ * @date: 2019/9/9
  */
-public class SortAlgorithms {
+public class CountingSort {
 
     /**
      * 计数排序：用于有范围的整数数组排序
