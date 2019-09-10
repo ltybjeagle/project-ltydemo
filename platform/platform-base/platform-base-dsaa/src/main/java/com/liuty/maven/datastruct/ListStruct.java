@@ -1,16 +1,14 @@
-package com.liuty.maven.collection;
+package com.liuty.maven.datastruct;
 
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 列表类集合
- *
- * 底层数据结构：
- *      1、数组：CopyOnWriteArrayList
- *      2、链表
+ * @description: 列表数据结构（底层数据结构：数组、链表）
+ * @author: Sunny
+ * @date: 2019/9/11
  */
-public class ListDemo {
+public class ListStruct {
     /**
      * CopyOnWriteArrayList: JUC包里的并发集合
      * 列表特性：
@@ -19,6 +17,7 @@ public class ListDemo {
      *      2、查询操作不需要使用锁，因更新操作是在新数组上操作，所以不影响查询操作
      *      3、使用迭代器遍历列表数据时，同查询一样，更新操作不影响迭代器查询
      *      4、弱一致性集合
+     *      5、底层数据结构：数组
      */
     private static volatile CopyOnWriteArrayList<String> arrayList = new CopyOnWriteArrayList<>();
 

@@ -10,6 +10,7 @@
   <modules>
     <module>platform-base</module>
     <module>platform-common</module>
+      <module>platform-webapp</module>
   </modules>
 
   <name>platform</name>
