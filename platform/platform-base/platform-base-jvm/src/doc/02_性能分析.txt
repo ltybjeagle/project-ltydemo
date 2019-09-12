@@ -1,3 +1,4 @@
+Linux系统：
 1、应用进程监控分析:
     ps -ef|grep java        查看所有JAVA进程，找到要分析进程。
     top                     查看监控进程的总统资源占用情况。
@@ -35,3 +36,8 @@
     a、命令行访问url：
         GET请求     curl http://地址:端口/描述符
         POST请求    curl http://地址:端口/描述符 -X POST
+
+windows系统：
+系统资源监控:
+1、netstat -ano       查看系统套接字连接情况
+2、route print        查看本地网络路由情况
