@@ -15,11 +15,11 @@ import java.util.Base64;
 public class PfOauth2TestSecret {
     public static void main(String ...args) throws Exception {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String srcSource = "password";
+        String srcSource = "admin$123456";
         System.out.println("BCrypt加密：原文[" + srcSource + "]，加密["
                 + passwordEncoder.encode(srcSource) + "]");
         BASE64Encoder encoder = new BASE64Encoder();
-        String secBase64 = "admin:123456";
+        String secBase64 = "paashsp-gateway:PAASHsp&Gateway";
         String base64Str = encoder.encode(secBase64.getBytes());
         System.out.println("Base64转码：" + base64Str);
         /**
@@ -47,12 +47,8 @@ public class PfOauth2TestSecret {
         BASE64Decoder decoder = new BASE64Decoder();
         System.out.println(new String(decoder.decodeBuffer("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9")
                 , "utf-8"));
-        System.out.println(new String(decoder.decodeBuffer("eyJ1c2VyX25hbWUiOiJqb2huLmNhcm5lbG" +
-                "wiLCJzY29wZSI6WyJ3ZWJjbGllbnQiLCJtb2JpbGVjbGllbnQiXSwibG9naW5OYW1lIjoiam9obi" +
-                "5jYXJuZWxsIiwiZXhwIjoxNTcwNjU0MTMyLCJqdGkiOiJhZTM1ZGUwZi0xYzRmLTRiNzAtYmRhZS" +
-                "1kMTRjNDhiZDc0MTgiLCJjbGllbnRfaWQiOiJhZG1pbjEiLCJ0aW1lc3RhbXAiOjE1NzA2MTA5Mz" +
-                "I4MTl9"), "utf-8"));
-        System.out.println(new String(decoder.decodeBuffer("6clnZHxCqZSGAOsu-LR3NmpY4KjuHJwNGdILYdJEfvE")
-                , "utf-8"));
+        System.out.println(new String(decoder.decodeBuffer("eyJ1c2VyX25hbWUiOiJqb2huLmNhcm5lbGwiLCJzY29wZSI6WyJ3ZWJjbGllbnQiLCJtb2JpbGVjbGllbnQiXSwibG9naW5OYW1lIjoiam9obi5jYXJuZWxsIiwiZXhwIjoxNTcwODYwMTM3LCJqdGkiOiJhMGFjMTRhYi1hMjJjLTRlNzYtYmZkOS05YjZmM2I5NGYxMjciLCJjbGllbnRfaWQiOiJhZG1pbjEiLCJ0aW1lc3RhbXAiOjE1NzA4NTk1MzcxNTl9"), "utf-8"));
+//        System.out.println(new String(decoder.decodeBuffer("6clnZHxCqZSGAOsu-LR3NmpY4KjuHJwNGdILYdJEfvE")
+//                , "utf-8"));
     }
 }
