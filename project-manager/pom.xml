@@ -14,14 +14,12 @@
     <module>project-web-springmvc</module>
     <module>project-web-springcloud</module>
     <module>project-register-eureka</module>
-    <module>project-service-dubbo</module>
     <module>project-hystrix-dashboard</module>
     <module>project-hystrix-turbine</module>
     <module>project-gateway-zuul</module>
     <module>project-config-server</module>
     <module>project-common-dubbo</module>
     <module>project-register-zookeeper</module>
-    <module>project-web-dubbo</module>
   </modules>
 
   <name>project-manager</name>
