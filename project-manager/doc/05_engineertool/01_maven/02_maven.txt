@@ -1,3 +1,0 @@
-1、命令行提交本地JAR到本地仓库
-    mvn install:install-file -Dfile=weblogic.jar -DgroupId=com.liuty.maven -Dart ifactId=weblogic -Dversion=10.3
-    -Dpackaging=jar
