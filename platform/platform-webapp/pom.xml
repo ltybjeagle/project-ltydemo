@@ -14,6 +14,9 @@
     <name>platform-webapp</name>
     <modules>
         <module>platform-webapp-springmvc</module>
+        <module>platform-transaction-manager</module>
+        <module>platform-transaction-application</module>
+        <module>platform-spring-security</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
