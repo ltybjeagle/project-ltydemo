@@ -17,8 +17,24 @@
         <module>platform-transaction-manager</module>
         <module>platform-transaction-application</module>
         <module>platform-spring-security</module>
+        <module>platform-spring-rpcserver</module>
+        <module>platform-spring-rpcclient</module>
+        <module>platform-spring-rpcapi</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
 
+    <properties>
+        <platfrom-spring-rpcapi.version>1.0-SNAPSHOT</platfrom-spring-rpcapi.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.sunny.maven</groupId>
+                <artifactId>platform-spring-rpcapi</artifactId>
+                <version>${platfrom-spring-rpcapi.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

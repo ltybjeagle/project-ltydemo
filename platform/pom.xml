@@ -32,8 +32,12 @@
   </developers>
 
   <properties>
+    <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <spring.framework.version>5.2.1.RELEASE</spring.framework.version>
     <spring.security.version>5.2.1.RELEASE</spring.security.version>
+
+    <platfrom-remote-rpc.version>1.0-SNAPSHOT</platfrom-remote-rpc.version>
   </properties>
 
   <dependencies>
@@ -42,6 +46,17 @@
       <artifactId>junit</artifactId>
       <version>4.13-beta-3</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.0-alpha1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.10</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
@@ -54,6 +69,27 @@
         <version>Greenwich.RELEASE</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <!-- Spring framework -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring.framework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>${spring.framework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.framework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context-support</artifactId>
+        <version>${spring.framework.version}</version>
       </dependency>
       <!--  Spring Security -->
       <dependency>
@@ -71,6 +107,30 @@
         <artifactId>spring-security-core</artifactId>
         <version>${spring.security.version}</version>
       </dependency>
+      <!-- Apache Http Client -->
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5.6</version>
+      </dependency>
+      <!-- 基于ASM字节码类库 -->
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>3.2.5</version>
+      </dependency>
+      <!-- guava -->
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>28.1-jre</version>
+      </dependency>
+      <!-- 自定义组件 -->
+      <dependency>
+        <groupId>com.sunny.maven</groupId>
+        <artifactId>platfrom-remote-rpc</artifactId>
+        <version>${platfrom-remote-rpc.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -85,9 +145,9 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-          <encoding>UTF-8</encoding>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
     </plugins>
