@@ -1,4 +1,4 @@
-package com.liuty.maven.design;
+package com.sunny.maven.design;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -9,18 +9,22 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
- * 代理模式
- * 结构：
+ * @author ：SUNNY
+ * @date ：Created in 2020/3/11 11:39
+ * @description：代理模式
+ *  结构：
  *      1、被代理对象，真实实例对象
  *      2、代理对象，内部调用真实实例对象
  *      3、外部调用都通过代理对象调用真实实例对象
  *      4、代理对象在调用真实实例对象的时候可以增加一些额外的操作
  *
- * 代理实现：
+ *  代理实现：
  *      1、JDK内部实现代理，又分为静态代理、动态代理
  *      2、第三方类库CGLIB实现代理
+ * @modified By：
+ * @version: 1.0.0
  */
-public class ProxyDesignDemo {
+public class ProxyDesign {
     public static void main(String ...args) {
         /**
          * JDK内部实现代理
@@ -36,7 +40,6 @@ public class ProxyDesignDemo {
         IJDKProxy jdkInstance = new JDKProxyImpl();
         IJDKProxy jdkProxyStatic = new JDKStaticProxy(jdkInstance);
         jdkProxyStatic.helloWorld();
-
         /**
          * JDK内部实现代理
          * 动态代理实现：
@@ -54,11 +57,15 @@ public class ProxyDesignDemo {
          * 注：
          *      1、没有接口的类不是实现
          */
-        // JDK动态代理
         JDKDynamicProxy jdkDynamicProxy = new JDKDynamicProxy(jdkInstance);
         IJDKProxy jdkProxyDynamic = (IJDKProxy) jdkDynamicProxy.getProxyInstance();
         jdkProxyDynamic.helloWorld();
-
+        /**
+         * 根据接口生成代理类
+         */
+        JDKDynamicInterfaceProxy jdkDynamicInterfaceProxy = new JDKDynamicInterfaceProxy("hello");
+        IJDKProxy jdkDynamicInterface = (IJDKProxy) jdkDynamicInterfaceProxy.getProxyInstance(IJDKProxy.class);
+        jdkDynamicInterface.helloWorld();
         /**
          * CGLIB动态代理：JDK内部实现代理存在一个缺陷，即必须实现接口才能代理，因此出现了CGLIB动态代理
          * 动态代理实现：
@@ -74,13 +81,11 @@ public class ProxyDesignDemo {
          * 注：
          *      1、final修饰符修复的类不能实现
          */
-        // CGLIB动态代理
         CglibProxy cglibInstance = new CglibProxy();
         CglibDynamicProxy cglibDynamicProxy = new CglibDynamicProxy(cglibInstance);
         CglibProxy cglibProxy = (CglibProxy) cglibDynamicProxy.getProxyInstance();
         cglibProxy.helloWorld();
     }
-
     /**
      * JDK内部实现代理
      * 静态代理：
@@ -125,6 +130,25 @@ public class ProxyDesignDemo {
         public Object getProxyInstance() {
             return Proxy.newProxyInstance(target.getClass().getClassLoader(),
                     target.getClass().getInterfaces(), this);
+        }
+    }
+    /**
+     * JDK动态代理，根据接口生成代理类
+     */
+    public static class JDKDynamicInterfaceProxy implements InvocationHandler {
+        private String arg;
+        public JDKDynamicInterfaceProxy(String arg) {
+            this.arg = arg;
+        }
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            System.out.println("jdk reflect interface begin ...");
+            System.out.println("interface execute(" + arg + ") ...");
+            System.out.println("jdk reflect interface begin ...");
+            return null;
+        }
+        public Object getProxyInstance(Class clazz) {
+            return Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] {clazz}, this);
         }
     }
     /**
