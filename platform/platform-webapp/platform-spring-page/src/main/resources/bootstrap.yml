@@ -1,0 +1,10 @@
+server:
+  servlet:
+    jsp:
+      init-parameters:
+        development: true #修改jsp页面立即生效
+    session:
+      timeout: 3600s
+  tomcat:
+    basedir: .
+    uri-encoding: UTF-8

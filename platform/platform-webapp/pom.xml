@@ -20,6 +20,8 @@
         <module>platform-spring-rpcserver</module>
         <module>platform-spring-rpcclient</module>
         <module>platform-spring-rpcapi</module>
+        <module>platform-spring-page</module>
+        <module>platform-spring-portal</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
@@ -37,4 +39,22 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+        <resources>
+            <resource>
+                <!--将src/main/webapp下的页面编译到META-INF/reources中-->
+                <directory>src/main/webapp/WEB-INF</directory>
+                <targetPath>META-INF/resources</targetPath>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>
