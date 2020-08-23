@@ -1,5 +1,6 @@
 package com.sunny.maven.pagecore.annotation.springlistener;
 
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.parsing.ComponentDefinition;
 import org.springframework.beans.factory.parsing.EmptyReaderEventListener;
 
@@ -13,6 +14,6 @@ import org.springframework.beans.factory.parsing.EmptyReaderEventListener;
 public class ParesPageInitListener extends EmptyReaderEventListener {
     @Override
     public void componentRegistered(ComponentDefinition componentDefinition) {
-
+        BeanDefinition[] bd = componentDefinition.getBeanDefinitions();
     }
 }

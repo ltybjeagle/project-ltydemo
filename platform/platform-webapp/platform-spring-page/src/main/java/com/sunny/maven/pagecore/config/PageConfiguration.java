@@ -1,6 +1,6 @@
-package com.sunny.maven.pagecore.annotation.config;
+package com.sunny.maven.pagecore.config;
 
-import com.sunny.maven.servlet.PlatFormPageServlet;
+import com.sunny.maven.pagecore.servlet.PlatFormPageServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
