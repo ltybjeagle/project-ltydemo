@@ -15,6 +15,7 @@
     <modules>
         <module>platform-base-dsaa</module>
         <module>platform-base-jvm</module>
+        <module>platform-base-netty</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
