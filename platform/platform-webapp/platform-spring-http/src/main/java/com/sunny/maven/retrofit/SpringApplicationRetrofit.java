@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version: 1.0.0
  */
 @SpringBootApplication
-@RetrofitScan("com.sunny.maven.retrofit.clientapi")
+@RetrofitScan("com.sunny.maven.retrofit")
 public class SpringApplicationRetrofit {
     public static void main(String ...args) {
         SpringApplication.run(SpringApplicationRetrofit.class);

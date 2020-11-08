@@ -1,0 +1,13 @@
+retrofit:
+  # 连接池配置
+  pool:
+    test1:
+      max-idle-connections: 3
+      keep-alive-second: 100
+    test2:
+      max-idle-connections: 5
+      keep-alive-second: 50
+  # 日志打印拦截器,自定义日志连接器：继承BaseLoggingInterceptor
+  logging-interceptor: com.github.lianjiatech.retrofit.spring.boot.interceptor.DefaultLoggingInterceptor
+  # Http异常信息格式化器，自定义格式化器：继承BaseHttpExceptionMessageFormatter
+  http-exception-message-formatter: com.github.lianjiatech.retrofit.spring.boot.interceptor.DefaultHttpExceptionMessageFormatter
