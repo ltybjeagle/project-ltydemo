@@ -9,9 +9,9 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>platform-base-netty</artifactId>
+  <artifactId>platform-base-rxjava</artifactId>
 
-  <name>platform-base-netty</name>
+  <name>platform-base-rxjava</name>
   <packaging>jar</packaging>
   <url>http://www.example.com</url>
 
