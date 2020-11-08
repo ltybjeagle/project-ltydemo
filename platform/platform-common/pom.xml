@@ -14,6 +14,8 @@
     <name>platform-common</name>
     <modules>
         <module>platfrom-remote-rpc</module>
+        <module>platform-common-cache</module>
+        <module>platform-common-ECMAScript</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
