@@ -15,4 +15,10 @@
   <packaging>jar</packaging>
   <url>http://www.example.com</url>
 
+  <dependencies>
+    <dependency>
+      <groupId>io.reactivex.rxjava2</groupId>
+      <artifactId>rxjava</artifactId>
+    </dependency>
+  </dependencies>
 </project>
