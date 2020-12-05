@@ -13,6 +13,7 @@
     <module>platform-webapp</module>
     <module>platform-servicecomb</module>
     <module>platform-alicomb</module>
+    <module>platform-springcloud</module>
   </modules>
 
   <name>platform</name>
@@ -39,6 +40,8 @@
     <spring.framework.version>5.2.1.RELEASE</spring.framework.version>
     <spring.security.version>5.2.1.RELEASE</spring.security.version>
     <spring-cloud-alibaba-dependencies.version>0.2.2.RELEASE</spring-cloud-alibaba-dependencies.version>
+    <spring-cloud-starter-alicloud-ans.version>0.2.1.RELEASE</spring-cloud-starter-alicloud-ans.version>
+    <jaxb.version>2.3.1</jaxb.version>
 
     <platfrom-remote-rpc.version>1.0-SNAPSHOT</platfrom-remote-rpc.version>
   </properties>
@@ -111,6 +114,16 @@
         <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         <version>${spring-cloud-alibaba-dependencies.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        <version>${spring-cloud-alibaba-dependencies.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-alicloud-ans</artifactId>
+        <version>${spring-cloud-starter-alicloud-ans.version}</version>
+      </dependency>
       <!-- Apache Http Client -->
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
@@ -140,6 +153,28 @@
         <groupId>cn.hutool</groupId>
         <artifactId>hutool-all</artifactId>
         <version>5.3.10</version>
+      </dependency>
+      <!-- 响应式框架 -->
+      <dependency>
+        <groupId>io.reactivex.rxjava2</groupId>
+        <artifactId>rxjava</artifactId>
+        <version>2.1.7</version>
+      </dependency>
+      <!-- JDK11引入依赖包 -->
+      <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>${jaxb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-impl</artifactId>
+        <version>${jaxb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jaxb</groupId>
+        <artifactId>jaxb-runtime</artifactId>
+        <version>${jaxb.version}</version>
       </dependency>
       <!-- 自定义组件 -->
       <dependency>

@@ -1,4 +1,4 @@
-package com.sunny.maven;
+package com.sunny.maven.formDemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
