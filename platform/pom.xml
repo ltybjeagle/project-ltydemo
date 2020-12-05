@@ -37,7 +37,7 @@
     <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.framework.version>5.2.1.RELEASE</spring.framework.version>
-    <spring.security.version>5.2.1.RELEASE</spring.security.version>
+    <spring.security.version>5.4.2</spring.security.version>
     <spring-cloud-alibaba-dependencies.version>0.2.2.RELEASE</spring-cloud-alibaba-dependencies.version>
 
     <platfrom-remote-rpc.version>1.0-SNAPSHOT</platfrom-remote-rpc.version>
