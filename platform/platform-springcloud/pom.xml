@@ -14,6 +14,8 @@
   <modules>
     <module>platform-springcloud-gateway</module>
     <module>platform-springcloud-eureka</module>
+    <module>platform-springcloud-provider</module>
+    <module>platform-springcloud-consumer</module>
   </modules>
 
   <name>platform-springcloud</name>
@@ -21,17 +23,6 @@
   <url>http://www.example.com</url>
 
   <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <!-- 删除日志依赖 -->
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
     <!-- log -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -52,4 +43,7 @@
     </dependency>
   </dependencies>
 
+  <build>
+    <finalName>${artifactId}</finalName>
+  </build>
 </project>
