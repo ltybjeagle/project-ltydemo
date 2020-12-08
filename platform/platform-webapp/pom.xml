@@ -13,14 +13,7 @@
 
     <name>platform-webapp</name>
     <modules>
-        <module>platform-webapp-springmvc</module>
-        <module>platform-transaction-manager</module>
-        <module>platform-transaction-application</module>
         <module>platform-spring-security</module>
-        <module>platform-spring-rpcserver</module>
-        <module>platform-spring-rpcclient</module>
-        <module>platform-spring-rpcapi</module>
-        <module>platform-spring-page</module>
         <module>platform-spring-common</module>
         <module>platform-spring-http</module>
         <module>platform-spring-orm</module>
