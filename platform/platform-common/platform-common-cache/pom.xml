@@ -15,8 +15,11 @@
   <packaging>jar</packaging>
   <url>http://www.example.com</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
+  <dependencies>
+    <!-- 淘汰算法：W-TinyLFU -->
+<!--    <dependency>-->
+<!--      <groupId>com.github.ben-manes.caffeine</groupId>-->
+<!--      <artifactId>caffeine</artifactId>-->
+<!--    </dependency>-->
+  </dependencies>
 </project>
