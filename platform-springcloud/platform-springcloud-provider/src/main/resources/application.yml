@@ -1,0 +1,22 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: @pom.artifactId@
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 30 # 拉取注册中心数据间隔时间
+    serviceUrl:
+      defaultZone: http://sunny:123456@localhost:8761/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        cloud:
+          sleuth: DEBUG
