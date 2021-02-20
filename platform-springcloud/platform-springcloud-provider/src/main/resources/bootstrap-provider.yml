@@ -1,9 +1,7 @@
-server:
-  port: 8002
-spring:
-  application:
-    name: @pom.artifactId@
-
+# 服务注册定时任务
+# 服务续约定时任务(心跳)
+# 服务拉取定时任务
+# http rest接口交互
 eureka:
   client:
     # 拉取注册中心数据间隔时间
@@ -11,15 +9,9 @@ eureka:
     serviceUrl:
       defaultZone: http://sunny:123456@localhost:8761/eureka/
   instance:
+    # 每隔30s发送心跳（发给eureka服务端）
     lease-renewal-interval-in-seconds: 30
+    # 90s后服务失效
     lease-expiration-duration-in-seconds: 90
     metadata-map:
       zone: beijing
-
-logging:
-  level:
-    org:
-      springframework:
-        web: DEBUG
-        cloud:
-          sleuth: DEBUG

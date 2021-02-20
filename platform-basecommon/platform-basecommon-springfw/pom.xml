@@ -14,7 +14,6 @@
     <name>platform-basecommon-springfw</name>
     <modules>
         <module>platform-basecommon-springfw-security</module>
-        <module>platform-basecommon-springfw-common</module>
         <module>platform-basecommon-springfw-http</module>
         <module>platform-basecommon-springfw-orm</module>
     </modules>
@@ -22,6 +21,11 @@
     <url>http://www.example.com</url>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -32,16 +36,6 @@
                     <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-            <version>4.5.4</version>
         </dependency>
         <!-- log -->
         <dependency>

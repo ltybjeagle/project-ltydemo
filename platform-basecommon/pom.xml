@@ -9,11 +9,11 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>platform-basecommon-javase</module>
-      <module>platform-basecommon-rxjava</module>
-      <module>platform-basecommon-netty</module>
-      <module>platform-basecommon-cache</module>
+    <module>platform-basecommon-rxjava</module>
+    <module>platform-basecommon-netty</module>
+    <module>platform-basecommon-cache</module>
     <module>platform-basecommon-rpc</module>
-      <module>platform-basecommon-springfw</module>
+    <module>platform-basecommon-springfw</module>
   </modules>
 
   <name>platform-basecommon</name>
@@ -37,9 +37,11 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>11</java.version>
+
     <spring.framework.version>5.2.1.RELEASE</spring.framework.version>
     <spring.security.version>5.2.1.RELEASE</spring.security.version>
     <jaxb.version>2.3.1</jaxb.version>
+    <mybatis-starter.version>2.1.0</mybatis-starter.version>
   </properties>
 
   <dependencies>
@@ -96,10 +98,26 @@
         <artifactId>spring-security-core</artifactId>
         <version>${spring.security.version}</version>
       </dependency>
+      <!-- mybatis -->
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>${mybatis-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tk.mybatis</groupId>
+        <artifactId>mapper-spring-boot-starter</artifactId>
+        <version>2.1.5</version>
+      </dependency>
       <!-- Apache Http Client -->
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
+        <version>4.5.6</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpmime</artifactId>
         <version>4.5.6</version>
       </dependency>
       <!-- 基于ASM字节码类库 -->
@@ -175,6 +193,9 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <fork>true</fork><!-- devtools 结合使用 -->
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

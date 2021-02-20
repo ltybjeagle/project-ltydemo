@@ -15,4 +15,15 @@
     <packaging>jar</packaging>
     <url>http://www.example.com</url>
 
+    <!-- mybatis Cursor 流式查询 -->
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 </project>

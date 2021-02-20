@@ -9,23 +9,32 @@ spring:
       name: sunny
       password: 123456
 
+# 1、eureka使用双层MAP存储：
+# 一层KEY：服务名
+# 二层KEY：实例名
+# 2、region、zone注册分区绑定(区域亲和特性)
+# 3、定时任务，判断剔除异常服务
 eureka:
   instance:
     hostname: localhost
   client:
-    register-with-eureka: false # 服务为注册中心，所以不需要注册自己，设置false
-    fetch-registry: false # 设置false，不去检索服务
+    # 服务为注册中心，所以不需要注册自己，设置false
+    register-with-eureka: false
+    # 设置false，不检索服务
+    fetch-registry: false
 #    service-url:
 #      default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
-    #eureka server缓存readWriteCacheMap失效时间，这个只有在这个时间过去后缓存才会失效，失效前不会更新，
-    #过期后从registry重新读取注册服务信息，registry是一个ConcurrentHashMap。
-    #默认180s
+    # eureka server缓存readWriteCacheMap失效时间：
+    # 时间过期缓存失效，失效前不更新MAP，过期后从registry重新读取注册信息，
+    # registry是一个ConcurrentHashMap，默认180s
     responseCacheAutoExpirationInSeconds: 180
-    #eureka server刷新readCacheMap的时间，注意，client读取的是readCacheMap，
-    #这个时间决定了多久会把readWriteCacheMap的缓存更新到readCacheMap上
-    #默认30s
+    # eureka server刷新readCacheMap的时间：
+    # client读取的是readCacheMap，配置多久同步readWriteCacheMap到readCacheMap
+    # 默认30s
     responseCacheUpdateIntervalMs: 3000
     peer-node-read-timeout-ms: 200000
-    enable-self-preservation: false # 设为false，关闭自我保护
-    eviction-interval-timer-in-ms: 5000 # 清理间隔（单位毫秒，默认是60*1000）
+    # 设为false，关闭自我保护(保护会导致客户端获取到异常服务)
+    enable-self-preservation: false
+    # 清理间隔（单位毫秒，默认是60*1000）
+    eviction-interval-timer-in-ms: 5000
