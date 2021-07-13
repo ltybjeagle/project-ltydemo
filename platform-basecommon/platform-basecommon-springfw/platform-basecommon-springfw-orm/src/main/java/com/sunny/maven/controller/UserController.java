@@ -18,7 +18,6 @@ import javax.validation.Valid;
 @RequestMapping("user")
 public class UserController {
 
-    @Autowired
     private IUserService userService;
 
     @PostMapping("/addUser")
@@ -35,5 +34,10 @@ public class UserController {
         user.setEmail("123@qq.com");
 
         return user;
+    }
+
+    @Autowired
+    public void setUserService(IUserService userService) {
+        this.userService = userService;
     }
 }

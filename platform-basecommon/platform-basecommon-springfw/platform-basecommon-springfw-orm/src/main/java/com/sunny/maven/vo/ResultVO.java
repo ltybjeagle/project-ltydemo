@@ -2,6 +2,7 @@ package com.sunny.maven.vo;
 
 import com.sunny.maven.enums.ResultCode;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * @author ：SUNNY
@@ -11,15 +12,17 @@ import lombok.Getter;
  * @version: 1.0.0
  */
 @Getter
+@ToString
 public class ResultVO<T> {
     /**
      * 状态码，比如1000代表响应成功
      */
-    private int code;
+    private Integer code;
     /**
      * 响应信息，用来说明响应情况
      */
     private String msg;
+
     /**
      * 响应的具体数据
      */

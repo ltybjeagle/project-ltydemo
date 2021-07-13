@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HelloWorldService {
     @GetMapping("/hello")
     public String hello() {
+        try {
+            Thread.sleep(10000);
+        } catch (Exception e) {
+
+        }
         return "Hello world!";
     }
 }

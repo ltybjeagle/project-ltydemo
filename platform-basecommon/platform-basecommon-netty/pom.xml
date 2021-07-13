@@ -15,4 +15,11 @@
   <packaging>jar</packaging>
   <url>http://www.example.com</url>
 
+  <dependencies>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

@@ -24,8 +24,8 @@ public class ExceptionControllerAdvice {
         return new ResultVO<>(ResultCode.FAILED, objectError.getDefaultMessage());
     }
 
-    @ExceptionHandler(APIException.class)
-    public ResultVO<String> APIExceptionHandler(APIException e) {
+    @ExceptionHandler(ApiException.class)
+    public ResultVO<String> APIExceptionHandler(ApiException e) {
         // 注意哦，这里返回类型是自定义响应体
         return new ResultVO<>(ResultCode.VALIDATE_FAILED, e.getMsg());
     }

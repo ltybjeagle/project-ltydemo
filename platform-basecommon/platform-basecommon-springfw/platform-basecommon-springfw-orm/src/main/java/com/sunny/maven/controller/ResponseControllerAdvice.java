@@ -2,7 +2,7 @@ package com.sunny.maven.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sunny.maven.exception.APIException;
+import com.sunny.maven.exception.ApiException;
 import com.sunny.maven.vo.ResultVO;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -38,7 +38,7 @@ public class ResponseControllerAdvice implements ResponseBodyAdvice<Object> {
                 // 将数据包装在ResultVO里后，再转换为json字符串响应给前端
                 return objectMapper.writeValueAsString(new ResultVO<>(data));
             } catch (JsonProcessingException e) {
-                throw new APIException("返回String类型错误");
+                throw new ApiException("返回String类型错误");
             }
         }
         // 将原本的数据包装在ResultVO里
