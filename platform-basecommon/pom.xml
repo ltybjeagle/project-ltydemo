@@ -9,7 +9,6 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>platform-basecommon-javase</module>
-    <module>platform-basecommon-rpc</module>
   </modules>
 
   <name>platform-basecommon</name>
