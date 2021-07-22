@@ -8,7 +8,7 @@
   <artifactId>platform-basecommon</artifactId>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>platform-basecommon-javase</module>
+    <module>platform-basecommon-base</module>
   </modules>
 
   <name>platform-basecommon</name>
