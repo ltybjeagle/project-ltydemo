@@ -1,9 +1,0 @@
-# spring security默认用户(基于配置提供用户)
-# 1、提供默认用户user，密码为启动服务后动态生成
-# 2、配置以下参数，就不会生成动态密码
-spring:
-  security:
-    user:
-      name: liuty
-      password: 123456
-      roles: USER

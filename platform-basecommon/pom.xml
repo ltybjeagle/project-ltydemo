@@ -13,7 +13,6 @@
     <module>platform-basecommon-netty</module>
     <module>platform-basecommon-cache</module>
     <module>platform-basecommon-rpc</module>
-    <module>platform-basecommon-springfw</module>
   </modules>
 
   <name>platform-basecommon</name>

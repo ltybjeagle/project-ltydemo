@@ -1,3 +1,0 @@
-# Application Context Initializers
-org.springframework.context.ApplicationListener=\
-  com.sunny.maven.listener.MyEnvListener
