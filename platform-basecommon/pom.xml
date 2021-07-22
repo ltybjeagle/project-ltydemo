@@ -10,7 +10,6 @@
   <modules>
     <module>platform-basecommon-javase</module>
     <module>platform-basecommon-netty</module>
-    <module>platform-basecommon-cache</module>
     <module>platform-basecommon-rpc</module>
   </modules>
 
