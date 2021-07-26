@@ -39,7 +39,7 @@
     <jaxb.version>2.3.1</jaxb.version>
     <mybatis-starter.version>2.1.0</mybatis-starter.version>
     <netty.version>4.1.59.Final</netty.version>
-    <httpcomponents.version>4.5.6</httpcomponents.version>
+    <httpcomponents.version>4.5.13</httpcomponents.version>
   </properties>
 
   <dependencies>
