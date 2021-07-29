@@ -57,6 +57,11 @@ public class UnsafeDemo {
          */
         boolean success = unsafe.compareAndSwapLong(test, stateOffset, 0, 1);
         System.out.println(success);
+
+        // 注册停服回调方法，处理系统逻辑
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            // 停服前处理资源
+        }));
     }
 
     public static class TestUnsafe {
