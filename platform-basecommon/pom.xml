@@ -225,12 +225,11 @@
         <version>${jaxb.version}</version>
       </dependency>
       <!-- 对象分析工具 -->
-<!--      <dependency>-->
-<!--        <groupId>org.openjdk.jol</groupId>-->
-<!--        <artifactId>jol-core</artifactId>-->
-<!--        <scope>system</scope>-->
-<!--        <systemPath>${lib.dir}/jol-core-0.11.jar</systemPath>-->
-<!--      </dependency>-->
+      <dependency>
+        <groupId>org.openjdk.jol</groupId>
+        <artifactId>jol-core</artifactId>
+        <version>0.10</version>
+      </dependency>
       <!-- 自定义组件 -->
       <!-- 单元测试MOCK -->
       <dependency>
