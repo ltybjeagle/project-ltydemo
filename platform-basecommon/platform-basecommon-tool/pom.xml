@@ -15,6 +15,7 @@
   <modules>
     <module>platform-basecommon-httpclient</module>
       <module>platform-basecommon-rpc</module>
+    <module>platform-basecommon-utils</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
