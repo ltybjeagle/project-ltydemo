@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>platform-basecommon</artifactId>
     <groupId>com.sunny.maven</groupId>
@@ -9,14 +9,9 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>platform-basecommon-tool</artifactId>
+  <artifactId>platform-basecommon-microservice</artifactId>
 
-  <name>platform-basecommon-tool</name>
-  <modules>
-    <module>platform-basecommon-httpclient</module>
-    <module>platform-basecommon-rpc</module>
-    <module>platform-basecommon-utils</module>
-  </modules>
+  <name>platform-basecommon-microservice</name>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
 

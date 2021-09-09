@@ -18,6 +18,11 @@ public class BeanCopyUtil {
     private static final ConcurrentHashMap<String, BeanCopier> BEAN_COPIER_CACHE = new ConcurrentHashMap<>();
 
     /**
+     * 私有构造函数
+     */
+    private BeanCopyUtil() {}
+
+    /**
      * 复制对象
      * @param srcObj 来源对象
      * @param descObj 目标对象
