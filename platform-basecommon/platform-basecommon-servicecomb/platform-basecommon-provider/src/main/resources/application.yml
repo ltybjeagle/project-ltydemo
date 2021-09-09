@@ -1,0 +1,19 @@
+server:
+  port: 8070
+
+servicecomb:
+  service:
+    application: demo-application
+    name: provider-service
+    version: 0.0.1
+    registry:
+      # Default using local service center
+      address: http://127.0.0.1:30100
+      instance:
+        watch: false
+  rest:
+    address: 0.0.0.0:8070
+  inspector:
+    enabled: false
+
+
