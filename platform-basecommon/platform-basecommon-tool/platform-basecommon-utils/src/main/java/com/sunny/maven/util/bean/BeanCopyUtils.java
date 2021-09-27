@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @description: 使用cglib的BeanCopier实现对象复制
  * @create: 2021-08-04 15:35
  */
-public class BeanCopyUtil {
+public class BeanCopyUtils {
 
     /**
      * BeanCopier的缓存
@@ -20,7 +20,7 @@ public class BeanCopyUtil {
     /**
      * 私有构造函数
      */
-    private BeanCopyUtil() {}
+    private BeanCopyUtils() {}
 
     /**
      * 复制对象

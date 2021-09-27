@@ -1,4 +1,4 @@
-package com.sunny.maven.util.common;
+package com.sunny.maven.util.distributed;
 
 /**
  * @author SUNNY

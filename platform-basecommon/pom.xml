@@ -13,6 +13,7 @@
     <module>platform-basecommon-springcloud</module>
     <module>platform-basecommon-microservice</module>
     <module>platform-basecommon-servicecomb</module>
+      <module>platform-basecommon-vertx</module>
   </modules>
 
   <name>platform-basecommon</name>
@@ -185,6 +186,11 @@
         <groupId>com.github.ben-manes.caffeine</groupId>
         <artifactId>caffeine</artifactId>
         <version>2.8.8</version>
+      </dependency>
+      <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>2.9.0</version>
       </dependency>
       <!-- 高性能内存消息队列框架 -->
       <dependency>
