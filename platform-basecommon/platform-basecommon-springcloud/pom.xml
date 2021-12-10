@@ -11,7 +11,10 @@
 
   <artifactId>platform-basecommon-springcloud</artifactId>
   <modules>
-    <module>platform-basecommon-common</module>
+    <module>platform-basecommon-config</module>
+    <module>platform-basecommon-eureka</module>
+    <module>platform-basecommon-fwapi</module>
+    <module>platform-basecommon-eureka-client</module>
   </modules>
 
   <name>platform-basecommon-springcloud</name>
@@ -24,9 +27,15 @@
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>Greenwich.RELEASE</version>
+        <version>${spring.cloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <!-- 热部署 -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <optional>true</optional>
       </dependency>
     </dependencies>
   </dependencyManagement>

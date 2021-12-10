@@ -9,11 +9,11 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>platform-basecommon-base</module>
-    <module>platform-basecommon-tool</module>
     <module>platform-basecommon-springcloud</module>
     <module>platform-basecommon-microservice</module>
     <module>platform-basecommon-servicecomb</module>
-      <module>platform-basecommon-vertx</module>
+    <module>platform-basecommon-vertx</module>
+    <module>platform-basecommon-busservice</module>
   </modules>
 
   <name>platform-basecommon</name>
@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.4.RELEASE</version>
+    <version>2.3.12.RELEASE</version>
     <relativePath/>
   </parent>
 
@@ -38,12 +38,13 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>11</java.version>
 
-    <spring.framework.version>5.2.1.RELEASE</spring.framework.version>
-    <spring.security.version>5.2.1.RELEASE</spring.security.version>
+    <spring.framework.version>5.3.10</spring.framework.version>
+    <spring.security.version>5.3.12.RELEASE</spring.security.version>
     <jaxb.version>2.3.1</jaxb.version>
     <mybatis-starter.version>2.1.0</mybatis-starter.version>
     <netty.version>4.1.59.Final</netty.version>
     <httpcomponents.version>4.5.13</httpcomponents.version>
+    <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
   </properties>
 
   <dependencies>
@@ -109,6 +110,11 @@
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-core</artifactId>
         <version>${spring.security.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-spring-boot-starter</artifactId>
+        <version>2.0.9</version>
       </dependency>
       <!-- apache工具类 -->
       <dependency>
@@ -268,6 +274,11 @@
         <groupId>com.github.shyiko</groupId>
         <artifactId>mysql-binlog-connector-java</artifactId>
         <version>0.21.0</version>
+      </dependency>
+      <!-- 热部署 -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
       </dependency>
     </dependencies>
   </dependencyManagement>
