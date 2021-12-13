@@ -1,0 +1,4 @@
+{ "properties": [
+  { "name": "spring.mycache.redisName", "defaultValue": "admin" },
+  { "name": "spring.mycache.enabled", "type": "java.lang.Boolean", "defaultValue": false }
+] }

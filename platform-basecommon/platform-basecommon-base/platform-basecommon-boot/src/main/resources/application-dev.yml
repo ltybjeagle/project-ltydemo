@@ -1,0 +1,7 @@
+com:
+  sunny:
+    name: test
+spring:
+  mycache:
+    enabled: true
+    redisName: admin

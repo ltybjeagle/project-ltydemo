@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: portal-service
+  profiles:
+    active: eureka
+server:
+  port: 8082

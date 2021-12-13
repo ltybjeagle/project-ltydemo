@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: eureka-server
+  security: # 设置用户登录认证
+    user:
+      name: admin
+      password: 123456
+#  profiles:
+#    active: master # 默认启动master，启动参数 --spring.profiles.active=slave 控制加载slave配置文件
+eureka:
+  client:
+    register-with-eureka: false # 由于该应用为注册中心, 所以设置为false, 代表不向注册中心注册自己
+    fetch-registry: false # 由于注册中心的职责就是维护服务实例, 它并不需要去检索服务, 所以也设置为 false
+  server:
+    enable-self-preservation: false # 保护模式，Eureka 将会尝试保护其服务的注册表中的信息，不再删除服务注册表中的数据
+    eviction-interval-timer-in-ms: 5000 # 默认 60000 毫秒，清理间隔
+  instance:
+    hostname: localhost
+server:
+  port: 8761
