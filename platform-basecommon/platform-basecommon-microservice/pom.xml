@@ -15,6 +15,8 @@
   <modules>
     <module>platform-basecommon-usercenter</module>
     <module>platform-basecommon-portal</module>
+    <module>platform-basecommon-usercenter-api</module>
+    <module>platform-basecommon-usercenter-client</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

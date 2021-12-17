@@ -1,5 +1,6 @@
 package com.sunny.maven.controller;
 
+import com.sunny.maven.facade.api.UserRemoteClient;
 import com.sunny.maven.register.ServiceInsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2021-11-26 12:00
  */
 @RestController
-public class UserController {
+public class UserController implements UserRemoteClient {
 
     private ServiceInsClient serviceInsClient;
 
-    @GetMapping("/user/hello")
+    @Override
     public String hello() {
         return "hello";
     }
