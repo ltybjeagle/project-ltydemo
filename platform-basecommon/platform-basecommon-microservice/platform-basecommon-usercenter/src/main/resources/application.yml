@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: usercenter-service
-  profiles:
-    active: eureka
-server:
-  port: 8081
