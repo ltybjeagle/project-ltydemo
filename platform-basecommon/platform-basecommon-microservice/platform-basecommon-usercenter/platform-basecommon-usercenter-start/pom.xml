@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>platform-basecommon-usercenter</artifactId>
+    <groupId>com.sunny.maven</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>platform-basecommon-usercenter-start</artifactId>
+
+  <name>platform-basecommon-usercenter-start</name>
+  <packaging>jar</packaging>
+  <url>http://www.example.com</url>
+
+  <profiles>
+    <profile>
+      <id>model-one</id>
+      <dependencies>
+        <dependency>
+          <groupId>com.sunny.maven</groupId>
+          <artifactId>platform-basecommon-usercenter-facade-rest</artifactId>
+          <version>1.0-SNAPSHOT</version>
+        </dependency>
+      </dependencies>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+  </profiles>
+</project>

@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: usercenter-service
+  profiles:
+    active: model-one    # model-one：eureka + rest
+server:
+    port: 8081

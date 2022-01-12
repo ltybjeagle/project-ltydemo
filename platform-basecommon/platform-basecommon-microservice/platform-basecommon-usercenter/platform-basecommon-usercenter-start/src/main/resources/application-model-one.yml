@@ -1,0 +1,15 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:123456@localhost:8761/eureka/
+      # 集群注册中心：http://admin:123456@localhost:8761/eureka/,http://admin:123456@localhost:8762/eureka/
+    healthcheck:
+      enabled: true # 开启健康检查，需要引入 actuator 的依赖
+  instance:
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} # 定义实例ID格式
+    prefer-ip-address: true # 采用IP注册
+    status-page-url: www.instance.net # 自定义实例跳转链接
+    lease-renewal-interval-in-seconds: 10 # 默认 30 秒，表示 Client 发送心跳给 server 的频率
+    lease-expiration-duration-in-seconds: 30 # 默认 90 秒，表示Server 两次心跳超时时间，时间内未收到心跳，移除Instance
+    metadata-map: # 自定义元数据
+      biancheng: SUNNY
