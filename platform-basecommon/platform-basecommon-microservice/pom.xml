@@ -13,10 +13,8 @@
 
   <name>platform-basecommon-microservice</name>
   <modules>
-    <module>platform-basecommon-usercenter</module>
     <module>platform-basecommon-portal</module>
-    <module>platform-basecommon-usercenter-api</module>
-    <module>platform-basecommon-usercenter-client</module>
+    <module>platform-basecommon-usercenter</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
@@ -43,16 +41,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.sunny.maven</groupId>
-      <artifactId>platform-basecommon-fwapi</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
   </dependencies>
 
   <profiles>
     <profile>
-      <id>eureka</id>
+      <id>model-one</id>
       <dependencies>
         <dependency>
           <groupId>com.sunny.maven</groupId>
@@ -60,7 +53,7 @@
           <version>1.0-SNAPSHOT</version>
         </dependency>
       </dependencies>
-      <!-- 默认 -->
+      <!-- 默认-->
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>

@@ -12,9 +12,9 @@
   <artifactId>platform-basecommon-springcloud</artifactId>
   <modules>
     <module>platform-basecommon-config</module>
-    <module>platform-basecommon-eureka</module>
-    <module>platform-basecommon-fwapi</module>
-    <module>platform-basecommon-eureka-client</module>
+    <module>platform-basecommon-feign</module>
+    <module>platform-basecommon-register</module>
+    <module>platform-basecommon-comapi</module>
   </modules>
 
   <name>platform-basecommon-springcloud</name>

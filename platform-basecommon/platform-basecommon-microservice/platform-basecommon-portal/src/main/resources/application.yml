@@ -2,7 +2,7 @@ spring:
   application:
     name: portal-service
   profiles:
-    active: eureka
+    active: model-one
 server:
   port: 8082
 logging:
@@ -18,6 +18,8 @@ feign:
     enabled: false
   okhttp:
     enabled: true
+  hystrix:
+    enabled: true # 开启 Feign 对 Hystrix 的支持
 #  # 配置 GZIP 来压缩数据，没有启用 okhttp3 时才会进行压缩配置
 #  compression:
 #    request:

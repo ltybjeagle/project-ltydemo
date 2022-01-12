@@ -12,14 +12,14 @@
   <artifactId>platform-basecommon-usercenter</artifactId>
 
   <name>platform-basecommon-usercenter</name>
-  <packaging>jar</packaging>
+  <modules>
+    <module>platform-basecommon-usercenter-service</module>
+    <module>platform-basecommon-usercenter-api</module>
+    <module>platform-basecommon-usercenter-facade</module>
+    <module>platform-basecommon-usercenter-start</module>
+    <module>platform-basecommon-usercenter-client</module>
+  </modules>
+  <packaging>pom</packaging>
   <url>http://www.example.com</url>
 
-  <dependencies>
-    <dependency>
-      <artifactId>platform-basecommon-usercenter-api</artifactId>
-      <groupId>com.sunny.maven</groupId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-  </dependencies>
 </project>
