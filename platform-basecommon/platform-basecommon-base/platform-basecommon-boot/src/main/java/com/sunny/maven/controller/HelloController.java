@@ -1,7 +1,6 @@
 package com.sunny.maven.controller;
 
 import com.sunny.maven.common.MyLogger;
-import com.sunny.maven.template.MyCacheTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StopWatch;
@@ -21,7 +20,7 @@ public class HelloController {
      */
     private Environment env;
     private MyLogger myLogger;
-    private MyCacheTemplate myCacheTemplate;
+    //private MyCacheTemplate myCacheTemplate;
 
     @GetMapping("/hello")
     public String hello() {
@@ -29,7 +28,7 @@ public class HelloController {
         stopWatch.start();
         System.out.println(env.getProperty("com.sunny.name"));
         myLogger.saveLog();
-        System.out.println("redis:" + myCacheTemplate.getRedisName());
+        //System.out.println("redis:" + myCacheTemplate.getRedisName());
         stopWatch.stop();
         System.out.println("time:" + stopWatch.getTotalTimeMillis());
         return "hello";
@@ -38,9 +37,9 @@ public class HelloController {
      * 注入对象
      */
     @Autowired
-    public HelloController(Environment env, MyLogger myLogger, MyCacheTemplate myCacheTemplate) {
+    public HelloController(Environment env, MyLogger myLogger) {
         this.env = env;
         this.myLogger = myLogger;
-        this.myCacheTemplate = myCacheTemplate;
+        //this.myCacheTemplate = myCacheTemplate;
     }
 }

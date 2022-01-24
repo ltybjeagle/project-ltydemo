@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.sunny.maven.configuration.MyCacheAutoConfigure
+com.sunny.maven.configuration.SunnyCacheAutoConfigure
