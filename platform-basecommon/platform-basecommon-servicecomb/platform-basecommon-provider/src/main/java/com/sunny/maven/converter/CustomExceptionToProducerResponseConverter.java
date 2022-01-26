@@ -2,8 +2,8 @@ package com.sunny.maven.converter;
 
 import com.sunny.maven.common.RespErrorMsg;
 import com.sunny.maven.constant.ErrorEnum;
+import com.sunny.maven.core.util.JsonUtils;
 import com.sunny.maven.exception.AppException;
-import com.sunny.maven.util.JsonUtils;
 import org.apache.servicecomb.swagger.invocation.Response;
 import org.apache.servicecomb.swagger.invocation.SwaggerInvocation;
 import org.apache.servicecomb.swagger.invocation.exception.ExceptionToProducerResponseConverter;

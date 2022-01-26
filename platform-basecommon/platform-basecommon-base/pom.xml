@@ -17,7 +17,6 @@
         <module>platform-basecommon-core</module>
         <module>platform-basecommon-boot</module>
         <module>platform-basecommon-cache</module>
-        <module>platform-basecommon-utils</module>
         <module>platform-basecommon-rpc</module>
         <module>platform-basecommon-httpclient</module>
     </modules>
