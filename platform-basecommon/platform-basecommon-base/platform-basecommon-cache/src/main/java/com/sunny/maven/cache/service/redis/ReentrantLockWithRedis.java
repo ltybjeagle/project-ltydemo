@@ -1,4 +1,4 @@
-package com.sunny.maven.template;
+package com.sunny.maven.cache.service.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +13,10 @@ import java.util.*;
 /**
  * @author SUNNY
  * @description: 基于redis实现分布式锁(支持可重入锁)
- * @create: 2022-01-19 16:21
+ * @create: 2022-01-25 23:55
  */
-public class RedisWithReentrantLock {
-    private static final Logger logger = LoggerFactory.getLogger(RedisWithReentrantLock.class);
+public class ReentrantLockWithRedis {
+    private static final Logger logger = LoggerFactory.getLogger(ReentrantLockWithRedis.class);
     public static final String UNLOCK_LUA;
 
     static {
@@ -149,7 +149,7 @@ public class RedisWithReentrantLock {
      * 构造函数
      * @param redisTemplate redis模板对象
      */
-    public RedisWithReentrantLock(RedisTemplate<String, Object> redisTemplate) {
+    public ReentrantLockWithRedis(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 }

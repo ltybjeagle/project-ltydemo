@@ -1,5 +1,6 @@
-package com.sunny.maven.service;
+package com.sunny.maven.cache.service.redis;
 
+import com.sunny.maven.cache.service.ICacheFacadeService;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.StringRedisConnection;
 import org.springframework.data.redis.core.HashOperations;
@@ -11,10 +12,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author SUNNY
- * @description: Redis缓存实现
- * @create: 2022-01-20 14:13
+ * @description: Redis缓存实现方案
+ * @create: 2022-01-25 23:46
  */
-public class RedisCacheService implements ICacheService {
+public class CacheRedisService implements ICacheFacadeService {
     /**
      * 字符串类型设置（有失效时间）
      * @param key
@@ -174,7 +175,7 @@ public class RedisCacheService implements ICacheService {
      * @param valueOperations redis字符串对象
      * @param hashOperations redis Hash对象
      */
-    public RedisCacheService(RedisTemplate<String, Object> redisTemplate,
+    public CacheRedisService(RedisTemplate<String, Object> redisTemplate,
                              ValueOperations<String, Object> valueOperations,
                              HashOperations<String, String, Object> hashOperations) {
         this.redisTemplate = redisTemplate;

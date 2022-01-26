@@ -1,6 +1,6 @@
-package com.sunny.maven.configuration;
+package com.sunny.maven.cache.configuration;
 
-import com.sunny.maven.template.SunnyCacheTemplate;
+import com.sunny.maven.cache.template.SunnyCacheTemplate;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ import java.util.Objects;
  * @description: 抽象缓存对象初始化类
  * @create: 2022-01-19 17:09
  */
-public abstract class AbstractSunnyCacheAware {
+public abstract class SunnyCacheAwareAbstract {
     /**
      * 初始化缓存方式，业务自行实现
      */

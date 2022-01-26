@@ -1,18 +1,15 @@
-package com.sunny.maven.configuration;
+package com.sunny.maven.cache.configuration;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import com.sunny.maven.handler.AsyncRedisHandler;
-import com.sunny.maven.runner.SunnyCacheRunner;
-import com.sunny.maven.service.RedisCacheService;
-import com.sunny.maven.template.RedisWithReentrantLock;
+import com.sunny.maven.cache.runner.SunnyCacheRunner;
+import com.sunny.maven.cache.service.ICacheFacadeService;
+import com.sunny.maven.cache.service.redis.CacheRedisService;
+import com.sunny.maven.cache.service.redis.ReentrantLockWithRedis;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -27,10 +24,6 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.scheduling.annotation.AsyncConfigurer;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.annotation.Resource;
@@ -47,12 +40,9 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @create: 2021-11-24 10:51
  */
 @Configuration
-@EnableAsync
-@EnableScheduling
 @EnableConfigurationProperties(SunnyCacheProperties.class)
 @ConditionalOnProperty(prefix = "sunny.cache", value = "enabled", havingValue = "true")
-public class SunnyCacheAutoConfigure implements AsyncConfigurer {
-    private static final Logger logger = LoggerFactory.getLogger(SunnyCacheAutoConfigure.class);
+public class SunnyCacheAutoConfigure {
 
     @Resource
     private SunnyCacheProperties sunnyCacheProperties;
@@ -82,20 +72,20 @@ public class SunnyCacheAutoConfigure implements AsyncConfigurer {
      * @return RedisCacheService
      */
     @Bean
-    public RedisCacheService redisCacheService(RedisTemplate<String, Object> redisTemplate,
-                                               ValueOperations<String, Object> valueOperations,
-                                               HashOperations<String, String, Object> hashOperations) {
-        return new RedisCacheService(redisTemplate, valueOperations, hashOperations);
+    public ICacheFacadeService redisCacheService(RedisTemplate<String, Object> redisTemplate,
+                                                 ValueOperations<String, Object> valueOperations,
+                                                 HashOperations<String, String, Object> hashOperations) {
+        return new CacheRedisService(redisTemplate, valueOperations, hashOperations);
     }
 
     /**
      * 分布式锁对象
      * @param redisTemplate Redis模板对象
-     * @return RedisWithReentrantLock
+     * @return RedisWithReentrantLockr
      */
     @Bean
-    public RedisWithReentrantLock redisWithReentrantLock(RedisTemplate<String, Object> redisTemplate) {
-        return new RedisWithReentrantLock(redisTemplate);
+    public ReentrantLockWithRedis reentrantLockWithRedis(RedisTemplate<String, Object> redisTemplate) {
+        return new ReentrantLockWithRedis(redisTemplate);
     }
 
     /**
@@ -144,8 +134,9 @@ public class SunnyCacheAutoConfigure implements AsyncConfigurer {
         JedisConnectionFactory factory;
         JedisClientConfiguration.JedisPoolingClientConfigurationBuilder jpcf =
                 (JedisClientConfiguration.JedisPoolingClientConfigurationBuilder)
-                        JedisClientConfiguration.builder()
-                                .connectTimeout(Duration.ofMillis(sunnyCacheProperties.getCacheTimeout()));
+                        JedisClientConfiguration.builder().
+                                connectTimeout(Duration.ofMillis(sunnyCacheProperties.getCacheTimeout())).
+                                readTimeout(Duration.ofMillis(sunnyCacheProperties.getCacheTimeout()));
         jpcf.poolConfig(poolConfig);
         String master, nodes;
         if (StringUtils.isNotEmpty(master = sunnyCacheProperties.getCacheMaster()) &&
@@ -207,36 +198,5 @@ public class SunnyCacheAutoConfigure implements AsyncConfigurer {
                 JsonTypeInfo.As.WRAPPER_ARRAY);
         jackson2JsonRedisSerializer.setObjectMapper(om);
         return jackson2JsonRedisSerializer;
-    }
-
-    /**
-     * 设置缓存执行线程池
-     * @return Executor
-     */
-    @Override
-    @Bean(name = "cacheExecutor")
-    public Executor getAsyncExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(sunnyCacheProperties.getAsyncCache().getCorePoolSize());
-        executor.setMaxPoolSize(sunnyCacheProperties.getAsyncCache().getMaxPoolSize());
-        executor.setQueueCapacity(sunnyCacheProperties.getAsyncCache().getQueueCapacity());
-        executor.setKeepAliveSeconds(sunnyCacheProperties.getAsyncCache().getKeepAliveSeconds());
-        executor.setThreadNamePrefix(sunnyCacheProperties.getAsyncCache().getThreadNamePrefix());
-        // 设置队列满的情况下，直接使用主线程执行任务
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-        return new AsyncRedisHandler(executor);
-    }
-
-    /**
-     * 异步任务中异常处理
-     * @return AsyncUncaughtExceptionHandler
-     */
-    @Override
-    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-//        return new SimpleAsyncUncaughtExceptionHandler();
-        return (throwable, method, objects) -> {
-            logger.error("======================={}=================={}", throwable.getMessage(), throwable);
-            logger.error("exception method: {}", method.getName());
-        };
     }
 }

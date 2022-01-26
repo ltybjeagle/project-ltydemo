@@ -1,6 +1,6 @@
-package com.sunny.maven.template;
+package com.sunny.maven.cache.template;
 
-import com.sunny.maven.service.ICacheService;
+import com.sunny.maven.cache.service.ICacheFacadeService;
 
 import java.util.Objects;
 import java.util.Set;
@@ -18,7 +18,7 @@ public class SunnyCacheTemplate {
     /**
      * redis缓存对象
      */
-    private ICacheService redisService;
+    private ICacheFacadeService redisService;
     /**
      * 将结果value放入缓存，键值为key
      * @param key
@@ -65,7 +65,7 @@ public class SunnyCacheTemplate {
      * 构造函数
      * @param preCacheKey 缓存KEY前缀
      */
-    public SunnyCacheTemplate(String preCacheKey, ICacheService redisService) {
+    public SunnyCacheTemplate(String preCacheKey, ICacheFacadeService redisService) {
         this.PRE_CACHE_KEY = preCacheKey;
         this.redisService = redisService;
     }

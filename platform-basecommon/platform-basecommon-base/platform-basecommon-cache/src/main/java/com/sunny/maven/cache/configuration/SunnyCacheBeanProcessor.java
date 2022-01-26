@@ -1,8 +1,8 @@
-package com.sunny.maven.configuration;
+package com.sunny.maven.cache.configuration;
 
-import com.sunny.maven.service.ICacheService;
-import com.sunny.maven.service.RedisCacheService;
-import com.sunny.maven.template.SunnyCacheTemplate;
+import com.sunny.maven.cache.service.ICacheFacadeService;
+import com.sunny.maven.cache.service.redis.CacheRedisService;
+import com.sunny.maven.cache.template.SunnyCacheTemplate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -28,17 +28,17 @@ public class SunnyCacheBeanProcessor implements EnvironmentAware, ApplicationCon
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof AbstractSunnyCacheAware) {
+        if (bean instanceof SunnyCacheAwareAbstract) {
             String isCache = evn.getProperty("sunny.cache.enabled", "false");
             if (!Boolean.parseBoolean(isCache)) {
                 throw new RuntimeException(beanName + "初始化报错，缓存开关关闭，不能继承AbstractSunnyCacheAware");
             }
             try {
-                AbstractSunnyCacheAware cacheInit = (AbstractSunnyCacheAware) bean;
+                SunnyCacheAwareAbstract cacheInit = (SunnyCacheAwareAbstract) bean;
                 String keyName = cacheInit.getClass().getSimpleName();
                 Method method = cacheInit.getClass().getSuperclass().getMethod("setSunnyCacheTemplate",
                         SunnyCacheTemplate.class);
-                ICacheService redisCacheService = applicationContext.getBean(RedisCacheService.class);
+                ICacheFacadeService redisCacheService = applicationContext.getBean(CacheRedisService.class);
                 method.invoke(cacheInit, new SunnyCacheTemplate("SUNNY.CACHE." +
                         StringUtils.upperCase(keyName)+ ":", redisCacheService));
             } catch (Exception e) {

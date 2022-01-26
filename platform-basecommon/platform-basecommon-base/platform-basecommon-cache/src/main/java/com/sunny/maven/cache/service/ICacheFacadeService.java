@@ -1,4 +1,4 @@
-package com.sunny.maven.service;
+package com.sunny.maven.cache.service;
 
 import java.util.Set;
 
@@ -7,7 +7,7 @@ import java.util.Set;
  * @description: 缓存操作接口定义
  * @create: 2022-01-20 14:10
  */
-public interface ICacheService {
+public interface ICacheFacadeService {
     /**
      * 字符串类型设置
      * @param key

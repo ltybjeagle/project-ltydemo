@@ -1,6 +1,6 @@
-package com.sunny.maven.runner;
+package com.sunny.maven.cache.runner;
 
-import com.sunny.maven.configuration.AbstractSunnyCacheAware;
+import com.sunny.maven.cache.configuration.SunnyCacheAwareAbstract;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,7 +18,7 @@ public class SunnyCacheRunner implements ApplicationContextAware, ApplicationRun
     private static ApplicationContext applicationContext;
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Map<String, AbstractSunnyCacheAware> map = applicationContext.getBeansOfType(AbstractSunnyCacheAware.class);
+        Map<String, SunnyCacheAwareAbstract> map = applicationContext.getBeansOfType(SunnyCacheAwareAbstract.class);
         map.values().forEach(cacheObj -> cacheObj.init());
     }
 
