@@ -1,6 +1,9 @@
 package com.sunny.maven.usercenter.facade;
 
 import com.sunny.maven.usercenter.api.UserInfoApi;
+import com.sunny.maven.usercenter.common.constant.UserCenterConstant;
+import com.sunny.maven.usercenter.common.context.UserCenterContext;
+import com.sunny.maven.usercenter.service.UserInfoService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +23,7 @@ public class UserInfoRestApiImpl implements UserInfoApi {
     @Override
     @GetMapping("/user/test")
     public String getTestUserName() {
-        return "hello";
+        UserInfoService userInfoService = UserCenterContext.getBean(UserCenterConstant.USER_INFO_SERVICE);
+        return userInfoService.getTestUserName();
     }
 }

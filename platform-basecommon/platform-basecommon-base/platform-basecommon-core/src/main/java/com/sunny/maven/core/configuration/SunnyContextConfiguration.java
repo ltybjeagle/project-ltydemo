@@ -2,6 +2,7 @@ package com.sunny.maven.core.configuration;
 
 import com.sunny.maven.core.common.context.SunnyApplicationContext;
 import com.sunny.maven.core.handler.AsyncTaskHandler;
+import com.sunny.maven.core.interceptor.SunnyAsyncHandlerInterceptor;
 import com.sunny.maven.core.listener.GracefulShutdownListener;
 import com.sunny.maven.core.listener.GracefulStartupListener;
 import org.slf4j.Logger;
@@ -59,6 +60,15 @@ public class SunnyContextConfiguration implements AsyncConfigurer {
     @Bean
     public GracefulShutdownListener gracefulShutdownListener() {
         return new GracefulShutdownListener();
+    }
+
+    /**
+     * 异步调用拦截器
+     * @return SunnyAsyncHandlerInterceptor
+     */
+    @Bean
+    public SunnyAsyncHandlerInterceptor sunnyAsyncHandlerInterceptor() {
+        return new SunnyAsyncHandlerInterceptor();
     }
 
     /**

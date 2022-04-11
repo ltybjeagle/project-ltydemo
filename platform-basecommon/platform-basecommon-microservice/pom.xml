@@ -42,21 +42,4 @@
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
   </dependencies>
-
-  <profiles>
-    <profile>
-      <id>model-one</id>
-      <dependencies>
-        <dependency>
-          <groupId>com.sunny.maven</groupId>
-          <artifactId>platform-basecommon-eureka-client</artifactId>
-          <version>1.0-SNAPSHOT</version>
-        </dependency>
-      </dependencies>
-      <!-- 默认-->
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-    </profile>
-  </profiles>
 </project>

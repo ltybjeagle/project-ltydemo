@@ -2,6 +2,6 @@ spring:
   application:
     name: usercenter-service
   profiles:
-    active: model-one    # model-one：eureka + rest
+    active: SpringCloud    # SpringCloud：eureka + feign
 server:
     port: 8081

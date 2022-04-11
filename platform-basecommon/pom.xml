@@ -11,7 +11,6 @@
     <module>platform-basecommon-base</module>
     <module>platform-basecommon-springcloud</module>
     <module>platform-basecommon-microservice</module>
-    <module>platform-basecommon-servicecomb</module>
     <module>platform-basecommon-vertx</module>
     <module>platform-basecommon-busservice</module>
   </modules>
@@ -44,6 +43,7 @@
     <druid.version>1.1.23</druid.version>
     <oracle.version>12.1.0.1-atlassian-hosted</oracle.version>
     <netty.version>4.1.59.Final</netty.version>
+    <protostuff.version>1.2.2</protostuff.version>
     <httpcomponents.version>4.5.13</httpcomponents.version>
     <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
   </properties>
@@ -95,6 +95,33 @@
         <groupId>org.springframework</groupId>
         <artifactId>spring-context-support</artifactId>
         <version>${spring.framework.version}</version>
+      </dependency>
+      <!-- spring-session管理session -->
+      <dependency>
+        <groupId>org.springframework.session</groupId>
+        <artifactId>spring-session-core</artifactId>
+        <version>2.6.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.session</groupId>
+        <artifactId>spring-session-data-redis</artifactId>
+        <version>2.6.1</version>
+      </dependency>
+      <!-- Oauth2 -->
+      <dependency>
+        <groupId>org.springframework.security.oauth</groupId>
+        <artifactId>spring-security-oauth2</artifactId>
+        <version>2.3.8.RELEASE</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-jwt</artifactId>
+        <version>1.0.11.RELEASE</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>0.9.1</version>
       </dependency>
       <!--  Spring Security -->
       <dependency>
@@ -160,6 +187,12 @@
         <artifactId>fastjson</artifactId>
         <version>1.2.76</version>
       </dependency>
+      <!-- jackson -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.13.1</version>
+      </dependency>
       <!-- netty -->
       <dependency>
         <groupId>io.netty</groupId>
@@ -170,6 +203,21 @@
         <groupId>io.netty</groupId>
         <artifactId>netty-transport</artifactId>
         <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.dyuproject.protostuff</groupId>
+        <artifactId>protostuff-core</artifactId>
+        <version>${protostuff.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.dyuproject.protostuff</groupId>
+        <artifactId>protostuff-runtime</artifactId>
+        <version>${protostuff.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.objenesis</groupId>
+        <artifactId>objenesis</artifactId>
+        <version>3.2</version>
       </dependency>
       <!-- mybatis -->
       <dependency>
@@ -200,6 +248,11 @@
         <version>${oracle.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.3.1</version>
+      </dependency>
+      <dependency>
         <groupId>com.github.pagehelper</groupId>
         <artifactId>pagehelper-spring-boot-starter</artifactId>
         <version>1.4.1</version>
@@ -224,6 +277,18 @@
           <exclusion>
             <artifactId>commons-pool2</artifactId>
             <groupId>org.apache.commons</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <!-- 验证码 -->
+      <dependency>
+        <groupId>com.github.penggle</groupId>
+        <artifactId>kaptcha</artifactId>
+        <version>2.3.2</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>javax.servlet-api</artifactId>
+            <groupId>javax.servlet</groupId>
           </exclusion>
         </exclusions>
       </dependency>

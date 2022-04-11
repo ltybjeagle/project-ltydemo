@@ -1,9 +1,14 @@
 package com.sunny.maven.cache.template;
 
 import com.sunny.maven.cache.service.ICacheFacadeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.async.WebAsyncTask;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author SUNNY
@@ -11,6 +16,7 @@ import java.util.Set;
  * @create: 2022-01-19 15:49
  */
 public class SunnyCacheTemplate {
+    private static final Logger logger = LoggerFactory.getLogger(SunnyCacheTemplate.class);
     /**
      * 缓存KEY前缀
      */
@@ -44,6 +50,15 @@ public class SunnyCacheTemplate {
      * @return 如果键值对应的缓存不存在，返回null
      */
     public Object get(String key) {
+        logger.info("{} ——> get({}) ===> 查询缓存数据", Thread.currentThread().getName(), key);
+        WebAsyncTask<Object> webAsyncTask = new WebAsyncTask<>(3000,
+                () -> redisService.get(PRE_CACHE_KEY + key));
+        webAsyncTask.onCompletion(() -> logger.info("{} 查询完成", Thread.currentThread().getName()));
+        webAsyncTask.onTimeout(() -> {
+            logger.info("{} 调用超时", Thread.currentThread().getName());
+            return new TimeoutException("调用超时");
+        });
+        //webAsyncTask
         return redisService.get(PRE_CACHE_KEY + key);
     }
     /**

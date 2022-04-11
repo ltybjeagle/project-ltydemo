@@ -17,11 +17,6 @@
 
   <dependencies>
     <dependency>
-      <artifactId>platform-basecommon-usercenter-api</artifactId>
-      <groupId>com.sunny.maven</groupId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
       <artifactId>platform-basecommon-feign</artifactId>
       <groupId>com.sunny.maven</groupId>
       <version>1.0-SNAPSHOT</version>

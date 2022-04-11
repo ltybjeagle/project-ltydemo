@@ -7,13 +7,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.sunny.maven.cache.runner.SunnyCacheRunner;
 import com.sunny.maven.cache.service.ICacheFacadeService;
+import com.sunny.maven.cache.service.redis.AccessLimiter;
 import com.sunny.maven.cache.service.redis.CacheRedisService;
 import com.sunny.maven.cache.service.redis.ReentrantLockWithRedis;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
@@ -23,6 +26,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -42,6 +46,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 @EnableConfigurationProperties(SunnyCacheProperties.class)
 @ConditionalOnProperty(prefix = "sunny.cache", value = "enabled", havingValue = "true")
+@ComponentScan(basePackages = {"com.sunny.maven.cache.aspect"})
 public class SunnyCacheAutoConfigure {
 
     @Resource
@@ -109,6 +114,18 @@ public class SunnyCacheAutoConfigure {
     }
 
     /**
+     * 限流类
+     * @param redisTemplate
+     * @param loadRedisScript
+     * @return
+     */
+    @Bean
+    public AccessLimiter accessLimiter(RedisTemplate<String, Object> redisTemplate,
+                                       DefaultRedisScript loadRedisScript) {
+        return new AccessLimiter(redisTemplate, loadRedisScript);
+    }
+
+    /**
      * 设置Redis模板对象
      * @param redisConnectionFactory 连接工厂
      * @return RedisTemplate
@@ -122,6 +139,18 @@ public class SunnyCacheAutoConfigure {
         template.setKeySerializer(jackson2JsonRedisSerializer());
         template.afterPropertiesSet();
         return template;
+    }
+
+    /**
+     * Lua脚本执行器
+     * @return DefaultRedisScript
+     */
+    @Bean
+    public DefaultRedisScript loadRedisScript() {
+        DefaultRedisScript redisScript = new DefaultRedisScript();
+        redisScript.setLocation(new ClassPathResource("rateLimiter.lua"));
+        redisScript.setResultType(Boolean.class);
+        return redisScript;
     }
 
     /**

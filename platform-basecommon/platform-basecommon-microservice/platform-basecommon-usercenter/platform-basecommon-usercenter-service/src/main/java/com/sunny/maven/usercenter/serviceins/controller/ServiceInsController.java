@@ -1,6 +1,7 @@
 package com.sunny.maven.usercenter.serviceins.controller;
 
 import com.sunny.maven.register.ServiceInsClient;
+import com.sunny.maven.usercenter.common.constant.UserCenterConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class ServiceInsController {
      */
     @GetMapping("/serviceinfo")
     public Object serviceUrl() {
-        return serviceInsClient.getServiceInsByName("usercenter-service");
+        return serviceInsClient.getServiceInsByName(UserCenterConstant.APPLICATION_NAME);
     }
 
     /**

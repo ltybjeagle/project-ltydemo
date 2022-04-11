@@ -15,10 +15,8 @@
     <description>JAVA基础</description>
     <modules>
         <module>platform-basecommon-core</module>
-        <module>platform-basecommon-boot</module>
         <module>platform-basecommon-cache</module>
-        <module>platform-basecommon-rpc</module>
-        <module>platform-basecommon-httpclient</module>
+        <module>platform-basecommon-security</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>

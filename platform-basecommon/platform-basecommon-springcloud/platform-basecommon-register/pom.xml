@@ -15,6 +15,7 @@
   <modules>
     <module>platform-basecommon-eureka</module>
     <module>platform-basecommon-eureka-client</module>
+      <module>platform-basecommon-register-client</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

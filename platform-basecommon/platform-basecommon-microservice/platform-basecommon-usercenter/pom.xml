@@ -18,6 +18,7 @@
     <module>platform-basecommon-usercenter-facade</module>
     <module>platform-basecommon-usercenter-start</module>
     <module>platform-basecommon-usercenter-client</module>
+    <module>platform-basecommon-usercenter-authentication</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

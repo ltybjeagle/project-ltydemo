@@ -18,4 +18,11 @@
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
 
+  <dependencies>
+    <dependency>
+      <artifactId>platform-basecommon-usercenter-api</artifactId>
+      <groupId>com.sunny.maven</groupId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 </project>
