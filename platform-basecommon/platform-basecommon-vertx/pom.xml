@@ -19,7 +19,7 @@
     <url>http://www.example.com</url>
 
     <properties>
-        <vertx.version>3.4.2</vertx.version>
+        <vertx.version>3.5.4</vertx.version>
         <main.class>com.sunny.maven.Main</main.class>
     </properties>
 
