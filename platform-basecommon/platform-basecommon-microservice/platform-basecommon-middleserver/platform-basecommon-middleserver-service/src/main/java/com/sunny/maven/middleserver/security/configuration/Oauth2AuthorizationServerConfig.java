@@ -8,6 +8,8 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
  * @author SUNNY
@@ -26,6 +28,10 @@ public class Oauth2AuthorizationServerConfig extends AuthorizationServerConfigur
      * 认证管理器
      */
     private AuthenticationManager authenticationManager;
+    /**
+     * 令牌管理
+     */
+    private TokenStore tokenStore;
 
     /**
      * 配置被允许访问此认证服务器的客户端详细信息
@@ -47,28 +53,42 @@ public class Oauth2AuthorizationServerConfig extends AuthorizationServerConfigur
                 authorizedGrantTypes("authorization_code", "password", "implicit",
                         "client_credentials", "refresh_token").
                 // 授权范围标识，哪部分资源可访问（all是标识，不是代表所有）
-                scopes("all").
-                // false 跳转到授权页面手动点击授权，true 不用手动授权，直接响应授权码
-                autoApprove(false).
-                // 客户端回调地址
-                redirectUris("http://www.baidu.com/");
+                scopes("all");
+        /*
+         * // false 跳转到授权页面手动点击授权，true 不用手动授权，直接响应授权码
+         * autoApprove(false).
+         * // 客户端回调地址
+         * redirectUris("http://www.baidu.com/")
+         */
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         // 密码模式需要配置认证管理器
         endpoints.authenticationManager(authenticationManager);
+        // 令牌管理策略
+        endpoints.tokenStore(tokenStore);
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        // 所有人可访问 /oauth/token_key 后面要获取公钥, 默认拒绝访问
+        security.tokenKeyAccess("permitAll()");
+        // 认证后可访问 /oauth/check_token , 默认拒绝访问
+        security.checkTokenAccess("isAuthenticated()");
     }
 
     /**
      * 构造函数
      * @param passwordEncoder 加密方式
      * @param authenticationManager 认证管理器
+     * @param tokenStore 令牌管理
      */
     @Autowired
     public Oauth2AuthorizationServerConfig(PasswordEncoder passwordEncoder,
-                                           AuthenticationManager authenticationManager) {
+                                           AuthenticationManager authenticationManager, TokenStore tokenStore) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.tokenStore = tokenStore;
     }
 }

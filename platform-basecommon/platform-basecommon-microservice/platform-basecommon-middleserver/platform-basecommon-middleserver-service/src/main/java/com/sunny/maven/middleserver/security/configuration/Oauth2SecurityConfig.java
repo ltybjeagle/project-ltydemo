@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class Oauth2SecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
-    private UserDetailsService myUserDetailsService;
+    private UserDetailsService oauth2UserDetailService;
     /**
      *  password 密码模式要使用此认证管理器
      * @return
@@ -42,9 +42,14 @@ public class Oauth2SecurityConfig extends WebSecurityConfigurerAdapter {
                 authorities("admin_role");
     }
 
+    /**
+     * 构造函数
+     * @param passwordEncoder
+     * @param oauth2UserDetailService
+     */
     @Autowired
-    public Oauth2SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService myUserDetailsService) {
+    public Oauth2SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService oauth2UserDetailService) {
         this.passwordEncoder = passwordEncoder;
-        this.myUserDetailsService = myUserDetailsService;
+        this.oauth2UserDetailService = oauth2UserDetailService;
     }
 }
