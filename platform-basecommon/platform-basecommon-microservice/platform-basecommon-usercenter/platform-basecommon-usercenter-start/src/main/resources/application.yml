@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: usercenter-service
-  profiles:
-    active: SpringCloud    # SpringCloud：eureka + feign
-server:
-    port: 8081

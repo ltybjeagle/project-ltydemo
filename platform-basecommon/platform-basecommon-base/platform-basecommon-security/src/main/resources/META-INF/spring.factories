@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sunny.maven.security.config.AuthorizeConfig,\
-  com.sunny.maven.security.config.JwtTokenProperties, \
-  com.sunny.maven.security.config.JwtTokenStoreConfig
