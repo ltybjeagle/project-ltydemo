@@ -14,7 +14,7 @@
   <name>platform-basecommon-microservice</name>
   <modules>
     <module>platform-basecommon-portal</module>
-    <module>platform-basecommon-usercenter</module>
+    <module>platform-basecommon-middleserver</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

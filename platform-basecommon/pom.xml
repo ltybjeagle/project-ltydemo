@@ -190,6 +190,11 @@
       <!-- jackson -->
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>2.13.1</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
         <version>2.13.1</version>
       </dependency>
@@ -302,7 +307,7 @@
       <dependency>
         <groupId>cn.hutool</groupId>
         <artifactId>hutool-all</artifactId>
-        <version>5.3.10</version>
+        <version>5.5.9</version>
       </dependency>
       <!-- 参数校验类 -->
       <dependency>

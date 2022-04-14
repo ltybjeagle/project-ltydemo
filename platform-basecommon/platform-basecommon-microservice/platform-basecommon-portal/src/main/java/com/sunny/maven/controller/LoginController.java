@@ -1,6 +1,5 @@
 package com.sunny.maven.controller;
 
-import com.sunny.maven.usercenter.api.UserInfoApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class LoginController {
 
 //    private RestTemplate restTemplate;
 //    private static final String USER_CENTER = "usercenter-service";
-    private UserInfoApi userInfoApi;
+//   private UserInfoApi userInfoApi;
 
     @GetMapping("/portal/login")
     public String callHello() {
@@ -27,19 +26,20 @@ public class LoginController {
         stopWatch.start();
 //        String url = String.format("http://%s/user/hello", USER_CENTER);
 //        logger.info("restTemplate：{}", restTemplate.getForObject(url, String.class));
-        String result = userInfoApi.getTestUserName();
+//        String result = userInfoApi.getTestUserName();
+        String result = "test";
         logger.info("Feign client：{}", result);
         stopWatch.stop();
         logger.info("result：{}", stopWatch.getTotalTimeMillis());
         return result;
     }
 
-    /**
-     * 构造函数
-     * @param userInfoApi 用户中心用户信息API
-     */
-    @Autowired
-    public LoginController(UserInfoApi userInfoApi) {
-        this.userInfoApi = userInfoApi;
-    }
+//    /**
+//     * 构造函数
+//     * @param userInfoApi 用户中心用户信息API
+//     */
+//    @Autowired
+//    public LoginController(UserInfoApi userInfoApi) {
+//        this.userInfoApi = userInfoApi;
+//    }
 }

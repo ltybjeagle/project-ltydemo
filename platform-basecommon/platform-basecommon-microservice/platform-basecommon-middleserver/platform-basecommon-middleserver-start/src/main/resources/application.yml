@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  thymeleaf:
+    cache: false
+  application:
+    name: usercenter-service
+  datasource:
+    url: jdbc:oracle:thin:@192.168.100.80:1521/orcl
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: mid_330000_bak
+    password: 1
+    # 根据自身业务及事务大小来设置  config.decrypt=true;config.decrypt.key=${spring.datasource.publickey};
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  redis:
+    host: 192.168.100.148
+    port: 6379
+#  profiles:
+#    active: SpringCloud    # SpringCloud：eureka + feign

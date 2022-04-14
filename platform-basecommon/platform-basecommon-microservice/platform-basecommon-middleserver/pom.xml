@@ -9,13 +9,14 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>platform-basecommon-portal</artifactId>
+  <artifactId>platform-basecommon-middleserver</artifactId>
 
-  <name>platform-basecommon-portal</name>
-  <packaging>jar</packaging>
+  <name>platform-basecommon-middleserver</name>
+  <modules>
+    <module>platform-basecommon-middleserver-start</module>
+    <module>platform-basecommon-middleserver-service</module>
+  </modules>
+  <packaging>pom</packaging>
   <url>http://www.example.com</url>
 
-  <dependencies>
-
-  </dependencies>
 </project>
