@@ -11,8 +11,7 @@
     <module>platform-basecommon-base</module>
     <module>platform-basecommon-springcloud</module>
     <module>platform-basecommon-microservice</module>
-    <module>platform-basecommon-vertx</module>
-    <module>platform-basecommon-busservice</module>
+    <module>platform-basecommon-alibaba</module>
   </modules>
 
   <name>platform-basecommon</name>
@@ -46,6 +45,7 @@
     <protostuff.version>1.2.2</protostuff.version>
     <httpcomponents.version>4.5.13</httpcomponents.version>
     <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
+    <spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
   </properties>
 
   <dependencies>

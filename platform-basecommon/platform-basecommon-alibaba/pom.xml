@@ -9,23 +9,28 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>platform-basecommon-busservice</artifactId>
+  <artifactId>platform-basecommon-alibaba</artifactId>
 
-  <name>platform-basecommon-busservice</name>
+  <name>platform-basecommon-alibaba</name>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
 
   <dependencyManagement>
     <dependencies>
-      <!-- 引入spring cloud的依赖 -->
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring.cloud.version}</version>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring-cloud-alibaba.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
-
 </project>

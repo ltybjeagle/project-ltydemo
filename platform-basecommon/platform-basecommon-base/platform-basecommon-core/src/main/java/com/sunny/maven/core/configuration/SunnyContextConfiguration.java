@@ -86,6 +86,8 @@ public class SunnyContextConfiguration implements AsyncConfigurer {
         executor.setThreadNamePrefix(asyncPoolProperties.getThreadNamePrefix());
         // 设置队列满的情况下，直接使用主线程执行任务
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        // 初始化
+        executor.initialize();
         return new AsyncTaskHandler(executor);
     }
 
