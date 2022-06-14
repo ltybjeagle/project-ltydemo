@@ -10,7 +10,6 @@
   <modules>
     <module>platform-basecommon-base</module>
     <module>platform-basecommon-springcloud</module>
-    <module>platform-basecommon-microservice</module>
     <module>platform-basecommon-alibaba</module>
   </modules>
 
