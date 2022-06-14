@@ -8,7 +8,6 @@
   <artifactId>platform-basecommon</artifactId>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>platform-basecommon-springcloud</module>
     <module>platform-basecommon-alibaba</module>
   </modules>
 
