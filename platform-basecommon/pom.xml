@@ -8,6 +8,8 @@
   <artifactId>platform-basecommon</artifactId>
   <version>1.0-SNAPSHOT</version>
   <modules>
+    <module>platform-basecommon-base</module>
+    <module>platform-basecommon-microservice</module>
   </modules>
 
   <name>platform-basecommon</name>
@@ -32,18 +34,22 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>11</java.version>
     <jaxb.version>2.3.1</jaxb.version>
-
     <spring-cloud.version>2021.0.3</spring-cloud.version>
     <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
+
+    <common.logging>1.2</common.logging>
+    <httpcomponents.version>4.5.13</httpcomponents.version>
+    <slf4j.version>1.7.36</slf4j.version>
+    <logback.version>1.2.11</logback.version>
+    <fastjson.version>1.2.83</fastjson.version>
+    <com-baomidou-mybatis.version>3.5.1</com-baomidou-mybatis.version>
+    <oracle.version>12.1.0.1-atlassian-hosted</oracle.version>
+    <netty.version>4.1.59.Final</netty.version>
+    <druid.version>1.2.8</druid.version>
+    <minio.version>8.0.3</minio.version>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13-beta-3</version>
-      <scope>test</scope>
-    </dependency>
     <!-- JDK11引入依赖包 -->
     <dependency>
       <groupId>javax.xml.bind</groupId>
@@ -59,6 +65,18 @@
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
       <version>${jaxb.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13-beta-3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.24</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
@@ -77,6 +95,95 @@
         <version>${spring-cloud-alibaba.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-zipkin</artifactId>
+        <version>2.2.8.RELEASE</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>${common.logging}</version>
+      </dependency>
+      <!-- Apache Http Client -->
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${httpcomponents.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpmime</artifactId>
+        <version>${httpcomponents.version}</version>
+      </dependency>
+      <!-- log -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>${logback.version}</version>
+      </dependency>
+      <!-- json tools -->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+      </dependency>
+      <!-- 缓存框架 -->
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>30.1.1-jre</version>
+      </dependency>
+      <!-- 持久层 -->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${com-baomidou-mybatis.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oracle</groupId>
+        <artifactId>ojdbc6</artifactId>
+        <version>${oracle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid-spring-boot-starter</artifactId>
+        <version>1.2.11</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid</artifactId>
+        <version>${druid.version}</version>
+      </dependency>
+      <!-- netty -->
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-all</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-transport</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <!-- minio oss-->
+      <dependency>
+        <groupId>io.minio</groupId>
+        <artifactId>minio</artifactId>
+        <version>${minio.version}</version>
+        <optional>true</optional>
+      </dependency>
+      <!-- JimuReport -->
+      <dependency>
+        <groupId>org.jeecgframework.jimureport</groupId>
+        <artifactId>jimureport-spring-boot-starter</artifactId>
+        <version>1.5.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -123,12 +230,18 @@
   <repositories>
     <repository>
       <id>aliyun</id>
-      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
+      <name>aliyun Repository</name>
+      <url>https://maven.aliyun.com/repository/public</url>
       <snapshots>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>jeecg</id>
+      <name>jeecg Repository</name>
+      <url>https://maven.jeecg.org/nexus/content/repositories/jeecg</url>
+      <snapshots>
+        <enabled>false</enabled>
       </snapshots>
     </repository>
   </repositories>
