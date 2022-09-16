@@ -1,0 +1,8 @@
+server:
+  port: 9010
+  servlet:
+    context-path: /config
+
+spring:
+  application:
+    name: server-config

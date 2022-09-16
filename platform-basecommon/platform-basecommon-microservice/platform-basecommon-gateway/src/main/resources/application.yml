@@ -1,0 +1,41 @@
+server:
+  port: 10001
+spring:
+  application:
+    name: server-gateway
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    # alibaba在2020版本之后不使用ribbon，这里使用loadbalancer代替，在配置文件中禁用ribbon
+    loadbalancer:
+      ribbon:
+        enable: false
+    sentinel:
+      transport:
+        port: 7777
+        dashboard: 127.0.0.1:8888
+      web-context-unify: false
+      eager: true # 表示程序启动时，流控规则是否立即注册到Sentinel，配置为true表示立即注册到Sentinel
+      log:
+        dir: D:\sentinel\logs\csp
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowCredentials: true
+            allowedHeaders: "*"
+      discovery:
+        locator:
+          enabled: true
+          route-id-prefix: gateway-   # 生成流控规则API名称的前缀
+  sleuth:
+    sampler:
+      probability: 1.0 # 配置抽样采集数据
+  zipkin:
+    base-url: http://127.0.0.1:9411 # ZipKin服务端的地址
+    discovery-client-enabled: false # 配置成false，使Nacos将其当成一个URL，不要按服务名处理
