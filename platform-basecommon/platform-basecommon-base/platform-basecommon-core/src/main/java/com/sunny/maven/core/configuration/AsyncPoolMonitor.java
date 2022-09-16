@@ -16,10 +16,13 @@ public class AsyncPoolMonitor implements Runnable {
 
     private int seconds;
 
+    private String asyncName;
+
     private boolean run = true;
 
-    public AsyncPoolMonitor(ThreadPoolExecutor executor, int delay) {
+    public AsyncPoolMonitor(ThreadPoolExecutor executor, String asyncName, int delay) {
         this.executor = executor;
+        this.asyncName = asyncName;
         this.seconds = delay;
     }
 
@@ -32,7 +35,8 @@ public class AsyncPoolMonitor implements Runnable {
         while (run) {
             log.info(
                     String.format(
-                            "[monitor] [%d/%d] Active: %d, Completed: %d, Task: %d, isShutdown: %s, isTerminated: %s",
+                            "[%s monitor] [%d/%d] Active:%d, Completed:%d, Task:%d, isShutdown:%s, isTerminated:%s",
+                            asyncName,
                             this.executor.getPoolSize(),
                             this.executor.getCorePoolSize(),
                             this.executor.getActiveCount(),

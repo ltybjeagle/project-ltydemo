@@ -1,6 +1,4 @@
-package com.sunny.maven.core.utils.psswd;
-
-import com.sunny.maven.core.utils.md5.Md5Hash;
+package com.sunny.maven.core.utils.crypto;
 
 import java.util.Objects;
 

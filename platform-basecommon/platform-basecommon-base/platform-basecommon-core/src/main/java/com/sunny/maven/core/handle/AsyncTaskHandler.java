@@ -18,12 +18,14 @@ import java.util.concurrent.Future;
 @Slf4j
 public class AsyncTaskHandler implements AsyncTaskExecutor, InitializingBean, DisposableBean {
     private final AsyncTaskExecutor executor;
+    private final String taskName;
     /**
      * 构造函数
      * @param executor 线程池
      */
-    public AsyncTaskHandler(AsyncTaskExecutor executor) {
+    public AsyncTaskHandler(AsyncTaskExecutor executor, String taskName) {
         this.executor = executor;
+        this.taskName = taskName;
     }
 
     @Override
@@ -39,9 +41,10 @@ public class AsyncTaskHandler implements AsyncTaskExecutor, InitializingBean, Di
         if (executor instanceof InitializingBean) {
             InitializingBean bean = (InitializingBean) executor;
             bean.afterPropertiesSet();
-            log.info("start AsyncPoolMonitor!");
+            log.info("start {} Monitor!", taskName);
             AsyncPoolMonitor monitor =
-                    new AsyncPoolMonitor(((ThreadPoolTaskExecutor) executor).getThreadPoolExecutor(), 1);
+                    new AsyncPoolMonitor(((ThreadPoolTaskExecutor) executor).getThreadPoolExecutor(), taskName,
+                            60);
             new Thread(monitor).start();
         }
     }

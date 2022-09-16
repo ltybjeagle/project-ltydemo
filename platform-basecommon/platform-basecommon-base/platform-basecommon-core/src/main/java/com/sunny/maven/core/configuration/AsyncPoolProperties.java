@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @description: 线程池配置
  * @create: 2022-09-06 15:08
  */
-@ConfigurationProperties("sunny.async.pool")
+@ConfigurationProperties("platform.async.pool")
 public class AsyncPoolProperties {
     /**
      * 核心线程数
@@ -28,7 +28,7 @@ public class AsyncPoolProperties {
     /**
      * 线程名称前缀
      */
-    private String threadNamePrefix = "sunny-async-executor-";
+    private String threadNamePrefix = "platform-executor-";
 
     public int getCorePoolSize() {
         return corePoolSize;

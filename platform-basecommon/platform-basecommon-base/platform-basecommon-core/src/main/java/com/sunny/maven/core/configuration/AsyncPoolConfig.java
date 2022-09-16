@@ -25,8 +25,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableAsync
 @EnableScheduling
 @EnableConfigurationProperties(AsyncPoolProperties.class)
-public class SunnyContextConfiguration implements AsyncConfigurer {
-
+public class AsyncPoolConfig implements AsyncConfigurer {
+    private static final String ASYNC_EXECUTOR = "asyncExecutor";
     @Resource
     private AsyncPoolProperties asyncPoolProperties;
 
@@ -35,19 +35,19 @@ public class SunnyContextConfiguration implements AsyncConfigurer {
      * @return Executor
      */
     @Override
-    @Bean(name = "asyncExecutor")
+    @Bean(name = ASYNC_EXECUTOR)
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(asyncPoolProperties.getCorePoolSize());
         executor.setMaxPoolSize(asyncPoolProperties.getMaxPoolSize());
         executor.setQueueCapacity(asyncPoolProperties.getQueueCapacity());
         executor.setKeepAliveSeconds(asyncPoolProperties.getKeepAliveSeconds());
-        executor.setThreadNamePrefix(asyncPoolProperties.getThreadNamePrefix());
+        executor.setThreadNamePrefix("Async-executor-");
         // 设置队列满的情况下，直接使用主线程执行任务
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         // 初始化
         executor.initialize();
-        return new AsyncTaskHandler(executor);
+        return new AsyncTaskHandler(executor, ASYNC_EXECUTOR);
     }
 
     /**

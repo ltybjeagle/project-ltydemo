@@ -1,4 +1,4 @@
-package com.sunny.maven.core.utils.md5;
+package com.sunny.maven.core.utils.crypto;
 
 import lombok.extern.slf4j.Slf4j;
 
