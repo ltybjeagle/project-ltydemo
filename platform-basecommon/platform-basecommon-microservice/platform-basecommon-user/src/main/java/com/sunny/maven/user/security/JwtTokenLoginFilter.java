@@ -1,5 +1,6 @@
 package com.sunny.maven.user.security;
 
+import com.sunny.maven.cache.template.CacheTemplate;
 import com.sunny.maven.core.common.resp.R;
 import com.sunny.maven.core.utils.web.ResponseUtils;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,10 +25,13 @@ import java.util.Map;
 public class JwtTokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
     private JwtRsaKeyProperties jwtRsaKeyProperties;
+    private CacheTemplate cacheTemplate;
 
-    public JwtTokenLoginFilter(AuthenticationManager authenticationManager, JwtRsaKeyProperties jwtRsaKeyProperties) {
+    public JwtTokenLoginFilter(AuthenticationManager authenticationManager, JwtRsaKeyProperties jwtRsaKeyProperties,
+                               CacheTemplate cacheTemplate) {
         this.authenticationManager = authenticationManager;
         this.jwtRsaKeyProperties = jwtRsaKeyProperties;
+        this.cacheTemplate = cacheTemplate;
         this.setPostOnly(false);
         this.setRequiresAuthenticationRequestMatcher(
                 new AntPathRequestMatcher("/auth/login", "POST"));
@@ -60,6 +64,7 @@ public class JwtTokenLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
         JwtTokenUser jwtTokenUser = (JwtTokenUser) authResult.getPrincipal();
+        cacheTemplate.put(jwtTokenUser.getToken(), jwtTokenUser);
         String token = JwtTokenUtil.generateTokenExpireInMinutes(jwtTokenUser, jwtRsaKeyProperties.getPrivateKey(),
                 30);
         ResponseUtils.out(response, R.ok().data(token));

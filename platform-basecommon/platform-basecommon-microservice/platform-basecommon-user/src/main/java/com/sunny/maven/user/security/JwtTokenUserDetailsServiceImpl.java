@@ -1,5 +1,7 @@
 package com.sunny.maven.user.security;
 
+import com.sunny.maven.core.utils.id.SnowFlake;
+import com.sunny.maven.core.utils.id.SnowFlakeFactory;
 import com.sunny.maven.user.entity.Role;
 import com.sunny.maven.user.entity.User;
 import com.sunny.maven.user.mapper.RoleMapper;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class JwtTokenUserDetailsServiceImpl implements UserDetailsService {
     private UserMapper userMapper;
     private RoleMapper roleMapper;
+    private SnowFlake snowFlake;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -33,7 +36,8 @@ public class JwtTokenUserDetailsServiceImpl implements UserDetailsService {
         List<Role> roles = roleMapper.selectRolesByUserId(user.getGuid());
         List<SimpleGrantedAuthority> collect = roles.stream().
                 map(Role::getGuid).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        return new JwtTokenUser(user.getCode(), user.getPassword(), Integer.valueOf(user.getStatus()), collect);
+        String token = Long.toString(snowFlake.nextId());
+        return new JwtTokenUser(user.getCode(), user.getPassword(), Integer.valueOf(user.getStatus()), collect, token);
     }
 
     /**
@@ -45,5 +49,6 @@ public class JwtTokenUserDetailsServiceImpl implements UserDetailsService {
     public JwtTokenUserDetailsServiceImpl(UserMapper userMapper, RoleMapper roleMapper) {
         this.userMapper = userMapper;
         this.roleMapper = roleMapper;
+        snowFlake = SnowFlakeFactory.getSnowFlake();
     }
 }

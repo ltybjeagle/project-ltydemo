@@ -15,17 +15,20 @@ public class JwtTokenUser implements UserDetails {
     private String username;
     @JSONField(serialize = false)
     private String password;
+    @JSONField(serialize = false)
     private Integer state;
     @JSONField(serialize = false)
     private Collection<? extends GrantedAuthority> authorities;
+    private String token;
     public JwtTokenUser() {
     }
     public JwtTokenUser(String username, String password, Integer state,
-                        Collection<? extends GrantedAuthority> authorities) {
+                        Collection<? extends GrantedAuthority> authorities, String token) {
         this.username = username;
         this.password = password;
         this.state = state;
         this.authorities = authorities;
+        this.token = token;
     }
 
     @Override
@@ -43,16 +46,19 @@ public class JwtTokenUser implements UserDetails {
         return this.username;
     }
 
+    @JSONField(serialize = false)
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JSONField(serialize = false)
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JSONField(serialize = false)
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
@@ -61,5 +67,13 @@ public class JwtTokenUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return state == 1;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

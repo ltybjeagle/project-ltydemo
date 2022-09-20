@@ -69,6 +69,18 @@ public class JwtTokenUtil {
     }
 
     /**
+     * 校验token是否失效
+     * @param token
+     * @param token
+     * @return
+     */
+    public static Boolean isTokenExpired(String token, PublicKey publicKey) {
+        JwtTokenPayload claims = getInfoFromToken(token, publicKey);
+        Date expiration = claims.getExpiration();
+        return expiration.before(new Date());
+    }
+
+    /**
      * 获取token中的用户信息
      * @param token 用户请求中的令牌
      * @param publicKey 公钥

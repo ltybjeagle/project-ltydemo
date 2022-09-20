@@ -101,6 +101,17 @@
         <artifactId>spring-cloud-starter-zipkin</artifactId>
         <version>2.2.8.RELEASE</version>
       </dependency>
+      <!-- apache工具类 -->
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-pool2</artifactId>
+        <version>2.11.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.12.0</version>
+      </dependency>
       <dependency>
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
@@ -139,6 +150,17 @@
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>30.1.1-jre</version>
+      </dependency>
+      <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>3.9.0</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>commons-pool2</artifactId>
+            <groupId>org.apache.commons</groupId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <!-- 持久层 -->
       <dependency>

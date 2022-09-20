@@ -1,6 +1,9 @@
 package com.sunny.maven.user.security;
 
+import com.sunny.maven.cache.service.ICacheFacadeService;
+import com.sunny.maven.cache.template.CacheTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,7 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class JwtTokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    private static final String TOKEN_CACHE_KEY = "PLATFORM.CACHE.TOKEN.USER:";
     /**
      * 密码管理工具
      */
@@ -32,6 +35,7 @@ public class JwtTokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 认证密钥
      */
     private JwtRsaKeyProperties jwtRsaKeyProperties;
+    private ICacheFacadeService cacheRedisService;
 
     /**
      * 配置设置，设置退出的地址和token
@@ -46,10 +50,15 @@ public class JwtTokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers("/user/auth/**", "/auth/**", "/login").permitAll().
                 anyRequest().authenticated().
                 and().formLogin().and().
-                addFilter(new JwtTokenLoginFilter(authenticationManager(), jwtRsaKeyProperties)).
-                addFilter(new JwtTokenAuthenticationFilter(authenticationManager())).
+                addFilter(new JwtTokenLoginFilter(authenticationManager(), jwtRsaKeyProperties, cacheTokenTemplate())).
+                addFilter(new JwtTokenAuthenticationFilter(authenticationManager(), jwtRsaKeyProperties)).
                 // 未授权处理
                 exceptionHandling().authenticationEntryPoint(new JwtTokenUnauthorizedEntryPoint());
+    }
+
+    @Bean
+    public CacheTemplate cacheTokenTemplate() {
+        return new CacheTemplate(TOKEN_CACHE_KEY, cacheRedisService);
     }
 
     /**
@@ -67,10 +76,11 @@ public class JwtTokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     public JwtTokenWebSecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService,
-                                     JwtRsaKeyProperties jwtRsaKeyProperties) {
+                                     JwtRsaKeyProperties jwtRsaKeyProperties, ICacheFacadeService cacheRedisService) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.jwtRsaKeyProperties = jwtRsaKeyProperties;
+        this.cacheRedisService = cacheRedisService;
     }
 
 }

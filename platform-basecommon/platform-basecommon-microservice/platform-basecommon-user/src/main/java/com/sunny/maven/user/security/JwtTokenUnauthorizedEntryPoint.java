@@ -21,6 +21,6 @@ public class JwtTokenUnauthorizedEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
-        ResponseUtils.out(response, R.error().message("认证失败!"));
+        ResponseUtils.out(response, R.error().message("登录失败!"));
     }
 }
