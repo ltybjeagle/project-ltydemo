@@ -2,6 +2,7 @@ package com.sunny.maven.user.security;
 
 import com.sunny.maven.cache.service.ICacheFacadeService;
 import com.sunny.maven.cache.template.CacheTemplate;
+import com.sunny.maven.core.common.constants.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class JwtTokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String TOKEN_CACHE_KEY = "PLATFORM.CACHE.TOKEN.USER:";
     /**
      * 密码管理工具
      */
@@ -51,14 +51,15 @@ public class JwtTokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 anyRequest().authenticated().
                 and().formLogin().and().
                 addFilter(new JwtTokenLoginFilter(authenticationManager(), jwtRsaKeyProperties, cacheTokenTemplate())).
-                addFilter(new JwtTokenAuthenticationFilter(authenticationManager(), jwtRsaKeyProperties)).
+                addFilter(new JwtTokenAuthenticationFilter(authenticationManager(), jwtRsaKeyProperties,
+                        cacheTokenTemplate())).
                 // 未授权处理
                 exceptionHandling().authenticationEntryPoint(new JwtTokenUnauthorizedEntryPoint());
     }
 
     @Bean
     public CacheTemplate cacheTokenTemplate() {
-        return new CacheTemplate(TOKEN_CACHE_KEY, cacheRedisService);
+        return new CacheTemplate(CommonConstant.Redis.TOKEN_CACHE_KEY, cacheRedisService);
     }
 
     /**

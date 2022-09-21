@@ -1,6 +1,7 @@
 package com.sunny.maven.cache.service;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author SUNNY
@@ -8,6 +9,14 @@ import java.util.Set;
  * @create: 2022-09-20 10:12
  */
 public interface ICacheFacadeService {
+    /**
+     * 字符串类型设置（有失效时间）
+     * @param key
+     * @param value
+     * @param expire
+     * @param timeUnit
+     */
+    void put(String key, Object value, long expire, TimeUnit timeUnit);
     /**
      * 字符串类型设置
      * @param key

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.sunny.maven.cache.deserializer.SimpleGrantedAuthorityDeserializer;
 import com.sunny.maven.cache.service.redis.CacheRedisService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,6 +22,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.annotation.Resource;
@@ -145,6 +148,9 @@ public class CacheAutoConfigure {
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL,
                 JsonTypeInfo.As.WRAPPER_ARRAY);
+        // 解决jackson2无法反序列化SimpleGrantedAuthority问题
+        om.registerModule(new SimpleModule().addDeserializer(SimpleGrantedAuthority.class,
+                new SimpleGrantedAuthorityDeserializer()));
         jackson2JsonRedisSerializer.setObjectMapper(om);
         return jackson2JsonRedisSerializer;
     }

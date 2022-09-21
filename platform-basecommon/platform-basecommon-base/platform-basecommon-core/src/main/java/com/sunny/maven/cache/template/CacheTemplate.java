@@ -4,6 +4,7 @@ import com.sunny.maven.cache.service.ICacheFacadeService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author SUNNY
@@ -20,6 +21,16 @@ public class CacheTemplate {
      * redis缓存对象
      */
     private ICacheFacadeService redisService;
+    /**
+     * 将结果value放入缓存，键值为key（有失效时间）
+     * @param key
+     * @param value
+     * @param expire
+     * @param timeUnit
+     */
+    public void put(String key, Object value, long expire, TimeUnit timeUnit) {
+        redisService.put(PRE_CACHE_KEY + key, value, expire, timeUnit);
+    }
     /**
      * 将结果value放入缓存，键值为key
      * @param key

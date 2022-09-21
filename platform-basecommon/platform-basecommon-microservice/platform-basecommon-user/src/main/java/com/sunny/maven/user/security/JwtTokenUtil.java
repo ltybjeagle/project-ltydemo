@@ -1,10 +1,7 @@
 package com.sunny.maven.user.security;
 
 import com.sunny.maven.core.utils.json.JsonUtils;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -75,9 +72,12 @@ public class JwtTokenUtil {
      * @return
      */
     public static Boolean isTokenExpired(String token, PublicKey publicKey) {
-        JwtTokenPayload claims = getInfoFromToken(token, publicKey);
-        Date expiration = claims.getExpiration();
-        return expiration.before(new Date());
+        Jws<Claims> claimsJws = null;
+        try {
+            claimsJws =  parserToken(token, publicKey);
+        } catch (ExpiredJwtException ignored) {
+        }
+        return Optional.ofNullable(claimsJws).isPresent();
     }
 
     /**

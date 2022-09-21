@@ -1,6 +1,7 @@
 package com.sunny.maven.user.security;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +12,7 @@ import java.util.Collection;
  * @description: 令牌用户
  * @create: 2022-09-07 15:44
  */
+@JsonIgnoreProperties(value = {"accountNonExpired", "accountNonLocked", "credentialsNonExpired", "enabled"})
 public class JwtTokenUser implements UserDetails {
     private String username;
     @JSONField(serialize = false)

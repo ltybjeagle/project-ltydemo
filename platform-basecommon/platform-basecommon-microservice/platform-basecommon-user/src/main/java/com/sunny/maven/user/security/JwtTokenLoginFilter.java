@@ -1,6 +1,7 @@
 package com.sunny.maven.user.security;
 
 import com.sunny.maven.cache.template.CacheTemplate;
+import com.sunny.maven.core.common.constants.CommonConstant;
 import com.sunny.maven.core.common.resp.R;
 import com.sunny.maven.core.utils.web.ResponseUtils;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author SUNNY
@@ -64,9 +66,9 @@ public class JwtTokenLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
         JwtTokenUser jwtTokenUser = (JwtTokenUser) authResult.getPrincipal();
-        cacheTemplate.put(jwtTokenUser.getToken(), jwtTokenUser);
+        cacheTemplate.put(jwtTokenUser.getToken(), jwtTokenUser, CommonConstant.SESSION_REDIS_TIME, TimeUnit.MINUTES);
         String token = JwtTokenUtil.generateTokenExpireInMinutes(jwtTokenUser, jwtRsaKeyProperties.getPrivateKey(),
-                30);
+                CommonConstant.EXPIRATION_TIME);
         ResponseUtils.out(response, R.ok().data(token));
     }
 

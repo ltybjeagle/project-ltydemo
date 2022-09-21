@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author SUNNY
@@ -12,6 +13,18 @@ import java.util.Set;
  * @create: 2022-09-20 10:19
  */
 public class CacheRedisService implements ICacheFacadeService {
+
+    /**
+     * 字符串类型设置（有失效时间）
+     * @param key
+     * @param value
+     * @param expire
+     * @param timeUnit
+     */
+    @Override
+    public void put(String key, Object value, long expire, TimeUnit timeUnit) {
+        valueOperations.set(key, value, expire, timeUnit);
+    }
     /**
      * 字符串类型设置
      * @param key
