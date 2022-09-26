@@ -1,8 +1,7 @@
 package com.sunny.maven.core.common.context;
 
+import com.sunny.maven.core.common.domain.UserDto;
 import lombok.Data;
-
-import java.util.Map;
 
 /**
  * @author SUNNY
@@ -22,5 +21,5 @@ public class UserInfoContext {
     /**
      * 用户信息
      */
-    private Map<String, Object> userDto;
+    private UserDto userDto;
 }

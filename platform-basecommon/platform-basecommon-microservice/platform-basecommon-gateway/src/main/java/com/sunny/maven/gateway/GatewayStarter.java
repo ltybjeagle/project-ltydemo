@@ -2,7 +2,7 @@ package com.sunny.maven.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author SUNNY
@@ -10,10 +10,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @create: 2022-07-01 11:22
  */
 @SpringBootApplication
-@EnableDiscoveryClient
+@EnableFeignClients
 public class GatewayStarter {
     public static void main(String[] args) {
-        System.setProperty("csp.sentinel.app.type", "1");
         SpringApplication.run(GatewayStarter.class, args);
     }
 }

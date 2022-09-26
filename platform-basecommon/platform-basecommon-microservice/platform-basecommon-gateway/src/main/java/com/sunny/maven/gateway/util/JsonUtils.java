@@ -1,4 +1,4 @@
-package com.sunny.maven.core.utils.json;
+package com.sunny.maven.gateway.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

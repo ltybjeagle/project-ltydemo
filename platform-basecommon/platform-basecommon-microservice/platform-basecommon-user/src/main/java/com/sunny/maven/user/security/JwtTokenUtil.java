@@ -77,7 +77,30 @@ public class JwtTokenUtil {
             claimsJws =  parserToken(token, publicKey);
         } catch (ExpiredJwtException ignored) {
         }
-        return Optional.ofNullable(claimsJws).isPresent();
+        return Optional.ofNullable(claimsJws).isEmpty();
+    }
+
+    /**
+     * 刷新token
+     * @param token 用户请求中的令牌
+     * @param publicKey 公钥
+     * @param privateKey 私钥
+     * @param expire 过期时间，单位分钟
+     * @param userType
+     * @param <T>
+     * @return
+     */
+    public static <T> String refreshToken(String token, PublicKey publicKey, PrivateKey privateKey, int expire
+            , Class<T> userType) {
+        String refreshedToken;
+        try {
+            JwtTokenPayload<T> claims = getInfoFromToken(token, publicKey, userType);
+            refreshedToken = generateTokenExpireInMinutes(claims.getUserInfo(), privateKey, expire);
+        } catch (Exception e) {
+            refreshedToken = null;
+
+        }
+        return refreshedToken;
     }
 
     /**

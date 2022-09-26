@@ -141,7 +141,8 @@ public class CacheAutoConfigure {
      * 设置CacheManager的值序列化方式为json序列化
      * @return Jackson2JsonRedisSerializer
      */
-    private Jackson2JsonRedisSerializer jackson2JsonRedisSerializer() {
+    @Bean
+    public Jackson2JsonRedisSerializer jackson2JsonRedisSerializer() {
         // 设置CacheManager的值序列化方式为json序列化
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();

@@ -1,7 +1,11 @@
 package com.sunny.maven.user.security;
 
+import com.google.common.collect.Maps;
 import com.sunny.maven.cache.template.CacheTemplate;
 import com.sunny.maven.core.common.constants.CommonConstant;
+import com.sunny.maven.core.common.context.UserInfoContext;
+import com.sunny.maven.core.common.context.UserInfoContextHolder;
+import com.sunny.maven.core.common.domain.UserDto;
 import com.sunny.maven.core.common.resp.R;
 import com.sunny.maven.core.utils.web.ResponseUtils;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -66,10 +71,17 @@ public class JwtTokenLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
         JwtTokenUser jwtTokenUser = (JwtTokenUser) authResult.getPrincipal();
-        cacheTemplate.put(jwtTokenUser.getToken(), jwtTokenUser, CommonConstant.SESSION_REDIS_TIME, TimeUnit.MINUTES);
+        String tokenId = jwtTokenUser.getToken();
+        UserDto userDto = UserDto.createUserDto();
+        userDto.setUsername(jwtTokenUser.getUsername());
+        userDto.setAuthorities(jwtTokenUser.getAuthorities());
+        UserInfoContext userInfoContext = UserInfoContextHolder.createEmptyContext();
+        userInfoContext.setUserDto(userDto);
         String token = JwtTokenUtil.generateTokenExpireInMinutes(jwtTokenUser, jwtRsaKeyProperties.getPrivateKey(),
                 CommonConstant.EXPIRATION_TIME);
-        ResponseUtils.out(response, R.ok().data(token));
+        userInfoContext.setTokenId(token);
+        cacheTemplate.put(tokenId, userInfoContext, CommonConstant.SESSION_REDIS_TIME, TimeUnit.MINUTES);
+        ResponseUtils.out(response, R.ok().data(tokenId));
     }
 
     /**

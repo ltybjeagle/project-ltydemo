@@ -14,6 +14,7 @@ import java.util.Collection;
  */
 @JsonIgnoreProperties(value = {"accountNonExpired", "accountNonLocked", "credentialsNonExpired", "enabled"})
 public class JwtTokenUser implements UserDetails {
+    @JSONField(serialize = false)
     private String username;
     @JSONField(serialize = false)
     private String password;
@@ -77,5 +78,13 @@ public class JwtTokenUser implements UserDetails {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

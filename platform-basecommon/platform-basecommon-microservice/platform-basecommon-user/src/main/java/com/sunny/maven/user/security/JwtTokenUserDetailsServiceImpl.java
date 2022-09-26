@@ -1,11 +1,13 @@
 package com.sunny.maven.user.security;
 
+import com.sunny.maven.core.utils.crypto.Base64Utils;
 import com.sunny.maven.core.utils.id.SnowFlake;
 import com.sunny.maven.core.utils.id.SnowFlakeFactory;
 import com.sunny.maven.user.entity.Role;
 import com.sunny.maven.user.entity.User;
 import com.sunny.maven.user.mapper.RoleMapper;
 import com.sunny.maven.user.mapper.UserMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,8 +38,13 @@ public class JwtTokenUserDetailsServiceImpl implements UserDetailsService {
         List<Role> roles = roleMapper.selectRolesByUserId(user.getGuid());
         List<SimpleGrantedAuthority> collect = roles.stream().
                 map(Role::getGuid).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        String token = Long.toString(snowFlake.nextId());
-        return new JwtTokenUser(user.getCode(), user.getPassword(), Integer.valueOf(user.getStatus()), collect, token);
+        String tokenId = Long.toString(snowFlake.nextId());
+        try {
+            tokenId = Base64Utils.encryptBase64(tokenId.getBytes());
+        } catch (Exception e) {
+        }
+        return new JwtTokenUser(user.getCode(), user.getPassword(), Integer.valueOf(user.getStatus()), collect,
+                tokenId);
     }
 
     /**

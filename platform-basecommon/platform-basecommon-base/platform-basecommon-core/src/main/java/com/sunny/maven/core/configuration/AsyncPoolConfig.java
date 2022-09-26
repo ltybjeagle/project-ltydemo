@@ -1,10 +1,12 @@
 package com.sunny.maven.core.configuration;
 
 import com.sunny.maven.core.handle.AsyncTaskHandler;
+import com.sunny.maven.core.interceptor.PlatFormAsyncHandlerInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -29,6 +31,15 @@ public class AsyncPoolConfig implements AsyncConfigurer {
     private static final String ASYNC_EXECUTOR = "asyncExecutor";
     @Resource
     private AsyncPoolProperties asyncPoolProperties;
+
+    /**
+     * 异步调用拦截器
+     * @return PlatFormAsyncHandlerInterceptor
+     */
+    @Bean
+    public PlatFormAsyncHandlerInterceptor platFormAsyncHandlerInterceptor() {
+        return new PlatFormAsyncHandlerInterceptor();
+    }
 
     /**
      * 设置异步任务线程池
