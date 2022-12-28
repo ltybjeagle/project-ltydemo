@@ -9,7 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>platform-basecommon-core</module>
+        <module>platform-common-core</module>
+        <module>platform-webflux-core</module>
+        <module>platform-webmvc-core</module>
+        <module>platform-spring-core</module>
     </modules>
     <artifactId>platform-basecommon-base</artifactId>
 

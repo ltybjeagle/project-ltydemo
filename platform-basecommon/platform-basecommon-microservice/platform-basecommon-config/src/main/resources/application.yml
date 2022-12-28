@@ -1,8 +1,24 @@
 server:
-  port: 9010
-  servlet:
-    context-path: /config
+  port: 8000
 
 spring:
   application:
     name: server-config
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:config/
+            classpath:config/server-middle,
+            classpath:config/server-report
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
