@@ -1,6 +1,5 @@
 package com.sunny.maven.user.security;
 
-import com.google.common.collect.Maps;
 import com.sunny.maven.cache.template.CacheTemplate;
 import com.sunny.maven.core.common.constants.CommonConstant;
 import com.sunny.maven.core.common.context.UserInfoContext;
@@ -12,6 +11,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -20,9 +21,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author SUNNY
@@ -74,7 +75,9 @@ public class JwtTokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         String tokenId = jwtTokenUser.getToken();
         UserDto userDto = UserDto.createUserDto();
         userDto.setUsername(jwtTokenUser.getUsername());
-        userDto.setAuthorities(jwtTokenUser.getAuthorities());
+        userDto.setAuthorities(
+                jwtTokenUser.getAuthorities().
+                        stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         UserInfoContext userInfoContext = UserInfoContextHolder.createEmptyContext();
         userInfoContext.setUserDto(userDto);
         String token = JwtTokenUtil.generateTokenExpireInMinutes(jwtTokenUser, jwtRsaKeyProperties.getPrivateKey(),

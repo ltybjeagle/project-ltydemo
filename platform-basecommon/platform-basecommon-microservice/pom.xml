@@ -16,6 +16,8 @@
         <module>platform-basecommon-report</module>
         <module>platform-basecommon-user</module>
         <module>platform-basecommon-gateway</module>
+        <module>platform-microservice-middle</module>
+        <module>platform-basecommon-eureka</module>
         <module>platform-basecommon-config</module>
     </modules>
     <packaging>pom</packaging>

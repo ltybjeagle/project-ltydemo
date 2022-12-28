@@ -10,6 +10,7 @@
   <modules>
     <module>platform-basecommon-base</module>
     <module>platform-basecommon-microservice</module>
+    <module>platform-baserpc</module>
   </modules>
 
   <name>platform-basecommon</name>
@@ -37,16 +38,24 @@
     <spring-cloud.version>2021.0.3</spring-cloud.version>
     <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
 
+    <platform-rpc.version>1.0-SNAPSHOT</platform-rpc.version>
+
+    <string.version>5.3.20</string.version>
     <common.logging>1.2</common.logging>
+    <commons.collections4.version>4.0</commons.collections4.version>
     <httpcomponents.version>4.5.13</httpcomponents.version>
     <slf4j.version>1.7.36</slf4j.version>
     <logback.version>1.2.11</logback.version>
     <fastjson.version>1.2.83</fastjson.version>
+    <jackson.version>2.10.0</jackson.version>
     <com-baomidou-mybatis.version>3.5.1</com-baomidou-mybatis.version>
     <oracle.version>12.1.0.1-atlassian-hosted</oracle.version>
     <netty.version>4.1.59.Final</netty.version>
     <druid.version>1.2.8</druid.version>
     <minio.version>8.0.3</minio.version>
+    <reactor.version>3.4.23</reactor.version>
+    <objenesis.version>2.1</objenesis.version>
+    <javassist.version>3.21.0-GA</javassist.version>
   </properties>
 
   <dependencies>
@@ -194,12 +203,42 @@
         <artifactId>netty-transport</artifactId>
         <version>${netty.version}</version>
       </dependency>
+      <!-- reactor -->
+      <dependency>
+        <groupId>io.projectreactor</groupId>
+        <artifactId>reactor-test</artifactId>
+        <version>${reactor.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.projectreactor</groupId>
+        <artifactId>reactor-core</artifactId>
+        <version>${reactor.version}</version>
+      </dependency>
+      <!-- hutool工具 -->
+      <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-all</artifactId>
+        <version>5.5.9</version>
+      </dependency>
+      <!-- 基于ASM字节码类库 -->
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>3.3.0</version>
+      </dependency>
       <!-- minio oss-->
       <dependency>
         <groupId>io.minio</groupId>
         <artifactId>minio</artifactId>
         <version>${minio.version}</version>
         <optional>true</optional>
+      </dependency>
+      <!--  lua交互 -->
+      <dependency>
+        <groupId>org.luaj</groupId>
+        <artifactId>luaj-jse</artifactId>
+        <version>3.0.1</version>
       </dependency>
       <!-- JimuReport -->
       <dependency>
