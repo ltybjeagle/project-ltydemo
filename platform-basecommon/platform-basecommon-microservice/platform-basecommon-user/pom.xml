@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.sunny.maven</groupId>
-            <artifactId>platform-basecommon-core</artifactId>
+            <artifactId>platform-webmvc-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

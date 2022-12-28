@@ -2,6 +2,8 @@ server:
   port: 9000
 
 spring:
+  application:
+    name: server-report
   # 配置静态资源
   mvc:
     static-path-pattern: /**
@@ -20,6 +22,7 @@ spring:
       max-active: 20
       max-wait: 20000
       filters: stat,conn
+
 #JimuReport[minidao配置]
 minidao:
   base-package: org.jeecg.modules.jmreport.desreport.dao*
