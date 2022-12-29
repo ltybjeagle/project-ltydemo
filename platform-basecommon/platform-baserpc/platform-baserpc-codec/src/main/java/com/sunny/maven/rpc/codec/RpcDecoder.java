@@ -3,7 +3,7 @@ package com.sunny.maven.rpc.codec;
 import com.sunny.maven.rpc.common.utils.SerializationUtils;
 import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
-import com.sunny.maven.rpc.protocol.enumeration.RcpType;
+import com.sunny.maven.rpc.protocol.enumeration.RpcType;
 import com.sunny.maven.rpc.protocol.header.RpcHeader;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.protocol.response.RpcResponse;
@@ -43,7 +43,7 @@ public class RpcDecoder extends ByteToMessageDecoder implements RpcCodec {
         }
         byte[] data = new byte[dataLength];
         in.readBytes(data);
-        RcpType msgTypeEnum = RcpType.findByType(msgType);
+        RpcType msgTypeEnum = RpcType.findByType(msgType);
         if (msgTypeEnum == null) {
             return ;
         }
