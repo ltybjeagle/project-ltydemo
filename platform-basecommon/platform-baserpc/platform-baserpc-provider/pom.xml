@@ -19,11 +19,4 @@
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.sunny.maven</groupId>
-      <artifactId>platform-baserpc-common</artifactId>
-      <version>${platform-rpc.version}</version>
-    </dependency>
-  </dependencies>
 </project>
