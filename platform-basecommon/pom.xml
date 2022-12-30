@@ -38,8 +38,6 @@
     <spring-cloud.version>2021.0.3</spring-cloud.version>
     <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
 
-    <platform-rpc.version>1.0-SNAPSHOT</platform-rpc.version>
-
     <string.version>5.3.20</string.version>
     <common.logging>1.2</common.logging>
     <commons.collections4.version>4.0</commons.collections4.version>

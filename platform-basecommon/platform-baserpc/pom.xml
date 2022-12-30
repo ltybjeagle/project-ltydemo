@@ -25,7 +25,15 @@
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
 
+    <properties>
+        <platform-rpc.version>1.0-SNAPSHOT</platform-rpc.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
         <!-- SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
