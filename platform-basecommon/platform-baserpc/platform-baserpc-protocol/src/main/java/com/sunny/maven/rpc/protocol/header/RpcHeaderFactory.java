@@ -2,7 +2,7 @@ package com.sunny.maven.rpc.protocol.header;
 
 import com.sunny.maven.rpc.common.id.IdFactory;
 import com.sunny.maven.rpc.constants.RpcConstants;
-import com.sunny.maven.rpc.protocol.enumeration.RcpType;
+import com.sunny.maven.rpc.protocol.enumeration.RpcType;
 
 /**
  * @author SUNNY
@@ -15,7 +15,7 @@ public class RpcHeaderFactory {
         long requestId = IdFactory.getId();
         header.setMagic(RpcConstants.MAGIC);
         header.setRequestId(requestId);
-        header.setMsgType((byte) RcpType.REQUEST.getType());
+        header.setMsgType((byte) RpcType.REQUEST.getType());
         header.setStatus((byte) 0x1);
         header.setSerializationType(serializationType);
         return header;
