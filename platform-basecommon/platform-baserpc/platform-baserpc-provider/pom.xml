@@ -14,7 +14,7 @@
   <name>platform-baserpc-provider</name>
   <modules>
     <module>platform-baserpc-provider-common</module>
-      <module>platform-baserpc-provider-native</module>
+    <module>platform-baserpc-provider-native</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
