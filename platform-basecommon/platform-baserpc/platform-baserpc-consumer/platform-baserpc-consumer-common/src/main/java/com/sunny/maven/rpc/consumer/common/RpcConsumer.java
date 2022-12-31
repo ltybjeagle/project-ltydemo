@@ -1,5 +1,7 @@
 package com.sunny.maven.rpc.consumer.common;
 
+import com.sunny.maven.rpc.common.threadpool.ClientThreadPool;
+import com.sunny.maven.rpc.consumer.common.future.RpcFuture;
 import com.sunny.maven.rpc.consumer.common.handler.RpcConsumerHandler;
 import com.sunny.maven.rpc.consumer.common.initializer.RpcConsumerInitializer;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
@@ -49,9 +51,10 @@ public class RpcConsumer {
 
     public void close() {
         eventLoopGroup.shutdownGracefully();
+        ClientThreadPool.shutdown();
     }
 
-    public void sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception {
+    public RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception {
         // TODO 暂时写死，后续在引入注册中心时，从注册中心获取
         String serviceAddress = "127.0.0.1";
         int port = 27880;
@@ -67,7 +70,8 @@ public class RpcConsumer {
             handler = getRpcConsumerHandler(serviceAddress, port);
             handlerMap.put(key, handler);
         }
-        handler.sendRequest(protocol);
+        RpcRequest request = protocol.getBody();
+        return handler.sendRequest(protocol, request.isAsync(), request.isOneway());
     }
 
     /**

@@ -1,20 +1,39 @@
 package com.sunny.maven.rpc.test.consumer.handler;
 
 import com.sunny.maven.rpc.consumer.common.RpcConsumer;
+import com.sunny.maven.rpc.consumer.common.callback.AsyncRpcCallback;
+import com.sunny.maven.rpc.consumer.common.context.RpcContext;
+import com.sunny.maven.rpc.consumer.common.future.RpcFuture;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.header.RpcHeaderFactory;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author SUNNY
  * @description: 测试服务消费者
  * @create: 2022-12-30 17:57
  */
+@Slf4j
 public class RpcConsumerHandlerTest {
 
     public static void main(String[] args) throws Exception {
         RpcConsumer consumer = RpcConsumer.getInstance();
-        consumer.sendRequest(getRpcRequestProtocol());
+        RpcFuture future = consumer.sendRequest(getRpcRequestProtocol());
+//        RpcFuture future = RpcContext.getContext().getRpcFuture();
+//        log.info("从服务消费者获取的数据====>>> {}", future.get());
+//        log.info("无需获取返回的结果数据");
+        future.addCallback(new AsyncRpcCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                log.info("从服务消费者获取的数据====>>> {}", result);
+            }
+
+            @Override
+            public void onException(Exception e) {
+                log.info("抛出的异常====>>> {}", e.getMessage());
+            }
+        });
         Thread.sleep(2000);
         consumer.close();
     }
