@@ -24,7 +24,7 @@ public class RpcTestConsumerHandler extends SimpleChannelInboundHandler<RpcProto
         RpcProtocol<RpcRequest> protocol = new RpcProtocol<>();
         protocol.setHeader(RpcHeaderFactory.getRequestHeader("jdk"));
         RpcRequest request = new RpcRequest();
-        request.setClassName("com.sunny.maven.rpc.protocol");
+        request.setClassName("com.sunny.maven.rpc.test.api.DemoService");
         request.setMethodName("hello");
         request.setGroup("SUNNY");
         request.setParameterTypes(new Class[]{String.class});
