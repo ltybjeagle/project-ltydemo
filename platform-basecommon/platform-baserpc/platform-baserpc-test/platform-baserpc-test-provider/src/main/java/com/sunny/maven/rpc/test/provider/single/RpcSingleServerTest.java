@@ -1,7 +1,11 @@
 package com.sunny.maven.rpc.test.provider.single;
 
 import com.sunny.maven.rpc.provider.RpcSingleServer;
+import org.junit.Before;
 import org.junit.Test;
+import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
 
 /**
  * @author SUNNY
@@ -10,10 +14,25 @@ import org.junit.Test;
  */
 public class RpcSingleServerTest {
 
+    @Before
+    public void disableWarning() {
+        try {
+            Field theUnSafe = Unsafe.class.getDeclaredField("theUnsafe");
+            theUnSafe.setAccessible(true);
+            Unsafe u = (Unsafe) theUnSafe.get(null);
+
+            Class cls = Class.forName("jdk.internal.module.IllegalAccessLogger");
+            Field logger = cls.getDeclaredField("logger");
+            u.putObjectVolatile(cls, u.staticFieldOffset(logger), null);
+        } catch (Exception e) {
+        }
+    }
+
     @Test
     public void startRpcSingleServer() {
         RpcSingleServer singleServer =
-                new RpcSingleServer("127.0.0.1:27880", "com.sunny.maven.rpc.test");
+                new RpcSingleServer("127.0.0.1:27880", "com.sunny.maven.rpc.test",
+                        "cglib");
         singleServer.startNettyServer();
     }
 }
