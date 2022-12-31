@@ -16,6 +16,7 @@
     <module>platform-baserpc-test-scanner</module>
       <module>platform-baserpc-test-provider</module>
       <module>platform-baserpc-test-consumer</module>
+      <module>platform-baserpc-test-api</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

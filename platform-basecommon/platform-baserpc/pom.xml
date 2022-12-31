@@ -21,6 +21,7 @@
         <module>platform-baserpc-constants</module>
         <module>platform-baserpc-serialization</module>
         <module>platform-baserpc-codec</module>
+        <module>platform-baserpc-consumer</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
