@@ -1,6 +1,6 @@
 package com.sunny.maven.rpc.consumer.common.context;
 
-import com.sunny.maven.rpc.consumer.common.future.RpcFuture;
+import com.sunny.maven.rpc.proxy.api.future.RpcFuture;
 
 /**
  * @author SUNNY

@@ -22,5 +22,10 @@
       <artifactId>platform-baserpc-codec</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-proxy-jdk</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
   </dependencies>
 </project>
