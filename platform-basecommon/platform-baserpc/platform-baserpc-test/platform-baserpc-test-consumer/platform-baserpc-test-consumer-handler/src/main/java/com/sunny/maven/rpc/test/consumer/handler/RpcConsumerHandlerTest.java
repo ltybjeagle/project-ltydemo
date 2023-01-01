@@ -1,9 +1,8 @@
 package com.sunny.maven.rpc.test.consumer.handler;
 
 import com.sunny.maven.rpc.consumer.common.RpcConsumer;
-import com.sunny.maven.rpc.consumer.common.callback.AsyncRpcCallback;
-import com.sunny.maven.rpc.consumer.common.context.RpcContext;
-import com.sunny.maven.rpc.consumer.common.future.RpcFuture;
+import com.sunny.maven.rpc.proxy.api.callback.AsyncRpcCallback;
+import com.sunny.maven.rpc.proxy.api.future.RpcFuture;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.header.RpcHeaderFactory;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
