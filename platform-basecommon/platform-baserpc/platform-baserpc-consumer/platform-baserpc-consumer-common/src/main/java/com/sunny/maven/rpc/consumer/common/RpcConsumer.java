@@ -1,7 +1,8 @@
 package com.sunny.maven.rpc.consumer.common;
 
 import com.sunny.maven.rpc.common.threadpool.ClientThreadPool;
-import com.sunny.maven.rpc.consumer.common.future.RpcFuture;
+import com.sunny.maven.rpc.proxy.api.consumer.Consumer;
+import com.sunny.maven.rpc.proxy.api.future.RpcFuture;
 import com.sunny.maven.rpc.consumer.common.handler.RpcConsumerHandler;
 import com.sunny.maven.rpc.consumer.common.initializer.RpcConsumerInitializer;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
@@ -23,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @create: 2022-12-30 17:28
  */
 @Slf4j
-public class RpcConsumer {
+public class RpcConsumer implements Consumer {
 
     private final Bootstrap bootstrap;
     private final EventLoopGroup eventLoopGroup;
@@ -54,6 +55,7 @@ public class RpcConsumer {
         ClientThreadPool.shutdown();
     }
 
+    @Override
     public RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception {
         // TODO 暂时写死，后续在引入注册中心时，从注册中心获取
         String serviceAddress = "127.0.0.1";

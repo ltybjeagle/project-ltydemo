@@ -2,7 +2,7 @@ package com.sunny.maven.rpc.consumer.common.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sunny.maven.rpc.consumer.common.context.RpcContext;
-import com.sunny.maven.rpc.consumer.common.future.RpcFuture;
+import com.sunny.maven.rpc.proxy.api.future.RpcFuture;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.header.RpcHeader;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
