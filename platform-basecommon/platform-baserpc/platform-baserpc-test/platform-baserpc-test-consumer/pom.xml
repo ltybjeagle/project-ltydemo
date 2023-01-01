@@ -15,6 +15,7 @@
   <modules>
     <module>platform-baserpc-test-consumer-codec</module>
       <module>platform-baserpc-test-consumer-handler</module>
+      <module>platform-baserpc-test-consumer-native</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

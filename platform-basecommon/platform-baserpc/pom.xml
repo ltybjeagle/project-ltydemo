@@ -22,6 +22,7 @@
         <module>platform-baserpc-serialization</module>
         <module>platform-baserpc-codec</module>
         <module>platform-baserpc-consumer</module>
+        <module>platform-baserpc-proxy</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
