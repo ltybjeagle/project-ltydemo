@@ -1,7 +1,9 @@
 package com.sunny.maven.rpc.consumer;
 
 import com.sunny.maven.rpc.consumer.common.RpcConsumer;
+import com.sunny.maven.rpc.proxy.api.ProxyFactory;
 import com.sunny.maven.rpc.proxy.api.async.IAsyncObjectProxy;
+import com.sunny.maven.rpc.proxy.api.config.ProxyConfig;
 import com.sunny.maven.rpc.proxy.api.object.ObjectProxy;
 import com.sunny.maven.rpc.proxy.jdk.JdkProxyFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -49,9 +51,10 @@ public class RpcClient {
     }
 
     public <T> T create(Class<T> interfaceClass) {
-        JdkProxyFactory<T> jdkProxyFactory = new JdkProxyFactory<T>(serviceVersion, serviceGroup, timeout,
-                RpcConsumer.getInstance(), serializationType, async, oneWay);
-        return jdkProxyFactory.getProxy(interfaceClass);
+        ProxyFactory proxyFactory = new JdkProxyFactory<T>();
+        proxyFactory.init(new ProxyConfig(interfaceClass, serviceVersion, serviceGroup, timeout,
+                RpcConsumer.getInstance(), serializationType, async, oneWay));
+        return proxyFactory.getProxy(interfaceClass);
     }
 
     public <T> IAsyncObjectProxy createAsync(Class<T> interfaceClass) {
