@@ -23,12 +23,14 @@
         <module>platform-baserpc-codec</module>
         <module>platform-baserpc-consumer</module>
         <module>platform-baserpc-proxy</module>
+        <module>platform-baserpc-registry</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
 
     <properties>
         <platform-rpc.version>1.0-SNAPSHOT</platform-rpc.version>
+        <curator.version>2.12.0</curator.version>
     </properties>
 
     <dependencies>
@@ -50,7 +52,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${string.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <!-- Netty -->
         <dependency>
