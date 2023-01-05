@@ -4,6 +4,9 @@ import com.sunny.maven.rpc.codec.RpcDecoder;
 import com.sunny.maven.rpc.codec.RpcEncoder;
 import com.sunny.maven.rpc.provider.common.handler.RpcProviderHandler;
 import com.sunny.maven.rpc.provider.common.server.api.Server;
+import com.sunny.maven.rpc.registry.api.RegistryService;
+import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
+import com.sunny.maven.rpc.registry.zookeeper.ZookeeperRegistryService;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -41,13 +44,28 @@ public class BaseServer implements Server {
     protected Map<String, Object> handlerMap = new HashMap<>();
     private String reflectType;
 
-    public BaseServer(String serverAddress, String reflectType) {
+    protected RegistryService registryService;
+
+    public BaseServer(String serverAddress, String reflectType, String registryAddress, String registryType) {
         if (StringUtils.isNotEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             host = serverArray[0];
             port = Integer.parseInt(serverArray[1]);
         }
         this.reflectType = reflectType;
+        this.registryService = this.getRegistryService(registryAddress, registryType);
+    }
+
+    private RegistryService getRegistryService(String registryAddress, String registryType) {
+        //TODO 后续扩展支持SPI
+        RegistryService registryService = null;
+        try {
+            registryService = new ZookeeperRegistryService();
+            registryService.init(new RegistryConfig(registryAddress, registryType));
+        } catch (Exception e) {
+            log.error("RPC Server init error", e);
+        }
+        return registryService;
     }
 
     @Override

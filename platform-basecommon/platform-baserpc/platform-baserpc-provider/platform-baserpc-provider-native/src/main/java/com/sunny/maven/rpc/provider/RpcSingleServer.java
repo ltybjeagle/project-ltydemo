@@ -1,6 +1,6 @@
 package com.sunny.maven.rpc.provider;
 
-import com.sunny.maven.rpc.common.scanner.server.RpcServiceScanner;
+import com.sunny.maven.rpc.provider.common.scanner.RpcServiceScanner;
 import com.sunny.maven.rpc.provider.common.server.base.BaseServer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,12 +11,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class RpcSingleServer extends BaseServer {
-    public RpcSingleServer(String serverAddress, String scanPackage, String reflectType) {
+    public RpcSingleServer(String serverAddress, String scanPackage, String reflectType, String registryAddress,
+                           String registryType) {
         // 调用父类构造方法
-        super(serverAddress, reflectType);
+        super(serverAddress, reflectType, registryAddress, registryType);
         try {
             this.handlerMap =
-                    RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(scanPackage);
+                    RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(this.host, this.port,
+                            scanPackage, this.registryService);
         } catch (Exception e) {
             log.error("RPC Server init error : {}", e.getMessage());
         }
