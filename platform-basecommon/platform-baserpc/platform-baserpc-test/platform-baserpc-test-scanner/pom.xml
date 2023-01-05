@@ -18,7 +18,7 @@
   <dependencies>
     <dependency>
       <groupId>com.sunny.maven</groupId>
-      <artifactId>platform-baserpc-common</artifactId>
+      <artifactId>platform-baserpc-provider-common</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
   </dependencies>

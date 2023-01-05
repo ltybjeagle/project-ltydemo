@@ -2,7 +2,7 @@ package com.sunny.maven.rpc.test.scanner;
 
 import com.sunny.maven.rpc.common.scanner.ClassScanner;
 import com.sunny.maven.rpc.common.scanner.reference.RpcReferenceScanner;
-import com.sunny.maven.rpc.common.scanner.server.RpcServiceScanner;
+import com.sunny.maven.rpc.provider.common.scanner.RpcServiceScanner;
 import org.junit.Test;
 
 import java.util.List;
