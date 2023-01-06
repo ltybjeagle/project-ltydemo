@@ -1,6 +1,7 @@
 package com.sunny.maven.rpc.proxy.api.config;
 
 import com.sunny.maven.rpc.proxy.api.consumer.Consumer;
+import com.sunny.maven.rpc.registry.api.RegistryService;
 
 import java.io.Serializable;
 
@@ -43,12 +44,16 @@ public class ProxyConfig<T> implements Serializable {
      * 是否单向调用
      */
     private boolean oneWay;
+    /**
+     * 服务注册接口
+     */
+    private RegistryService registryService;
 
     public ProxyConfig() {
     }
 
     public ProxyConfig(Class<T> clazz, String serviceVersion, String serviceGroup, long timeout, Consumer consumer,
-                       String serializationType, boolean async, boolean oneWay) {
+                       String serializationType, boolean async, boolean oneWay, RegistryService registryService) {
         this.clazz = clazz;
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
@@ -57,6 +62,7 @@ public class ProxyConfig<T> implements Serializable {
         this.serializationType = serializationType;
         this.async = async;
         this.oneWay = oneWay;
+        this.registryService = registryService;
     }
 
     public Class<T> getClazz() {
@@ -121,5 +127,13 @@ public class ProxyConfig<T> implements Serializable {
 
     public void setOneWay(boolean oneWay) {
         this.oneWay = oneWay;
+    }
+
+    public RegistryService getRegistryService() {
+        return registryService;
+    }
+
+    public void setRegistryService(RegistryService registryService) {
+        this.registryService = registryService;
     }
 }
