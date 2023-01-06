@@ -15,6 +15,7 @@ public abstract class BaseProxyFactory<T> implements ProxyFactory {
     public <T> void init(ProxyConfig<T> proxyConfig) {
         this.objectProxy = new ObjectProxy(proxyConfig.getClazz(), proxyConfig.getServiceVersion(),
                 proxyConfig.getServiceGroup(), proxyConfig.getTimeout(), proxyConfig.getConsumer(),
-                proxyConfig.getSerializationType(), proxyConfig.isAsync(), proxyConfig.isOneWay());
+                proxyConfig.getSerializationType(), proxyConfig.isAsync(), proxyConfig.isOneWay(),
+                proxyConfig.getRegistryService());
     }
 }
