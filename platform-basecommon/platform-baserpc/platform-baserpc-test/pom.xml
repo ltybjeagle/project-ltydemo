@@ -18,6 +18,7 @@
       <module>platform-baserpc-test-consumer</module>
       <module>platform-baserpc-test-api</module>
       <module>platform-baserpc-test-registry</module>
+      <module>platform-baserpc-test-spi</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

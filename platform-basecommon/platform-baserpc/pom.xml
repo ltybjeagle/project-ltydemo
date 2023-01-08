@@ -25,6 +25,7 @@
         <module>platform-baserpc-proxy</module>
         <module>platform-baserpc-registry</module>
         <module>platform-baserpc-loadbalancer</module>
+        <module>platform-baserpc-spi</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
