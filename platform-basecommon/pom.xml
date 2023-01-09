@@ -11,6 +11,7 @@
     <module>platform-basecommon-base</module>
     <module>platform-basecommon-microservice</module>
     <module>platform-baserpc</module>
+    <module>platform-spring</module>
   </modules>
 
   <name>platform-basecommon</name>
