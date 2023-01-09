@@ -1,10 +1,14 @@
 package com.sunny.maven.rpc.serialization.api;
 
+import com.sunny.maven.rpc.constants.RpcConstants;
+import com.sunny.maven.rpc.spi.annotation.SPI;
+
 /**
  * @author SUNNY
  * @description: 序列化接口
  * @create: 2022-12-28 16:51
  */
+@SPI(RpcConstants.SERIALIZATION_JDK)
 public interface Serialization {
     /**
      * 序列化
