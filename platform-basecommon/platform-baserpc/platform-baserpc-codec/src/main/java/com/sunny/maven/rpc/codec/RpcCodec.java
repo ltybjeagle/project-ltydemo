@@ -2,6 +2,7 @@ package com.sunny.maven.rpc.codec;
 
 import com.sunny.maven.rpc.serialization.api.Serialization;
 import com.sunny.maven.rpc.serialization.jdk.JdkSerialization;
+import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 
 /**
  * @author SUNNY
@@ -10,10 +11,11 @@ import com.sunny.maven.rpc.serialization.jdk.JdkSerialization;
  */
 public interface RpcCodec {
     /**
-     * 获取默认JDK序列化
-     * @return Serialization
+     * 根据serializationType通过SPI获取序列化句柄
+     * @param serializationType 序列化方式
+     * @return Serialization对象
      */
-    default Serialization getJdkSerialization() {
-        return new JdkSerialization();
+    default Serialization getSerialization(String serializationType) {
+        return ExtensionLoader.getExtension(Serialization.class, serializationType);
     }
 }
