@@ -15,6 +15,7 @@
   <modules>
     <module>platform-baserpc-serialization-api</module>
     <module>platform-baserpc-serialization-jdk</module>
+      <module>platform-baserpc-serialization-json</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
