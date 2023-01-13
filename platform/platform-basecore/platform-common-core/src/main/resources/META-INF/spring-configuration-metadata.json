@@ -1,0 +1,14 @@
+{ "properties": [
+  { "name": "platform.cache.enabled", "type": "java.lang.Boolean", "defaultValue": false },
+  { "name": "platform.cache.cacheDatabase", "type": "java.lang.Integer", "defaultValue": 0 },
+  { "name": "platform.cache.cacheHost", "type": "java.lang.String", "defaultValue": "127.0.0.1" },
+  { "name": "platform.cache.cachePort", "type": "java.lang.Integer", "defaultValue": 6379 },
+  { "name": "platform.cache.cachePwd", "type": "java.lang.String" },
+  { "name": "platform.cache.cacheTimeout", "type": "java.lang.Long", "defaultValue": 5000 },
+  { "name": "platform.cache.cacheMaster", "type": "java.lang.String" },
+  { "name": "platform.cache.cacheNodes", "type": "java.lang.String" },
+  { "name": "platform.cache.cacheMaxActive", "type": "java.lang.Integer", "defaultValue": 10000 },
+  { "name": "platform.cache.cacheMaxIdle", "type": "java.lang.Integer", "defaultValue": 50 },
+  { "name": "platform.cache.cacheMinIdle", "type": "java.lang.Integer", "defaultValue": 0 },
+  { "name": "platform.cache.cacheMaxWait", "type": "java.lang.Long", "defaultValue": -1 }
+] }
