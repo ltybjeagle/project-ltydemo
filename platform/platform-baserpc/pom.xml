@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>platform</artifactId>
+        <groupId>com.sunny.maven</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>platform-baserpc</artifactId>
+
+    <name>platform-baserpc</name>
+    <modules>
+        <module>platform-baserpc-annotation</module>
+        <module>platform-baserpc-common</module>
+        <module>platform-baserpc-test</module>
+        <module>platform-baserpc-provider</module>
+        <module>platform-baserpc-protocol</module>
+        <module>platform-baserpc-constants</module>
+        <module>platform-baserpc-serialization</module>
+        <module>platform-baserpc-codec</module>
+        <module>platform-baserpc-consumer</module>
+        <module>platform-baserpc-proxy</module>
+        <module>platform-baserpc-registry</module>
+        <module>platform-baserpc-loadbalancer</module>
+        <module>platform-baserpc-spi</module>
+    </modules>
+    <packaging>pom</packaging>
+    <url>http://www.example.com</url>
+
+    <properties>
+        <platform-rpc.version>1.0-SNAPSHOT</platform-rpc.version>
+        <curator.version>2.12.0</curator.version>
+        <hessian.version>4.0.63</hessian.version>
+        <fst.version>2.57</fst.version>
+        <kyro.version>5.2.0</kyro.version>
+        <protostuff.version>1.0.8</protostuff.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <!-- SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- Netty -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+        <!-- Apache Commons Collections -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons.collections4.version}</version>
+        </dependency>
+        <!--Apache Commons lang3-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <!-- Objenesis -->
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <version>${objenesis.version}</version>
+        </dependency>
+        <!-- CGLib -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>${javassist.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+    </dependencies>
+</project>
