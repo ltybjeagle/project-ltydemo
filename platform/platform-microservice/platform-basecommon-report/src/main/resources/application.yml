@@ -1,0 +1,44 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: server-report
+  # 配置静态资源
+  mvc:
+    static-path-pattern: /**
+  resource:
+    static-locations: classpath:/static/
+  # 配置数据库
+  datasource:
+    druid:
+      db-type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:oracle:thin:@192.168.100.80:1521/orcl
+      username: jeecgboot
+      password: 1
+      driver-class-name: oracle.jdbc.OracleDriver
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 20000
+      filters: stat,conn
+
+#JimuReport[minidao配置]
+minidao:
+  base-package: org.jeecg.modules.jmreport.desreport.dao*
+  db-type: oracle
+
+#JimuReport[上传配置]
+jeecg :
+  jmreport:
+    # 自动保存
+    autoSave: true
+    # 单位毫秒 默认5*60*1000
+    interval: 10000
+
+#输出sql日志
+logging:
+  level:
+    org.jeecg.modules.jmreport: debug
+    com.sunny.maven.report.datasource: debug
+    com.alibaba.druid: debug
