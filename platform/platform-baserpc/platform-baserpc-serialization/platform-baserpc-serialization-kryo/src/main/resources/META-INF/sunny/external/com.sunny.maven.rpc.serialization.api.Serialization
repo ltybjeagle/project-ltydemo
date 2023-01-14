@@ -1,0 +1,1 @@
+kryo=com.sunny.maven.rpc.serialization.kryo.KryoSerialization
