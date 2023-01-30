@@ -26,6 +26,7 @@
         <module>platform-baserpc-registry</module>
         <module>platform-baserpc-loadbalancer</module>
         <module>platform-baserpc-spi</module>
+        <module>platform-baserpc-reflect</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
@@ -37,6 +38,7 @@
         <fst.version>2.57</fst.version>
         <kyro.version>5.2.0</kyro.version>
         <protostuff.version>1.0.8</protostuff.version>
+        <bytebuddy.version>1.10.13</bytebuddy.version>
     </properties>
 
     <dependencies>
