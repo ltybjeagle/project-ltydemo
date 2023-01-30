@@ -2,22 +2,20 @@ package com.sunny.maven.rpc.provider.common.handler;
 
 import com.sunny.maven.rpc.common.helper.RpcServiceHelper;
 import com.sunny.maven.rpc.common.threadpool.ServerThreadPool;
-import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.enumeration.RpcStatus;
 import com.sunny.maven.rpc.protocol.enumeration.RpcType;
 import com.sunny.maven.rpc.protocol.header.RpcHeader;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.protocol.response.RpcResponse;
+import com.sunny.maven.rpc.reflect.api.ReflectInvoker;
+import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.cglib.reflect.FastClass;
-import net.sf.cglib.reflect.FastMethod;
 
-import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -34,10 +32,10 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
     /**
      * 调用采用哪种类型调用真实方法
      */
-    private final String reflectType;
+    private ReflectInvoker reflectInvoker;
     public RpcProviderHandler(String reflectType, Map<String, Object> handlerMap) {
-        this.reflectType = reflectType;
         this.handlerMap = handlerMap;
+        this.reflectInvoker = ExtensionLoader.getExtension(ReflectInvoker.class, reflectType);
     }
 
     @Override
@@ -96,57 +94,7 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
                 log.debug(parameter.toString());
             }
         }
-        return invokeMethod(serviceBean, serviceClass, methodName, parameterTypes, parameters);
-    }
-
-    private Object invokeMethod(Object serviceBean, Class<?> serviceClass, String methodName,
-                                Class<?>[] parameterTypes, Object[] parameters) throws Throwable {
-        switch (this.reflectType) {
-            case RpcConstants.REFLECT_TYPE_JDK:
-                return this.invokeJdkMethod(serviceBean, serviceClass, methodName, parameterTypes, parameters);
-            case RpcConstants.REFLECT_TYPE_CGLIB:
-                return this.invokeCglibMethod(serviceBean, serviceClass, methodName, parameterTypes, parameters);
-            default:
-                throw new IllegalArgumentException("not support reflect type");
-        }
-    }
-
-    /**
-     * JDK代理方式
-     * @param serviceBean Bean
-     * @param serviceClass Bean类型
-     * @param methodName 方法名
-     * @param parameterTypes 参数类型
-     * @param parameters 参数
-     * @return 响应结果
-     * @throws Throwable 异常
-     */
-    private Object invokeJdkMethod(Object serviceBean, Class<?> serviceClass, String methodName,
-                                   Class<?>[] parameterTypes, Object[] parameters) throws Throwable {
-        // JDK reflect
-        log.info("use jdk reflect type invoke method ...");
-        Method method = serviceClass.getMethod(methodName, parameterTypes);
-        method.setAccessible(true);
-        return method.invoke(serviceBean, parameters);
-    }
-
-    /**
-     * CGLib代理方式
-     * @param serviceBean Bean
-     * @param serviceClass Bean类型
-     * @param methodName 方法名
-     * @param parameterTypes 参数类型
-     * @param parameters 参数
-     * @return 响应结果
-     * @throws Throwable 异常
-     */
-    private Object invokeCglibMethod(Object serviceBean, Class<?> serviceClass, String methodName,
-                                   Class<?>[] parameterTypes, Object[] parameters) throws Throwable {
-        // CGLib reflect
-        log.info("use cglib reflect type invoke method ...");
-        FastClass serviceFastClass = FastClass.create(serviceClass);
-        FastMethod serviceFastMethod = serviceFastClass.getMethod(methodName, parameterTypes);
-        return serviceFastMethod.invoke(serviceBean, parameters);
+        return this.reflectInvoker.invokeMethod(serviceBean, serviceClass, methodName, parameterTypes, parameters);
     }
 
     @Override

@@ -32,5 +32,15 @@
       <artifactId>platform-baserpc-registry-zookeeper</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-reflect-jdk</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-reflect-cglib</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
   </dependencies>
 </project>
