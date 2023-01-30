@@ -17,6 +17,8 @@
         <module>platform-baserpc-proxy-jdk</module>
         <module>platform-baserpc-proxy-cglib</module>
         <module>platform-baserpc-proxy-javassist</module>
+        <module>platform-baserpc-proxy-bytebuddy</module>
+        <module>platform-baserpc-proxy-asm</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
