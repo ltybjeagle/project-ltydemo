@@ -24,7 +24,7 @@ public class ASMGenerateProxyFactory {
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
         // 创建的java版本、访问标志、类名、父类、接口
         String internalName = Type.getInternalName(ASMProxy.class);
-        cw.visit(Opcodes.V11, Opcodes.ACC_PUBLIC, proxyClassName, null, internalName,
+        cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, proxyClassName, null, internalName,
                 getInterfacesName(interfaces));
         // 创建<init>
         createInit(cw);

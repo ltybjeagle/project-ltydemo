@@ -25,8 +25,8 @@ public class ASMProxy {
         h = var1;
     }
 
-    public static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)
-            throws Exception {
+    public static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)throws
+            Exception {
         // 生成代理类Class
         Class<?> proxyClass = generate(interfaces);
         Constructor<?> constructor = proxyClass.getConstructor(InvocationHandler.class);
@@ -34,10 +34,11 @@ public class ASMProxy {
     }
 
     /**
-     * 生成代理类Class
-     * @param interfaces
-     * @return
-     */
+      * 生成代理类Class
+      *
+      * @param interfaces
+      * @return
+      */
     private static Class<?> generate(Class<?>[] interfaces) throws ClassNotFoundException {
         String proxyClassName = PROXY_CLASS_NAME_PRE + PROXY_CNT.getAndIncrement();
         byte[] codes = ASMGenerateProxyFactory.generateClass(interfaces, proxyClassName);
