@@ -32,7 +32,7 @@ public class RpcSingleServerTest {
     public void startRpcSingleServer() {
         RpcSingleServer singleServer =
                 new RpcSingleServer("127.0.0.1:27880", "com.sunny.maven.rpc.test",
-                        "cglib", "127.0.0.1:2181", "zookeeper");
+                        "bytebuddy", "127.0.0.1:2181", "zookeeper");
         singleServer.startNettyServer();
     }
 }

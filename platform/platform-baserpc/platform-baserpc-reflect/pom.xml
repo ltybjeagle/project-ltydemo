@@ -16,6 +16,8 @@
     <module>platform-baserpc-reflect-api</module>
     <module>platform-baserpc-reflect-jdk</module>
       <module>platform-baserpc-reflect-cglib</module>
+      <module>platform-baserpc-reflect-javassist</module>
+      <module>platform-baserpc-reflect-bytebuddy</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
