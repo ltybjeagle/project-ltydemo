@@ -9,22 +9,17 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>platform-baserpc-loadbalancer-api</artifactId>
+  <artifactId>platform-baserpc-loadbalancer-random-weight</artifactId>
   <version>${platform-rpc.version}</version>
 
-  <name>platform-baserpc-loadbalancer-api</name>
+  <name>platform-baserpc-loadbalancer-random-weight</name>
   <packaging>jar</packaging>
   <url>http://www.example.com</url>
 
   <dependencies>
     <dependency>
       <groupId>com.sunny.maven</groupId>
-      <artifactId>platform-baserpc-protocol</artifactId>
-      <version>${platform-rpc.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sunny.maven</groupId>
-      <artifactId>platform-baserpc-spi</artifactId>
+      <artifactId>platform-baserpc-loadbalancer-api</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
   </dependencies>

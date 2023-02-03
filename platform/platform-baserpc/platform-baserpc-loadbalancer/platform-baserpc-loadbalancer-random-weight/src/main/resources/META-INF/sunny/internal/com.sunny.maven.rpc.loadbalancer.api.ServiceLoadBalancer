@@ -1,0 +1,1 @@
+randomweight=com.sunny.maven.rpc.loadbalancer.random.weight.RandomWeightServiceLoadBalancer

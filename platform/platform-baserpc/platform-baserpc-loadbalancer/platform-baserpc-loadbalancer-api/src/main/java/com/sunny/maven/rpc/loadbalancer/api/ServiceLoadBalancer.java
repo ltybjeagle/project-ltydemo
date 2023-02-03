@@ -1,5 +1,8 @@
 package com.sunny.maven.rpc.loadbalancer.api;
 
+import com.sunny.maven.rpc.constants.RpcConstants;
+import com.sunny.maven.rpc.spi.annotation.SPI;
+
 import java.util.List;
 
 /**
@@ -7,6 +10,7 @@ import java.util.List;
  * @description: 负载均衡接口
  * @create: 2023-01-05 16:23
  */
+@SPI(RpcConstants.SERVICE_LOAD_BALANCER_RANDOM)
 public interface ServiceLoadBalancer<T> {
 
     /**
