@@ -15,6 +15,7 @@
   <modules>
     <module>platform-baserpc-loadbalancer-api</module>
     <module>platform-baserpc-loadbalancer-random</module>
+    <module>platform-baserpc-loadbalancer-random-weight</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

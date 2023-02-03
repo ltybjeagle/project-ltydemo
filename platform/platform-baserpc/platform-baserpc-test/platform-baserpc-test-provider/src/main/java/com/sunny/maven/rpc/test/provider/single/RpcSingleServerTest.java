@@ -32,7 +32,8 @@ public class RpcSingleServerTest {
     public void startRpcSingleServer() {
         RpcSingleServer singleServer =
                 new RpcSingleServer("127.0.0.1:27880", "com.sunny.maven.rpc.test",
-                        "asm", "127.0.0.1:2181", "zookeeper");
+                        "asm", "127.0.0.1:2181", "zookeeper",
+                        "random");
         singleServer.startNettyServer();
     }
 }

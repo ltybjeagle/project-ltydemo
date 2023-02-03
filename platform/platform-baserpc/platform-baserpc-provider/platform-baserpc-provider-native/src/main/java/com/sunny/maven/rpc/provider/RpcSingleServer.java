@@ -12,9 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RpcSingleServer extends BaseServer {
     public RpcSingleServer(String serverAddress, String scanPackage, String reflectType, String registryAddress,
-                           String registryType) {
+                           String registryType, String registryLoadBalanceType) {
         // 调用父类构造方法
-        super(serverAddress, reflectType, registryAddress, registryType);
+        super(serverAddress, reflectType, registryAddress, registryType, registryLoadBalanceType);
         try {
             this.handlerMap =
                     RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(this.host, this.port,

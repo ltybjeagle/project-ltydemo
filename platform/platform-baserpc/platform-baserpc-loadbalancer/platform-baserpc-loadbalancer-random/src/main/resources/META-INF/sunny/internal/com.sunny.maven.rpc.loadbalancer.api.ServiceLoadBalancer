@@ -1,0 +1,1 @@
+random=com.sunny.maven.rpc.loadbalancer.random.RandomServiceLoadBalancer

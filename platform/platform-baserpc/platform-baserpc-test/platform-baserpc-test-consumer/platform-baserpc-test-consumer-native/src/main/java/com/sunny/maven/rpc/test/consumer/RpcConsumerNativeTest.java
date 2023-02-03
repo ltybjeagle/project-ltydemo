@@ -18,8 +18,8 @@ public class RpcConsumerNativeTest {
 
     public static void main(String[] args) throws Exception {
         RpcClient rpcClient = new RpcClient("127.0.0.1:2181", "zookeeper",
-                "1.0.0", "SUNNY", "JDK", 3000, "jdk",
-                false, false);
+                "1.0.0", "SUNNY", "JDK", "random",
+                3000, "jdk", false, false);
         DemoService demoService = rpcClient.create(DemoService.class);
         String result = demoService.hello("SUNNY");
         log.info("返回的结果数据===>>> {}", result);
@@ -31,8 +31,8 @@ public class RpcConsumerNativeTest {
     @Before
     public void initRpcClient() {
         rpcClient = new RpcClient("127.0.0.1:2181", "zookeeper", "1.0.0",
-                "SUNNY", "protostuff", 3000, "bytebuddy", false,
-                false);
+                "SUNNY", "protostuff", "randomweight",
+                3000, "bytebuddy", false, false);
     }
 
     @Test

@@ -2,10 +2,10 @@ package com.sunny.maven.rpc.registry.zookeeper;
 
 import com.sunny.maven.rpc.common.helper.RpcServiceHelper;
 import com.sunny.maven.rpc.loadbalancer.api.ServiceLoadBalancer;
-import com.sunny.maven.rpc.loadbalancer.random.RandomServiceLoadBalancer;
 import com.sunny.maven.rpc.protocol.meta.ServiceMeta;
 import com.sunny.maven.rpc.registry.api.RegistryService;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
+import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -76,7 +76,7 @@ public class ZookeeperRegistryService implements RegistryService {
         this.serviceDiscovery = ServiceDiscoveryBuilder.builder(ServiceMeta.class).
                 client(client).serializer(serializer).basePath(ZK_BASE_PATH).build();
         this.serviceDiscovery.start();
-        //TODO 默认创建基于随机算法的负载均衡策略，后续基于SPI扩展
-        this.serviceLoadBalancer = new RandomServiceLoadBalancer<>();
+        this.serviceLoadBalancer = ExtensionLoader.getExtension(ServiceLoadBalancer.class,
+                registryConfig.getRegistryLoadBalanceType());
     }
 }
