@@ -1,0 +1,1 @@
+zkconsistenthash=com.sunny.maven.rpc.loadbalancer.consistenthash.ZkConsistentHashLoadBalancer
