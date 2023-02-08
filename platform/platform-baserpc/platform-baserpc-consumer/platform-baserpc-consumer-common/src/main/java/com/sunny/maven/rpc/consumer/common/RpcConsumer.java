@@ -1,6 +1,7 @@
 package com.sunny.maven.rpc.consumer.common;
 
 import com.sunny.maven.rpc.common.helper.RpcServiceHelper;
+import com.sunny.maven.rpc.common.ip.IpUtils;
 import com.sunny.maven.rpc.common.threadpool.ClientThreadPool;
 import com.sunny.maven.rpc.consumer.common.helper.RpcConsumerHandlerHelper;
 import com.sunny.maven.rpc.protocol.meta.ServiceMeta;
@@ -32,12 +33,13 @@ public class RpcConsumer implements Consumer {
 
     private final Bootstrap bootstrap;
     private final EventLoopGroup eventLoopGroup;
-
+    private final String localIp;
     private static volatile RpcConsumer instance;
 
     private static Map<String, RpcConsumerHandler> handlerMap = new ConcurrentHashMap<>();
 
     private RpcConsumer() {
+        localIp = IpUtils.getLocalHostIp();
         bootstrap = new Bootstrap();
         eventLoopGroup = new NioEventLoopGroup(4);
         bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).handler(new RpcConsumerInitializer());
@@ -67,7 +69,7 @@ public class RpcConsumer implements Consumer {
                 request.getGroup());
         Object[] params = request.getParameters();
         int invokerHashCode = (params == null || params.length <= 0) ? serviceKsy.hashCode() : params[0].hashCode();
-        ServiceMeta serviceMeta = registryService.discovery(serviceKsy, invokerHashCode);
+        ServiceMeta serviceMeta = registryService.discovery(serviceKsy, invokerHashCode, localIp);
         if (serviceMeta != null) {
             RpcConsumerHandler handler = RpcConsumerHandlerHelper.get(serviceMeta);
             // 缓存中无RpcClientHandler
