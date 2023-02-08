@@ -32,5 +32,45 @@
       <artifactId>platform-baserpc-loadbalancer-random-weight</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-round-robin</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-round-robin-weight</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-hash</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-hash-weight</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-sourceip-hash</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-sourceip-hash-weight</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-consistenthash-zk</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-random-weight-enhanced</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
   </dependencies>
 </project>
