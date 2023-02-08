@@ -16,7 +16,7 @@ import java.util.Random;
 @SPIClass
 public class RandomWeightServiceLoadBalancer<T> implements ServiceLoadBalancer<T> {
     @Override
-    public T select(List<T> servers, int hashCode) {
+    public T select(List<T> servers, int hashCode, String sourceIp) {
         log.info("基于加权随机算法的负载均衡策略...");
         if (servers == null || servers.isEmpty()) {
             return null;
