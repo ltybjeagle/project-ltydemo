@@ -13,11 +13,16 @@
         <module>platform-webflux-core</module>
         <module>platform-webmvc-core</module>
         <module>platform-spring-core</module>
+        <module>platform-basecore-common</module>
     </modules>
     <artifactId>platform-basecore</artifactId>
 
     <name>platform-basecore</name>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
+
+    <properties>
+        <platform-core.version>1.0-SNAPSHOT</platform-core.version>
+    </properties>
 
 </project>
