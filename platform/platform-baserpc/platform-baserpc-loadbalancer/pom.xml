@@ -24,6 +24,11 @@
     <module>platform-baserpc-loadbalancer-sourceip-hash-weight</module>
       <module>platform-baserpc-loadbalancer-consistenthash-zk</module>
       <module>platform-baserpc-loadbalancer-random-weight-enhanced</module>
+      <module>platform-baserpc-loadbalancer-round-robin-weight-enhanced</module>
+    <module>platform-baserpc-loadbalancer-hash-weight-enhanced</module>
+    <module>platform-baserpc-loadbalancer-sourceip-hash-weight-enhanced</module>
+    <module>platform-baserpc-loadbalancer-consistenthash-zk-enhanced</module>
+    <module>platform-baserpc-loadbalancer-least-connections</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

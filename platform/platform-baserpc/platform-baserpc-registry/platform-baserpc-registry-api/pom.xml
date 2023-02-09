@@ -72,5 +72,30 @@
       <artifactId>platform-baserpc-loadbalancer-random-weight-enhanced</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-round-robin-weight-enhanced</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-hash-weight-enhanced</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-sourceip-hash-weight-enhanced</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-consistenthash-zk-enhanced</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-loadbalancer-least-connections</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
   </dependencies>
 </project>
