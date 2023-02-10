@@ -2,6 +2,7 @@ package com.sunny.maven.rpc.registry.api;
 
 import com.sunny.maven.rpc.protocol.meta.ServiceMeta;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
+import com.sunny.maven.rpc.spi.annotation.SPI;
 
 import java.io.IOException;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
  * @description: RegistryService
  * @create: 2023-01-03 17:59
  */
+@SPI
 public interface RegistryService {
     /**
      * 服务注册

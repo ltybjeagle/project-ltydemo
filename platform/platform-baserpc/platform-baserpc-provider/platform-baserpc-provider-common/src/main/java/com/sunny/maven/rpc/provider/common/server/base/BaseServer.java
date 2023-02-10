@@ -7,6 +7,7 @@ import com.sunny.maven.rpc.provider.common.server.api.Server;
 import com.sunny.maven.rpc.registry.api.RegistryService;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
 import com.sunny.maven.rpc.registry.zookeeper.ZookeeperRegistryService;
+import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -59,10 +60,9 @@ public class BaseServer implements Server {
 
     private RegistryService getRegistryService(String registryAddress, String registryType,
                                                String registryLoadBalanceType) {
-        //TODO 后续扩展支持SPI
         RegistryService registryService = null;
         try {
-            registryService = new ZookeeperRegistryService();
+            registryService = ExtensionLoader.getExtension(RegistryService.class, registryType);
             registryService.init(new RegistryConfig(registryAddress, registryType, registryLoadBalanceType));
         } catch (Exception e) {
             log.error("RPC Server init error", e);

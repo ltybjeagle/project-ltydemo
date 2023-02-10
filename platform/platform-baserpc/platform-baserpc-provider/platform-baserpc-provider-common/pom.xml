@@ -34,6 +34,11 @@
     </dependency>
     <dependency>
       <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-registry-nacos</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
       <artifactId>platform-baserpc-reflect-jdk</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
