@@ -28,9 +28,13 @@ public class RpcConsumerNativeTest {
 
     private RpcClient rpcClient;
 
+    /**
+     * zookeeper：127.0.0.1:2181
+     * nacos：127.0.0.1:8848
+     */
     @Before
     public void initRpcClient() {
-        rpcClient = new RpcClient("127.0.0.1:2181", "zookeeper", "1.0.0",
+        rpcClient = new RpcClient("127.0.0.1:8848", "nacos", "1.0.0",
                 "SUNNY", "protostuff", "enhanced_leastconnections",
                 3000, "bytebuddy", false, false);
     }

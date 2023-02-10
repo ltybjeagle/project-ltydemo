@@ -7,6 +7,7 @@ import com.sunny.maven.rpc.loadbalancer.helper.ServiceLoadBalancerHelper;
 import com.sunny.maven.rpc.protocol.meta.ServiceMeta;
 import com.sunny.maven.rpc.registry.api.RegistryService;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
+import com.sunny.maven.rpc.spi.annotation.SPIClass;
 import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -25,6 +26,7 @@ import java.util.List;
  * @description: 基于Zookeeper的注册服务
  * @create: 2023-01-03 21:59
  */
+@SPIClass
 public class ZookeeperRegistryService implements RegistryService {
     public static final int BASE_SLEEP_TIME_MS = 1000;
     public static final int MAX_RETRIES = 3;

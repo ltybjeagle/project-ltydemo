@@ -1,0 +1,1 @@
+nacos=com.sunny.maven.rpc.registry.nacos.NacosRegistryService
