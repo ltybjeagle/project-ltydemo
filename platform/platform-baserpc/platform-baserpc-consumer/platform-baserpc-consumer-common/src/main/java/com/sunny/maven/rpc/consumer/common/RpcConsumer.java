@@ -3,7 +3,9 @@ package com.sunny.maven.rpc.consumer.common;
 import com.sunny.maven.rpc.common.helper.RpcServiceHelper;
 import com.sunny.maven.rpc.common.ip.IpUtils;
 import com.sunny.maven.rpc.common.threadpool.ClientThreadPool;
+import com.sunny.maven.rpc.consumer.common.cache.ConsumerChannelCache;
 import com.sunny.maven.rpc.consumer.common.helper.RpcConsumerHandlerHelper;
+import com.sunny.maven.rpc.consumer.common.manager.ConsumerConnectionManager;
 import com.sunny.maven.rpc.loadbalancer.context.ConnectionsContext;
 import com.sunny.maven.rpc.protocol.meta.ServiceMeta;
 import com.sunny.maven.rpc.proxy.api.consumer.Consumer;
@@ -23,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author SUNNY
@@ -36,21 +41,50 @@ public class RpcConsumer implements Consumer {
     private final EventLoopGroup eventLoopGroup;
     private final String localIp;
     private static volatile RpcConsumer instance;
+    private ScheduledExecutorService executorService;
+    /**
+     * 心跳间隔时间，默认30秒
+     */
+    private int heartbeatInterval = 30000;
+    /**
+     * 扫描并移除空闲连接时间，默认60秒
+     */
+    private int scanNotActiveChannelInterval = 60000;
 
-    private static Map<String, RpcConsumerHandler> handlerMap = new ConcurrentHashMap<>();
-
-    private RpcConsumer() {
+    private RpcConsumer(int heartbeatInterval, int scanNotActiveChannelInterval) {
+        if (heartbeatInterval > 0) {
+            this.heartbeatInterval = heartbeatInterval;
+        }
+        if (scanNotActiveChannelInterval > 0) {
+            this.scanNotActiveChannelInterval = scanNotActiveChannelInterval;
+        }
         localIp = IpUtils.getLocalHostIp();
         bootstrap = new Bootstrap();
         eventLoopGroup = new NioEventLoopGroup(4);
         bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).handler(new RpcConsumerInitializer());
+        // TODO 启动心跳，后续优化
+        this.startHeartBeat();
     }
 
-    public static RpcConsumer getInstance() {
+    private void startHeartBeat() {
+        executorService = Executors.newScheduledThreadPool(2);
+        // 扫描并处理所有不活跃的连接
+        executorService.scheduleAtFixedRate(() -> {
+            log.info("=============scanNotActiveChannel============");
+            ConsumerConnectionManager.scanNotActiveChannel();
+        }, 10, scanNotActiveChannelInterval, TimeUnit.MILLISECONDS);
+
+        executorService.scheduleAtFixedRate(() -> {
+            log.info("=============broadcastPingMessageFromConsumer============");
+            ConsumerConnectionManager.broadcastPingMessageFromConsumer();
+        }, 3, heartbeatInterval, TimeUnit.MILLISECONDS);
+    }
+
+    public static RpcConsumer getInstance(int heartbeatInterval, int scanNotActiveChannelInterval) {
         if (instance == null) {
             synchronized (RpcConsumer.class) {
                 if (instance == null) {
-                    instance = new RpcConsumer();
+                    instance = new RpcConsumer(heartbeatInterval, scanNotActiveChannelInterval);
                 }
             }
         }
