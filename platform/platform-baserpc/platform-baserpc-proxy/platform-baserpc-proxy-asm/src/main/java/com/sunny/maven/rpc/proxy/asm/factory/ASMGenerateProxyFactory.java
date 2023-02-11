@@ -163,7 +163,7 @@ public class ASMGenerateProxyFactory {
             for (int i = 0; i < anInterface.getMethods().length; i++) {
                 Method method = anInterface.getMethods()[i];
                 String methodName = "_" + anInterface.getSimpleName() + "_" + i;
-                MethodVisitor mv = cw.visitMethod(Opcodes.ACC_STATIC, method.getName(),
+                MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, method.getName(),
                         Type.getMethodDescriptor(method), null,
                         new String[]{Type.getInternalName(Exception.class)});
                 mv.visitCode();
@@ -190,7 +190,7 @@ public class ASMGenerateProxyFactory {
                         break;
                 }
                 mv.visitTypeInsn(Opcodes.ANEWARRAY, Type.getInternalName(Object.class));
-                for (int paramIndex = 0; paramIndex < method.getParameterTypes().length; paramIndex++) {
+                for (int paramIndex = 0; paramIndex < method.getParameterCount(); paramIndex++) {
                     mv.visitInsn(Opcodes.DUP);
                     switch (paramIndex) {
                         case 0:
@@ -247,7 +247,7 @@ public class ASMGenerateProxyFactory {
             mv.visitTypeInsn(Opcodes.CHECKCAST, Type.getInternalName(Long.class));
             mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Type.getInternalName(Long.class), "longValue",
                     "()J", false);
-            mv.visitInsn(Opcodes.IRETURN);
+            mv.visitInsn(Opcodes.LRETURN);
         } else if (returnType.isAssignableFrom(short.class)) {
             mv.visitTypeInsn(Opcodes.CHECKCAST, Type.getInternalName(Short.class));
             mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Type.getInternalName(Short.class), "shortValue",

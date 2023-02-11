@@ -1,6 +1,7 @@
 package com.sunny.maven.rpc.proxy.api.object;
 
 import com.sunny.maven.rpc.protocol.RpcProtocol;
+import com.sunny.maven.rpc.protocol.enumeration.RpcType;
 import com.sunny.maven.rpc.protocol.header.RpcHeaderFactory;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.proxy.api.async.IAsyncObjectProxy;
@@ -92,7 +93,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
         }
         RpcProtocol<RpcRequest> requestRpcProtocol = new RpcProtocol<>();
 
-        requestRpcProtocol.setHeader(RpcHeaderFactory.getRequestHeader(serializationType));
+        requestRpcProtocol.setHeader(RpcHeaderFactory.getRequestHeader(serializationType, RpcType.REQUEST.getType()));
 
         RpcRequest request = new RpcRequest();
         request.setVersion(this.serviceVersion);
@@ -140,7 +141,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
     private RpcProtocol<RpcRequest> createRequest(String className, String methodName, Object[] args) {
         RpcProtocol<RpcRequest> requestRpcProtocol = new RpcProtocol<>();
 
-        requestRpcProtocol.setHeader(RpcHeaderFactory.getRequestHeader(serializationType));
+        requestRpcProtocol.setHeader(RpcHeaderFactory.getRequestHeader(serializationType, RpcType.REQUEST.getType()));
 
         RpcRequest request = new RpcRequest();
         request.setClassName(className);

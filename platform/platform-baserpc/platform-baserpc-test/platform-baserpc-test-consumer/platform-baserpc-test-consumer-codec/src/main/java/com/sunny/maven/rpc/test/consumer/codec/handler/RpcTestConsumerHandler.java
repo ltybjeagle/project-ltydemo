@@ -2,6 +2,7 @@ package com.sunny.maven.rpc.test.consumer.codec.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
+import com.sunny.maven.rpc.protocol.enumeration.RpcType;
 import com.sunny.maven.rpc.protocol.header.RpcHeaderFactory;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.protocol.response.RpcResponse;
@@ -22,7 +23,7 @@ public class RpcTestConsumerHandler extends SimpleChannelInboundHandler<RpcProto
         log.info("发送数据开始...");
         // 模拟发送数据
         RpcProtocol<RpcRequest> protocol = new RpcProtocol<>();
-        protocol.setHeader(RpcHeaderFactory.getRequestHeader("jdk"));
+        protocol.setHeader(RpcHeaderFactory.getRequestHeader("jdk", RpcType.REQUEST.getType()));
         RpcRequest request = new RpcRequest();
         request.setClassName("com.sunny.maven.rpc.test.api.DemoService");
         request.setMethodName("hello");

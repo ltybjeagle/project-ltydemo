@@ -1,5 +1,6 @@
 package com.sunny.maven.rpc.protocol;
 
+import com.sunny.maven.rpc.protocol.enumeration.RpcType;
 import com.sunny.maven.rpc.protocol.header.RpcHeader;
 import com.sunny.maven.rpc.protocol.header.RpcHeaderFactory;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
@@ -16,7 +17,7 @@ public class RpcProtocolTest {
 
     @Test
     public void rpcProtocol() {
-        RpcHeader header = RpcHeaderFactory.getRequestHeader("jdk");
+        RpcHeader header = RpcHeaderFactory.getRequestHeader("jdk", RpcType.REQUEST.getType());
         RpcRequest body = new RpcRequest();
         body.setOneway(false);
         body.setAsync(false);
