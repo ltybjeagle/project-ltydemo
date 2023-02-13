@@ -9,12 +9,10 @@ import com.sunny.maven.rpc.protocol.enumeration.RpcType;
 import com.sunny.maven.rpc.protocol.header.RpcHeader;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.protocol.response.RpcResponse;
+import com.sunny.maven.rpc.provider.common.cache.ProviderChannelCache;
 import com.sunny.maven.rpc.reflect.api.ReflectInvoker;
 import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -40,9 +38,26 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
     }
 
     @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
+        ProviderChannelCache.add(ctx.channel());
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        ProviderChannelCache.remove(ctx.channel());
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        super.channelUnregistered(ctx);
+        ProviderChannelCache.remove(ctx.channel());
+    }
+
+    @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcProtocol<RpcRequest> protocol) throws Exception {
         ServerThreadPool.submit(() -> {
-            RpcProtocol<RpcResponse> responseRpcProtocol = handlerMessage(protocol);
+            RpcProtocol<RpcResponse> responseRpcProtocol = handlerMessage(protocol, ctx.channel());
             ctx.writeAndFlush(responseRpcProtocol).addListener((ChannelFutureListener) channelFuture ->
                     log.debug("Send response for request " + protocol.getHeader().getRequestId()));
         });
@@ -51,12 +66,15 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
     /**
      * 处理消息
      */
-    private RpcProtocol<RpcResponse> handlerMessage(RpcProtocol<RpcRequest> protocol) {
+    private RpcProtocol<RpcResponse> handlerMessage(RpcProtocol<RpcRequest> protocol, Channel channel) {
         RpcProtocol<RpcResponse> responseRpcProtocol = null;
         RpcHeader header = protocol.getHeader();
         if (header.getMsgType() == (byte) RpcType.HEARTBEAT_FROM_CONSUMER.getType()) {
-            // 心跳消息
-            responseRpcProtocol = handlerHeartbeatMessage(protocol, header);
+            // 接收到服务消费者发送的心跳消息
+            responseRpcProtocol = handlerHeartbeatMessageFromConsumer(protocol, header);
+        } else if (header.getMsgType() == (byte) RpcType.HEARTBEAT_TO_PROVIDER.getType()) {
+            // 接收到服务消费者响应的心跳消息
+            handlerHeartbeatMessageToProvider(protocol, channel);
         } else if (header.getMsgType() == (byte) RpcType.REQUEST.getType()) {
             // 请求消息
             responseRpcProtocol = handlerRequestMessage(protocol, header);
@@ -65,9 +83,18 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
     }
 
     /**
+     * 处理服务消费者响应的心跳消息
+     */
+    private void handlerHeartbeatMessageToProvider(RpcProtocol<RpcRequest> protocol, Channel channel) {
+        log.info("receive service consumer heartbeat message, the consumer is:{}, the heartbeat message is:{}",
+                channel.remoteAddress(), protocol.getBody().getParameters()[0]);
+    }
+
+    /**
      * 处理心跳消息
      */
-    private RpcProtocol<RpcResponse> handlerHeartbeatMessage(RpcProtocol<RpcRequest> protocol, RpcHeader header) {
+    private RpcProtocol<RpcResponse> handlerHeartbeatMessageFromConsumer(RpcProtocol<RpcRequest> protocol,
+                                                                         RpcHeader header) {
         header.setMsgType((byte) RpcType.HEARTBEAT_TO_CONSUMER.getType());
         RpcRequest request = protocol.getBody();
         RpcProtocol<RpcResponse> responseRpcProtocol = new RpcProtocol<>();
@@ -137,6 +164,7 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         log.error("server caught exception", cause);
+        ProviderChannelCache.remove(ctx.channel());
         ctx.close();
     }
 }

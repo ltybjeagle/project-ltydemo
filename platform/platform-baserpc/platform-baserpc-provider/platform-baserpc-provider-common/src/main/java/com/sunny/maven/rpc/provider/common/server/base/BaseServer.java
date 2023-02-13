@@ -3,6 +3,7 @@ package com.sunny.maven.rpc.provider.common.server.base;
 import com.sunny.maven.rpc.codec.RpcDecoder;
 import com.sunny.maven.rpc.codec.RpcEncoder;
 import com.sunny.maven.rpc.provider.common.handler.RpcProviderHandler;
+import com.sunny.maven.rpc.provider.common.manager.ProviderConnectionManager;
 import com.sunny.maven.rpc.provider.common.server.api.Server;
 import com.sunny.maven.rpc.registry.api.RegistryService;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
@@ -23,6 +24,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author SUNNY
@@ -46,13 +50,31 @@ public class BaseServer implements Server {
     private String reflectType;
 
     protected RegistryService registryService;
+    /**
+     * 心跳定时任务线程池
+     */
+    private ScheduledExecutorService executorService;
+    /**
+     * 心跳间隔时间，默认30秒
+     */
+    private int heartbeatInterval = 30000;
+    /**
+     * 扫描并移除空闲连接时间，默认60秒
+     */
+    private int scanNotActiveChannelInterval = 60000;
 
     public BaseServer(String serverAddress, String reflectType, String registryAddress, String registryType,
-                      String registryLoadBalanceType) {
+                      String registryLoadBalanceType, int heartbeatInterval, int scanNotActiveChannelInterval) {
         if (StringUtils.isNotEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             host = serverArray[0];
             port = Integer.parseInt(serverArray[1]);
+        }
+        if (heartbeatInterval > 0) {
+            this.heartbeatInterval = heartbeatInterval;
+        }
+        if (scanNotActiveChannelInterval > 0) {
+            this.scanNotActiveChannelInterval = scanNotActiveChannelInterval;
         }
         this.reflectType = reflectType;
         this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
@@ -72,6 +94,7 @@ public class BaseServer implements Server {
 
     @Override
     public void startNettyServer() {
+        this.startHeartBeat();
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -96,5 +119,19 @@ public class BaseServer implements Server {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
+    }
+
+    private void startHeartBeat() {
+        executorService = Executors.newScheduledThreadPool(2);
+        // 扫描并处理所有不活跃的连接
+        executorService.scheduleAtFixedRate(() -> {
+            log.info("=============scanNotActiveChannel============");
+            ProviderConnectionManager.scanNotActiveChannel();
+        }, 10, scanNotActiveChannelInterval, TimeUnit.MILLISECONDS);
+
+        executorService.scheduleAtFixedRate(() -> {
+            log.info("=============broadcastPingMessageFromProvider============");
+            ProviderConnectionManager.broadcastPingMessageFromProvider();
+        }, 3, heartbeatInterval, TimeUnit.MILLISECONDS);
     }
 }
