@@ -16,6 +16,7 @@
     <module>platform-baserpc-registry-api</module>
     <module>platform-baserpc-registry-zookeeper</module>
       <module>platform-baserpc-registry-nacos</module>
+      <module>platform-baserpc-registry-eureka</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
