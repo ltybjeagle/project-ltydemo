@@ -6,6 +6,7 @@ import com.sunny.maven.rpc.consumer.common.cache.ConsumerChannelCache;
 import com.sunny.maven.rpc.consumer.common.context.RpcContext;
 import com.sunny.maven.rpc.protocol.enumeration.RpcStatus;
 import com.sunny.maven.rpc.protocol.enumeration.RpcType;
+import com.sunny.maven.rpc.protocol.header.RpcHeaderFactory;
 import com.sunny.maven.rpc.proxy.api.future.RpcFuture;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.header.RpcHeader;
@@ -16,6 +17,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.SocketAddress;
@@ -70,6 +72,24 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
         ConsumerChannelCache.remove(ctx.channel());
+    }
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if (evt instanceof IdleStateEvent) {
+            log.info("consumer IdleStateEvent...................");
+            // 发送一次心跳数据
+            RpcHeader header = RpcHeaderFactory.getRequestHeader(RpcConstants.SERIALIZATION_PROTOSTUFF,
+                    RpcType.HEARTBEAT_FROM_CONSUMER.getType());
+            RpcProtocol<RpcRequest> requestRpcProtocol = new RpcProtocol<>();
+            RpcRequest request = new RpcRequest();
+            request.setParameters(new Object[] {RpcConstants.HEARTBEAT_PING});
+            requestRpcProtocol.setHeader(header);
+            requestRpcProtocol.setBody(request);
+            ctx.writeAndFlush(requestRpcProtocol);
+        } else {
+            super.userEventTriggered(ctx, evt);
+        }
     }
 
     @Override
