@@ -20,7 +20,7 @@ public class RpcConsumerNativeTest {
         RpcClient rpcClient = new RpcClient("127.0.0.1:2181", "zookeeper",
                 "1.0.0", "SUNNY", "JDK", "random",
                 3000, "jdk", false, false, 30000,
-                60000);
+                60000, 1000, 3);
         DemoService demoService = rpcClient.create(DemoService.class);
         String result = demoService.hello("SUNNY");
         log.info("返回的结果数据===>>> {}", result);
@@ -38,7 +38,7 @@ public class RpcConsumerNativeTest {
         rpcClient = new RpcClient("127.0.0.1:2181", "zookeeper", "1.0.0",
                 "SUNNY", "protostuff", "enhanced_leastconnections",
                 3000, "asm", false, false,
-                30000, 60000);
+                30000, 60000, 1000, 3);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class RpcConsumerNativeTest {
         DemoService demoService = rpcClient.create(DemoService.class);
         String result = demoService.hello("SUNNY");
         log.info("返回的结果数据===>>> {}", result);
-        Thread.sleep(60000);
+        Thread.sleep(600000);
         rpcClient.shutdown();
     }
 

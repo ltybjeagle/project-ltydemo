@@ -2,6 +2,7 @@ package com.sunny.maven.rpc.provider.common.server.base;
 
 import com.sunny.maven.rpc.codec.RpcDecoder;
 import com.sunny.maven.rpc.codec.RpcEncoder;
+import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.provider.common.handler.RpcProviderHandler;
 import com.sunny.maven.rpc.provider.common.manager.ProviderConnectionManager;
 import com.sunny.maven.rpc.provider.common.server.api.Server;
@@ -19,6 +20,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -104,9 +106,13 @@ public class BaseServer implements Server {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline().
-                                    addLast(new RpcDecoder()).
-                                    addLast(new RpcEncoder()).
-                                    addLast(new RpcProviderHandler(reflectType, handlerMap));
+                                    addLast(RpcConstants.CODEC_DECODER, new RpcDecoder()).
+                                    addLast(RpcConstants.CODEC_ENCODER, new RpcEncoder()).
+                                    addLast(RpcConstants.CODEC_SERVER_IDLE_HANDLER,
+                                            new IdleStateHandler(0, 0,
+                                                    heartbeatInterval, TimeUnit.MILLISECONDS)).
+                                    addLast(RpcConstants.CODEC_HANDLER,
+                                            new RpcProviderHandler(reflectType, handlerMap));
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128).
                     childOption(ChannelOption.SO_KEEPALIVE, true);
