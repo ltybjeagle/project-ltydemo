@@ -9,16 +9,14 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>platform-baserpc-test</artifactId>
+  <artifactId>platform-baserpc-demo</artifactId>
 
-  <name>platform-baserpc-test</name>
+  <name>platform-baserpc-demo</name>
   <modules>
-    <module>platform-baserpc-test-scanner</module>
-    <module>platform-baserpc-test-provider</module>
-    <module>platform-baserpc-test-consumer</module>
-    <module>platform-baserpc-test-api</module>
-    <module>platform-baserpc-test-registry</module>
-    <module>platform-baserpc-test-spi</module>
+    <module>platform-baserpc-demo-api</module>
+    <module>platform-baserpc-demo-spring-xml-provider</module>
+      <module>platform-baserpc-demo-native-consumer</module>
+      <module>platform-baserpc-demo-spring-annotation-provider</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

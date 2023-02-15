@@ -27,6 +27,7 @@
         <module>platform-baserpc-loadbalancer</module>
         <module>platform-baserpc-spi</module>
         <module>platform-baserpc-reflect</module>
+        <module>platform-baserpc-demo</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
