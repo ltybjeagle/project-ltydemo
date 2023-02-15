@@ -17,11 +17,15 @@
         <module>platform-basecommon-user</module>
         <module>platform-basecommon-gateway</module>
         <module>platform-microservice-middle</module>
-        <module>platform-basecommon-eureka</module>
         <module>platform-basecommon-config</module>
+        <module>platform-microservice-eureka</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
+
+    <properties>
+        <eureka-service.version>1.0-SNAPSHOT</eureka-service.version>
+    </properties>
 
 
 </project>
