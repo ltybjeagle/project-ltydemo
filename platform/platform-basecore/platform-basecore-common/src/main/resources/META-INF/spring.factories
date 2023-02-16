@@ -1,0 +1,3 @@
+##逗号分隔多个自动配置类。注：多配置类间不能有空格，以免加载不到类
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.sunny.maven.core.common.config.CommonConfig
