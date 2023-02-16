@@ -15,6 +15,7 @@
   <modules>
     <module>platform-baserpc-consumer-common</module>
       <module>platform-baserpc-consumer-native</module>
+      <module>platform-baserpc-consumer-spring</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
