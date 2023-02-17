@@ -28,6 +28,7 @@
         <module>platform-baserpc-spi</module>
         <module>platform-baserpc-reflect</module>
         <module>platform-baserpc-demo</module>
+        <module>platform-baserpc-spring-boot-starter</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
@@ -40,6 +41,7 @@
         <kyro.version>5.2.0</kyro.version>
         <protostuff.version>1.0.8</protostuff.version>
         <bytebuddy.version>1.10.13</bytebuddy.version>
+        <spring.boot.version>2.6.8</spring.boot.version>
     </properties>
 
     <dependencies>

@@ -19,6 +19,7 @@
       <module>platform-baserpc-demo-spring-annotation-provider</module>
       <module>platform-baserpc-demo-spring-xml-consumer</module>
       <module>platform-baserpc-demo-spring-annotation-consumer</module>
+      <module>platform-baserpc-demo-spring-boot-provider</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
