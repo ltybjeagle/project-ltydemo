@@ -14,6 +14,7 @@
   <name>platform-baserpc-spring-boot-starter</name>
   <modules>
     <module>platform-baserpc-spring-boot-starter-provider</module>
+      <module>platform-baserpc-spring-boot-starter-consumer</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
