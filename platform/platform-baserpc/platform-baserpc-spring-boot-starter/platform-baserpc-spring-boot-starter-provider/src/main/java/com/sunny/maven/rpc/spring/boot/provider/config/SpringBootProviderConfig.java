@@ -12,6 +12,10 @@ public final class SpringBootProviderConfig {
      */
     private String serverAddress;
     /**
+     * 注册到注册中心的服务地址
+     */
+    private String serverRegistryAddress;
+    /**
      * 注册中心地址
      */
     private String registryAddress;
@@ -39,7 +43,8 @@ public final class SpringBootProviderConfig {
     public SpringBootProviderConfig() {
     }
 
-    public SpringBootProviderConfig(final String serverAddress, final String registryAddress, final String registryType,
+    public SpringBootProviderConfig(final String serverAddress, final String serverRegistryAddress,
+                                    final String registryAddress, final String registryType,
                                     final String registryLoadBalancerType, final String reflectType,
                                     final int heartbeatInterval, final int scanNotActiveChannelInterval) {
         this.serverAddress = serverAddress;
@@ -51,6 +56,7 @@ public final class SpringBootProviderConfig {
             this.heartbeatInterval = heartbeatInterval;
         }
         this.scanNotActiveChannelInterval = scanNotActiveChannelInterval;
+        this.serverRegistryAddress = serverRegistryAddress;
     }
 
     public String getServerAddress() {
@@ -107,5 +113,13 @@ public final class SpringBootProviderConfig {
 
     public void setScanNotActiveChannelInterval(int scanNotActiveChannelInterval) {
         this.scanNotActiveChannelInterval = scanNotActiveChannelInterval;
+    }
+
+    public String getServerRegistryAddress() {
+        return serverRegistryAddress;
+    }
+
+    public void setServerRegistryAddress(String serverRegistryAddress) {
+        this.serverRegistryAddress = serverRegistryAddress;
     }
 }

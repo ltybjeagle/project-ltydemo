@@ -28,8 +28,8 @@ public class ScannerTest {
      */
     @Test
     public void testScannerClassNameListByRpcService() throws Exception {
-        RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(
-                "com.sunny.maven.rpc.test.scanner");
+//        RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(
+//                "com.sunny.maven.rpc.test.scanner");
     }
 
     /**

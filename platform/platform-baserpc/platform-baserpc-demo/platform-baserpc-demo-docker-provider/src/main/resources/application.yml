@@ -5,11 +5,11 @@ baserpc:
   sunny:
     provider:
       # rpc server
-      serverAddress: 127.0.0.1:20880
+      serverAddress: 0.0.0.0:20881
       # serverRegistryAddress
-      serverRegistryAddress: 127.0.0.1:20880
+      serverRegistryAddress: 192.168.184.102:20881
       # zookeeper server
-      registryAddress: 127.0.0.1:2181
+      registryAddress: 192.168.184.102:2181
       # registry center type, zookeeper/nacos/apoll/etcd/eureka
       registryType: zookeeper
       #registry loadbalance type: zkconsistenthash

@@ -45,6 +45,8 @@ public class BaseServer implements Server {
      * 端口号
      */
     protected int port = 27110;
+    protected String serverRegistryHost;
+    protected int serverRegistryPort;
     /**
      * 存储的是实体类关系
      */
@@ -65,12 +67,21 @@ public class BaseServer implements Server {
      */
     private int scanNotActiveChannelInterval = 60000;
 
-    public BaseServer(String serverAddress, String reflectType, String registryAddress, String registryType,
-                      String registryLoadBalanceType, int heartbeatInterval, int scanNotActiveChannelInterval) {
+    public BaseServer(String serverAddress, String serverRegistryAddress, String reflectType, String registryAddress,
+                      String registryType, String registryLoadBalanceType, int heartbeatInterval,
+                      int scanNotActiveChannelInterval) {
         if (StringUtils.isNotEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             host = serverArray[0];
             port = Integer.parseInt(serverArray[1]);
+        }
+        if (StringUtils.isNotEmpty(serverRegistryAddress)) {
+            String[] serverRegistryAddressArray = serverRegistryAddress.split(":");
+            this.serverRegistryHost = serverRegistryAddressArray[0];
+            this.serverRegistryPort = Integer.parseInt(serverRegistryAddressArray[1]);
+        } else {
+            this.serverRegistryHost = host;
+            this.serverRegistryPort = port;
         }
         if (heartbeatInterval > 0) {
             this.heartbeatInterval = heartbeatInterval;

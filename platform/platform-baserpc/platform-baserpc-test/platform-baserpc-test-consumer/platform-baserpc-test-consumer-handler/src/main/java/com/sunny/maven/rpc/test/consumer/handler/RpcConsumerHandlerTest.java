@@ -23,7 +23,8 @@ import org.apache.commons.lang3.StringUtils;
 public class RpcConsumerHandlerTest {
 
     public static void main(String[] args) throws Exception {
-        RpcConsumer consumer = RpcConsumer.getInstance(30000, 60000);
+        RpcConsumer consumer = RpcConsumer.getInstance(30000, 60000,
+                1000, 3);
         RpcFuture future = consumer.sendRequest(getRpcRequestProtocol(), getRegistryService(
                 "127.0.0.1:2181", "zookeeper", "random"));
 //        RpcFuture future = RpcContext.getContext().getRpcFuture();

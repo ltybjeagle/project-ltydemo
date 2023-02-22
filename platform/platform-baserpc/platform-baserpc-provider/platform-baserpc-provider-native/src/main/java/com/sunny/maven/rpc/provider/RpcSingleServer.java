@@ -11,16 +11,16 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class RpcSingleServer extends BaseServer {
-    public RpcSingleServer(String serverAddress, String scanPackage, String reflectType, String registryAddress,
-                           String registryType, String registryLoadBalanceType, int heartbeatInterval,
-                           int scanNotActiveChannelInterval) {
+    public RpcSingleServer(String serverAddress, String serverRegistryAddress, String scanPackage, String reflectType,
+                           String registryAddress, String registryType, String registryLoadBalanceType,
+                           int heartbeatInterval, int scanNotActiveChannelInterval) {
         // 调用父类构造方法
-        super(serverAddress, reflectType, registryAddress, registryType, registryLoadBalanceType, heartbeatInterval,
-                scanNotActiveChannelInterval);
+        super(serverAddress, serverRegistryAddress, reflectType, registryAddress, registryType, registryLoadBalanceType,
+                heartbeatInterval, scanNotActiveChannelInterval);
         try {
             this.handlerMap =
-                    RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(this.host, this.port,
-                            scanPackage, this.registryService);
+                    RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(this.serverRegistryHost,
+                            this.serverRegistryPort, scanPackage, this.registryService);
         } catch (Exception e) {
             log.error("RPC Server init error : {}", e.getMessage());
         }

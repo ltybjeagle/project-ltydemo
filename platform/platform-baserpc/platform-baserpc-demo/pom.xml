@@ -21,6 +21,7 @@
       <module>platform-baserpc-demo-spring-annotation-consumer</module>
       <module>platform-baserpc-demo-spring-boot-provider</module>
       <module>platform-baserpc-demo-spring-boot-consumer</module>
+      <module>platform-baserpc-demo-docker-provider</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

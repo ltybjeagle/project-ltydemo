@@ -18,6 +18,8 @@ import org.springframework.context.annotation.PropertySource;
 public class SpringAnnotationProviderConfig {
     @Value("${server.address}")
     private String serverAddress;
+    @Value("${server.registry.address}")
+    private String serverRegistryAddress;
     @Value("${reflect.type}")
     private String reflectType;
     @Value("${registry.address}")
@@ -33,7 +35,7 @@ public class SpringAnnotationProviderConfig {
 
     @Bean
     public RpcSpringServer rpcSpringServer() {
-        return new RpcSpringServer(serverAddress, reflectType, registryAddress, registryType, registryLoadBalanceType,
-                heartbeatInterval, scanNotActiveChannelInterval);
+        return new RpcSpringServer(serverAddress, serverRegistryAddress, reflectType, registryAddress, registryType,
+                registryLoadBalanceType, heartbeatInterval, scanNotActiveChannelInterval);
     }
 }

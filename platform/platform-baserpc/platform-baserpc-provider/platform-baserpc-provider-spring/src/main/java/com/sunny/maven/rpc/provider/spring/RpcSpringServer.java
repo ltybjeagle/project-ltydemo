@@ -22,10 +22,11 @@ import java.util.Map;
 @Slf4j
 public class RpcSpringServer extends BaseServer implements ApplicationContextAware, InitializingBean {
 
-    public RpcSpringServer(String serverAddress, String reflectType, String registryAddress, String registryType,
-                           String registryLoadBalanceType, int heartbeatInterval, int scanNotActiveChannelInterval) {
-        super(serverAddress, reflectType, registryAddress, registryType, registryLoadBalanceType, heartbeatInterval,
-                scanNotActiveChannelInterval);
+    public RpcSpringServer(String serverAddress, String serverRegistryAddress, String reflectType,
+                           String registryAddress, String registryType, String registryLoadBalanceType,
+                           int heartbeatInterval, int scanNotActiveChannelInterval) {
+        super(serverAddress, serverRegistryAddress, reflectType, registryAddress, registryType, registryLoadBalanceType,
+                heartbeatInterval, scanNotActiveChannelInterval);
     }
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -38,8 +39,8 @@ public class RpcSpringServer extends BaseServer implements ApplicationContextAwa
         if (MapUtils.isNotEmpty(serviceBeanMap)) {
             for (Object serviceBean : serviceBeanMap.values()) {
                 RpcService rpcService = serviceBean.getClass().getAnnotation(RpcService.class);
-                ServiceMeta serviceMeta = new ServiceMeta(this.getServiceName(rpcService), rpcService.version(), host,
-                        port, rpcService.group(), this.getWeight(rpcService.weight()));
+                ServiceMeta serviceMeta = new ServiceMeta(this.getServiceName(rpcService), rpcService.version(),
+                        serverRegistryHost, serverRegistryPort, rpcService.group(), this.getWeight(rpcService.weight()));
                 handlerMap.put(RpcServiceHelper.buildServiceKey(serviceMeta.getServiceName(),
                         serviceMeta.getServiceVersion(), serviceMeta.getServiceGroup()), serviceBean);
                 try {
