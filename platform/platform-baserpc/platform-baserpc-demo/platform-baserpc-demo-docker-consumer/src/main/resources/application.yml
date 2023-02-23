@@ -5,7 +5,7 @@ baserpc:
   sunny:
     consumer:
       # zookeeper server
-      registryAddress: 127.0.0.1:2181
+      registryAddress: 192.168.184.102:2181
       # registry center type, zookeeper/nacos/apoll/etcd/eureka
       registryType: zookeeper
       # registry loadbalance type: zkconsistenthash
@@ -32,3 +32,4 @@ baserpc:
       retryInterval: 1000
       # retryTimes
       retryTimes: 3
+
