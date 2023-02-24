@@ -142,4 +142,8 @@ public class RpcConstants {
      * 默认的重试次数，无限重试
      */
     public static final int DEFAULT_RETRY_TIMES = Integer.MAX_VALUE;
+    /**
+     * 默认的结果缓存时长，默认5秒，单位是毫秒
+     */
+    public static final int RPC_SCAN_RESULT_CACHE_EXPIRE = 5000;
 }
