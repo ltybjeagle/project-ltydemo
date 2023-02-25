@@ -66,10 +66,18 @@ public class BaseServer implements Server {
      * 扫描并移除空闲连接时间，默认60秒
      */
     private int scanNotActiveChannelInterval = 60000;
+    /**
+     * 结果缓存过期时长，默认5秒
+     */
+    private int resultCacheExpire = 5000;
+    /**
+     * 是否开启结果缓存
+     */
+    private boolean enableResultCache;
 
     public BaseServer(String serverAddress, String serverRegistryAddress, String reflectType, String registryAddress,
                       String registryType, String registryLoadBalanceType, int heartbeatInterval,
-                      int scanNotActiveChannelInterval) {
+                      int scanNotActiveChannelInterval, boolean enableResultCache, int resultCacheExpire) {
         if (StringUtils.isNotEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             host = serverArray[0];
@@ -91,6 +99,10 @@ public class BaseServer implements Server {
         }
         this.reflectType = reflectType;
         this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
+        if (resultCacheExpire > 0) {
+            this.resultCacheExpire = resultCacheExpire;
+        }
+        this.enableResultCache = enableResultCache;
     }
 
     private RegistryService getRegistryService(String registryAddress, String registryType,
@@ -123,7 +135,8 @@ public class BaseServer implements Server {
                                             new IdleStateHandler(0, 0,
                                                     heartbeatInterval, TimeUnit.MILLISECONDS)).
                                     addLast(RpcConstants.CODEC_HANDLER,
-                                            new RpcProviderHandler(reflectType, handlerMap));
+                                            new RpcProviderHandler(reflectType, enableResultCache, resultCacheExpire,
+                                                    handlerMap));
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128).
                     childOption(ChannelOption.SO_KEEPALIVE, true);

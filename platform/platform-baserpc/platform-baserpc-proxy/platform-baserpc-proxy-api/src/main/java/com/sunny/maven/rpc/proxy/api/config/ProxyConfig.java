@@ -48,12 +48,21 @@ public class ProxyConfig<T> implements Serializable {
      * 服务注册接口
      */
     private RegistryService registryService;
+    /**
+     * 是否开启结果缓存
+     */
+    private boolean enableResultCache;
+    /**
+     * 缓存结果的时长，单位是毫秒
+     */
+    private int resultCacheExpire;
 
     public ProxyConfig() {
     }
 
     public ProxyConfig(Class<T> clazz, String serviceVersion, String serviceGroup, long timeout, Consumer consumer,
-                       String serializationType, boolean async, boolean oneWay, RegistryService registryService) {
+                       String serializationType, boolean async, boolean oneWay, RegistryService registryService,
+                       boolean enableResultCache, int resultCacheExpire) {
         this.clazz = clazz;
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
@@ -63,6 +72,8 @@ public class ProxyConfig<T> implements Serializable {
         this.async = async;
         this.oneWay = oneWay;
         this.registryService = registryService;
+        this.enableResultCache = enableResultCache;
+        this.resultCacheExpire = resultCacheExpire;
     }
 
     public Class<T> getClazz() {
@@ -135,5 +146,21 @@ public class ProxyConfig<T> implements Serializable {
 
     public void setRegistryService(RegistryService registryService) {
         this.registryService = registryService;
+    }
+
+    public boolean isEnableResultCache() {
+        return enableResultCache;
+    }
+
+    public void setEnableResultCache(boolean enableResultCache) {
+        this.enableResultCache = enableResultCache;
+    }
+
+    public int getResultCacheExpire() {
+        return resultCacheExpire;
+    }
+
+    public void setResultCacheExpire(int resultCacheExpire) {
+        this.resultCacheExpire = resultCacheExpire;
     }
 }

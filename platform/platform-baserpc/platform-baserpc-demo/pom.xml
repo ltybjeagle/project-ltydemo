@@ -23,6 +23,7 @@
       <module>platform-baserpc-demo-spring-boot-consumer</module>
       <module>platform-baserpc-demo-docker-provider</module>
       <module>platform-baserpc-demo-docker-consumer</module>
+      <module>platform-baserpc-demo-native-provider</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

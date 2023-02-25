@@ -1,5 +1,6 @@
 package com.sunny.maven.rpc.annotation;
 
+import com.sunny.maven.rpc.constants.RpcConstants;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.ElementType;
@@ -27,13 +28,21 @@ public @interface RpcService {
     /**
      * 版本号
      */
-    String version() default "1.0.0";
+    String version() default RpcConstants.RPC_COMMON_DEFAULT_VERSION;
     /**
      * 服务分组，默认为空
      */
-    String group() default "";
+    String group() default RpcConstants.RPC_COMMON_DEFAULT_GROUP;
     /**
      * 权重
      */
     int weight() default 0;
+    /**
+     * 心跳间隔时间，默认30秒
+     */
+    int heartbeatInterval() default RpcConstants.RPC_COMMON_DEFAULT_HEARTBEATINTERVAL;
+    /**
+     * 扫描空闲连接间隔时间，默认60秒
+     */
+    int scanNotActiveChannelInterval() default RpcConstants.RPC_COMMON_DEFAULT_SCANNOTACTIVECHANNELINTERVAL;
 }

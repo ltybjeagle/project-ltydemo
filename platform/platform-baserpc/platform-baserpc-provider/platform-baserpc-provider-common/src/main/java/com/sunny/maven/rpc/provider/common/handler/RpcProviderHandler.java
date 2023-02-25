@@ -1,5 +1,7 @@
 package com.sunny.maven.rpc.provider.common.handler;
 
+import com.sunny.maven.rpc.cache.result.CacheResultKey;
+import com.sunny.maven.rpc.cache.result.CacheResultManager;
 import com.sunny.maven.rpc.common.helper.RpcServiceHelper;
 import com.sunny.maven.rpc.common.threadpool.ServerThreadPool;
 import com.sunny.maven.rpc.constants.RpcConstants;
@@ -34,9 +36,22 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
      * 调用采用哪种类型调用真实方法
      */
     private ReflectInvoker reflectInvoker;
-    public RpcProviderHandler(String reflectType, Map<String, Object> handlerMap) {
+    /**
+     * 是否启用结果缓存
+     */
+    private final boolean enableResultCache;
+
+    private final CacheResultManager<RpcProtocol<RpcResponse>> cacheResultManager;
+
+    public RpcProviderHandler(String reflectType, boolean enableResultCache, int cacheResultExpire,
+                              Map<String, Object> handlerMap) {
         this.handlerMap = handlerMap;
         this.reflectInvoker = ExtensionLoader.getExtension(ReflectInvoker.class, reflectType);
+        this.enableResultCache = enableResultCache;
+        if (cacheResultExpire <= 0) {
+            cacheResultExpire = RpcConstants.RPC_SCAN_RESULT_CACHE_EXPIRE;
+        }
+        this.cacheResultManager = CacheResultManager.getInstance(cacheResultExpire, enableResultCache);
     }
 
     @Override
@@ -94,8 +109,38 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
             handlerHeartbeatMessageToProvider(protocol, channel);
         } else if (header.getMsgType() == (byte) RpcType.REQUEST.getType()) {
             // 请求消息
-            responseRpcProtocol = handlerRequestMessage(protocol, header);
+            responseRpcProtocol = handlerRequestMessageWithCache(protocol, header);
         }
+        return responseRpcProtocol;
+    }
+
+    /**
+     * 结合缓存处理结果
+     */
+    private RpcProtocol<RpcResponse> handlerRequestMessageWithCache(RpcProtocol<RpcRequest> protocol,
+                                                                    RpcHeader header) {
+        header.setMsgType((byte) RpcType.RESPONSE.getType());
+        if (this.enableResultCache) {
+            return this.handlerRequestMessageCache(protocol, header);
+        }
+        return this.handlerRequestMessage(protocol, header);
+    }
+
+    /**
+     * 处理缓存
+     */
+    private RpcProtocol<RpcResponse> handlerRequestMessageCache(RpcProtocol<RpcRequest> protocol, RpcHeader header) {
+        RpcRequest request = protocol.getBody();
+        CacheResultKey cacheResultKey = new CacheResultKey(request.getClassName(), request.getMethodName(),
+                request.getParameterTypes(), request.getParameters(), request.getVersion(), request.getGroup());
+        RpcProtocol<RpcResponse> responseRpcProtocol = this.cacheResultManager.get(cacheResultKey);
+        if (responseRpcProtocol == null) {
+            responseRpcProtocol = this.handlerRequestMessage(protocol, header);
+            // 设置保存的时间
+            cacheResultKey.setCacheTimeStamp(System.currentTimeMillis());
+            this.cacheResultManager.put(cacheResultKey, responseRpcProtocol);
+        }
+        responseRpcProtocol.setHeader(header);
         return responseRpcProtocol;
     }
 
@@ -129,7 +174,6 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
      * 处理请求消息
      */
     private RpcProtocol<RpcResponse> handlerRequestMessage(RpcProtocol<RpcRequest> protocol, RpcHeader header) {
-        header.setMsgType((byte) RpcType.RESPONSE.getType());
         RpcRequest request = protocol.getBody();
         log.debug("Receive request " + header.getRequestId());
         RpcProtocol<RpcResponse> responseRpcProtocol = new RpcProtocol<>();

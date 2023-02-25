@@ -25,14 +25,17 @@ public class ConsumerNativeDemoTest {
         rpcClient = new RpcClient("127.0.0.1:2181", "zookeeper", "1.0.0",
                 "SUNNY", "protostuff", "enhanced_leastconnections",
                 3000, "asm", false, false,
-                30000, 60000, 1000, 3);
+                30000, 60000, 1000, 3,
+                true, 30000);
     }
 
     @Test
     public void testInterfaceRpc() throws Exception {
         DemoService demoService = rpcClient.create(DemoService.class);
-        String result = demoService.hello("SUNNY");
-        log.info("返回的结果数据===>>> {}", result);
+        for (int i = 0; i < 5; i++) {
+            String result = demoService.hello("SUNNY");
+            log.info("返回的结果数据===>>> {}", result);
+        }
         while (true) {
             Thread.sleep(1000);
         }

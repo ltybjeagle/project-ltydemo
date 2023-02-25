@@ -2,6 +2,7 @@ package com.sunny.maven.rpc.consumer.spring;
 
 import com.sunny.maven.rpc.annotation.RpcReference;
 import com.sunny.maven.rpc.constants.RpcConstants;
+import com.sunny.maven.rpc.consumer.spring.config.RpcConsumerSpringContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
@@ -63,6 +64,7 @@ public class RpcConsumerPostProcessor implements ApplicationContextAware, BeanCl
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+        RpcConsumerSpringContext.getInstance().setContext(applicationContext);
     }
 
     private void parseRpcReference(Field field) {
@@ -85,6 +87,8 @@ public class RpcConsumerPostProcessor implements ApplicationContextAware, BeanCl
             builder.addPropertyValue("heartbeatInterval", annotation.heartbeatInterval());
             builder.addPropertyValue("retryInterval", annotation.retryInterval());
             builder.addPropertyValue("retryTimes", annotation.retryTimes());
+            builder.addPropertyValue("enableResultCache", annotation.enableResultCache());
+            builder.addPropertyValue("resultCacheExpire", annotation.resultCacheExpire());
 
             BeanDefinition beanDefinition = builder.getBeanDefinition();
             rpcRefBeanDefinitions.put(field.getName(), beanDefinition);

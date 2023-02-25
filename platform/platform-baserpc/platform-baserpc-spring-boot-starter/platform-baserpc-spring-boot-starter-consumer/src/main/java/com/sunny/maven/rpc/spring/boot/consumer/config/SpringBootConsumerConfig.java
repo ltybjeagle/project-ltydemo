@@ -62,6 +62,14 @@ public final class SpringBootConsumerConfig {
      * 重试次数
      */
     private int retryTimes = 3;
+    /**
+     * 是否开启结果缓存
+     */
+    private boolean enableResultCache;
+    /**
+     * 缓存结果的时长，单位是毫秒
+     */
+    private int resultCacheExpire;
 
     public SpringBootConsumerConfig() {
     }
@@ -200,5 +208,21 @@ public final class SpringBootConsumerConfig {
 
     public void setRetryTimes(int retryTimes) {
         this.retryTimes = retryTimes;
+    }
+
+    public boolean isEnableResultCache() {
+        return enableResultCache;
+    }
+
+    public void setEnableResultCache(boolean enableResultCache) {
+        this.enableResultCache = enableResultCache;
+    }
+
+    public int getResultCacheExpire() {
+        return resultCacheExpire;
+    }
+
+    public void setResultCacheExpire(int resultCacheExpire) {
+        this.resultCacheExpire = resultCacheExpire;
     }
 }

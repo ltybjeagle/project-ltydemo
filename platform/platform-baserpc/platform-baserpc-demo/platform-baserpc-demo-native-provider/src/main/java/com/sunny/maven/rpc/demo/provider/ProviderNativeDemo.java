@@ -1,4 +1,4 @@
-package com.sunny.maven.rpc.test.provider.single;
+package com.sunny.maven.rpc.demo.provider;
 
 import com.sunny.maven.rpc.provider.RpcSingleServer;
 import org.junit.Before;
@@ -9,11 +9,10 @@ import java.lang.reflect.Field;
 
 /**
  * @author SUNNY
- * @description: 测试Java原生启动RPC
- * @create: 2022-12-27 11:32
+ * @description: 服务提供者
+ * @create: 2023-02-24 12:15
  */
-public class RpcSingleServerTest {
-
+public class ProviderNativeDemo {
     @Before
     public void disableWarning() {
         try {
@@ -36,9 +35,9 @@ public class RpcSingleServerTest {
     public void startRpcSingleServer() {
         RpcSingleServer singleServer =
                 new RpcSingleServer("127.0.0.1:27880", "127.0.0.1:27880",
-                        "com.sunny.maven.rpc.test", "asm", "127.0.0.1:2181",
+                        "com.sunny.maven.rpc.demo", "asm", "127.0.0.1:2181",
                         "zookeeper", "random", 3000,
-                        6000, true, 5000);
+                        6000, true, 30000);
         singleServer.startNettyServer();
     }
 }
