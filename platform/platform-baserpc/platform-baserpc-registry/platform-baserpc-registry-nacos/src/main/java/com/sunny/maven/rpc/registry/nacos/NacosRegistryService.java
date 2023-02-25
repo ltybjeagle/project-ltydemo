@@ -62,6 +62,11 @@ public class NacosRegistryService implements RegistryService {
     }
 
     @Override
+    public ServiceMeta select(List<ServiceMeta> serviceMetaList, int invokerHashCode, String sourceIp) {
+        return null;
+    }
+
+    @Override
     public void destroy() throws IOException {
         try {
             namingService.shutDown();

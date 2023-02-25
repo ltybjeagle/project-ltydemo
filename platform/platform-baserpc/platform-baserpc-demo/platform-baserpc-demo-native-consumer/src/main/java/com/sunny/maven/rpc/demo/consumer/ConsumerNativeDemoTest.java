@@ -23,10 +23,11 @@ public class ConsumerNativeDemoTest {
     @Before
     public void initRpcClient() {
         rpcClient = new RpcClient("127.0.0.1:2181", "zookeeper", "1.0.0",
-                "SUNNY", "protostuff", "enhanced_leastconnections",
-                3000, "asm", false, false,
-                30000, 60000, 1000, 3,
-                true, 30000);
+                "SUNNY", "protostuff",
+                "enhanced_leastconnections", 3000, "asm", false,
+                false, 30000, 60000, 1000,
+                3, false, 30000, true,
+                "127.0.0.1:27880,127.0.0.1:27880,127.0.0.1:27880");
     }
 
     @Test

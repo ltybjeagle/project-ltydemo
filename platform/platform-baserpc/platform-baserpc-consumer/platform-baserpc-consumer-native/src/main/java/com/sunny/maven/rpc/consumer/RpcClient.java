@@ -6,10 +6,8 @@ import com.sunny.maven.rpc.proxy.api.ProxyFactory;
 import com.sunny.maven.rpc.proxy.api.async.IAsyncObjectProxy;
 import com.sunny.maven.rpc.proxy.api.config.ProxyConfig;
 import com.sunny.maven.rpc.proxy.api.object.ObjectProxy;
-import com.sunny.maven.rpc.proxy.jdk.JdkProxyFactory;
 import com.sunny.maven.rpc.registry.api.RegistryService;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
-import com.sunny.maven.rpc.registry.zookeeper.ZookeeperRegistryService;
 import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -77,11 +75,20 @@ public class RpcClient {
      * 缓存结果的时长，单位是毫秒
      */
     private int resultCacheExpire;
+    /**
+     * 是否开启直连服务
+     */
+    private boolean enableDirectServer;
+    /**
+     * 直连服务的地址
+     */
+    private String directServerUrl;
 
     public RpcClient(String registryAddress, String registryType, String serviceVersion, String serviceGroup,
                      String serializationType, String registryLoadBalanceType, long timeout, String proxy,
                      boolean async, boolean oneWay, int heartbeatInterval, int scanNotActiveChannelInterval,
-                     int retryInterval, int retryTimes, boolean enableResultCache, int resultCacheExpire) {
+                     int retryInterval, int retryTimes, boolean enableResultCache, int resultCacheExpire,
+                     boolean enableDirectServer, String directServerUrl) {
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
         this.serializationType = serializationType;
@@ -93,9 +100,11 @@ public class RpcClient {
         this.scanNotActiveChannelInterval = scanNotActiveChannelInterval;
         this.retryInterval = retryInterval;
         this.retryTimes = retryTimes;
-        this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
         this.enableResultCache = enableResultCache;
         this.resultCacheExpire = resultCacheExpire;
+        this.enableDirectServer = enableDirectServer;
+        this.directServerUrl = directServerUrl;
+        this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
     }
 
     private RegistryService getRegistryService(String registryAddress, String registryType,
@@ -116,18 +125,30 @@ public class RpcClient {
     public <T> T create(Class<T> interfaceClass) {
         ProxyFactory proxyFactory = ExtensionLoader.getExtension(ProxyFactory.class, proxy);
         proxyFactory.init(new ProxyConfig(interfaceClass, serviceVersion, serviceGroup, timeout,
-                RpcConsumer.getInstance(heartbeatInterval, scanNotActiveChannelInterval, retryInterval, retryTimes),
+                RpcConsumer.getInstance().
+                        setHeartbeatInterval(heartbeatInterval).
+                        setScanNotActiveChannelInterval(scanNotActiveChannelInterval).
+                        setRetryInterval(retryInterval).
+                        setRetryTimes(retryTimes).
+                        setEnableDirectServer(enableDirectServer).
+                        setDirectServerUrl(directServerUrl),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire));
         return proxyFactory.getProxy(interfaceClass);
     }
 
     public <T> IAsyncObjectProxy createAsync(Class<T> interfaceClass) {
         return new ObjectProxy<T>(interfaceClass, serviceVersion, serviceGroup, timeout,
-                RpcConsumer.getInstance(heartbeatInterval, scanNotActiveChannelInterval, retryInterval, retryTimes),
+                RpcConsumer.getInstance().
+                        setHeartbeatInterval(heartbeatInterval).
+                        setScanNotActiveChannelInterval(scanNotActiveChannelInterval).
+                        setRetryInterval(retryInterval).
+                        setRetryTimes(retryTimes).
+                        setEnableDirectServer(enableDirectServer).
+                        setDirectServerUrl(directServerUrl),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire);
     }
 
     public void shutdown() {
-        RpcConsumer.getInstance(heartbeatInterval, scanNotActiveChannelInterval, retryInterval, retryTimes).close();
+        RpcConsumer.getInstance().close();
     }
 }

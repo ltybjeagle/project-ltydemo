@@ -5,6 +5,7 @@ import com.sunny.maven.rpc.registry.api.RegistryService;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author SUNNY
@@ -24,6 +25,11 @@ public class EurekaRegistryService implements RegistryService {
 
     @Override
     public ServiceMeta discovery(String serviceName, int invokerHashCode, String sourceIp) throws Exception {
+        return null;
+    }
+
+    @Override
+    public ServiceMeta select(List<ServiceMeta> serviceMetaList, int invokerHashCode, String sourceIp) {
         return null;
     }
 

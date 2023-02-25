@@ -83,6 +83,14 @@ public class RpcReferenceBean implements FactoryBean<Object> {
     private int resultCacheExpire;
 
     private RpcClient rpcClient;
+    /**
+     * 是否开启直连服务
+     */
+    private boolean enableDirectServer;
+    /**
+     * 直连服务的地址
+     */
+    private String directServerUrl;
 
     @Override
     public Object getObject() throws Exception {
@@ -97,7 +105,7 @@ public class RpcReferenceBean implements FactoryBean<Object> {
     public void init() {
         rpcClient = new RpcClient(registryAddress, registryType, version, group, serializationType,
                 loadbalancerType, timeout, proxy, async, oneWay, heartbeatInterval, scanNotActiveChannelInterval,
-                retryInterval, retryTimes, enableResultCache, resultCacheExpire);
+                retryInterval, retryTimes, enableResultCache, resultCacheExpire, enableDirectServer, directServerUrl);
         this.object = rpcClient.create(interfaceClass);
     }
 
@@ -235,5 +243,21 @@ public class RpcReferenceBean implements FactoryBean<Object> {
 
     public void setResultCacheExpire(int resultCacheExpire) {
         this.resultCacheExpire = resultCacheExpire;
+    }
+
+    public boolean isEnableDirectServer() {
+        return enableDirectServer;
+    }
+
+    public void setEnableDirectServer(boolean enableDirectServer) {
+        this.enableDirectServer = enableDirectServer;
+    }
+
+    public String getDirectServerUrl() {
+        return directServerUrl;
+    }
+
+    public void setDirectServerUrl(String directServerUrl) {
+        this.directServerUrl = directServerUrl;
     }
 }

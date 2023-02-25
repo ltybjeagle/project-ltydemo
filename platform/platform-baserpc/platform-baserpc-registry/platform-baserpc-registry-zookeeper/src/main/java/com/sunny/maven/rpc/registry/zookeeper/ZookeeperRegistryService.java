@@ -1,7 +1,6 @@
 package com.sunny.maven.rpc.registry.zookeeper;
 
 import com.sunny.maven.rpc.common.helper.RpcServiceHelper;
-import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.loadbalancer.api.ServiceLoadBalancer;
 import com.sunny.maven.rpc.loadbalancer.helper.ServiceLoadBalancerHelper;
 import com.sunny.maven.rpc.protocol.meta.ServiceMeta;
@@ -36,8 +35,7 @@ public class ZookeeperRegistryService implements RegistryService {
     /**
      * 负载均衡接口
      */
-    private ServiceLoadBalancer<ServiceInstance<ServiceMeta>> serviceLoadBalancer;
-    private ServiceLoadBalancer<ServiceMeta> serviceEnhancedLoadBalancer;
+    private ServiceLoadBalancer<ServiceMeta> serviceLoadBalancer;
 
     @Override
     public void register(ServiceMeta serviceMeta) throws Exception {
@@ -59,22 +57,14 @@ public class ZookeeperRegistryService implements RegistryService {
     @Override
     public ServiceMeta discovery(String serviceName, int invokerHashCode, String sourceIp) throws Exception {
         Collection<ServiceInstance<ServiceMeta>> serviceInstances = serviceDiscovery.queryForInstances(serviceName);
-        if (serviceLoadBalancer != null) {
-            return getServiceMetaInstance(invokerHashCode, sourceIp,
-                    (List<ServiceInstance<ServiceMeta>>) serviceInstances);
-        }
-        return this.serviceEnhancedLoadBalancer.select(
+        return this.serviceLoadBalancer.select(
                 ServiceLoadBalancerHelper.getServiceMetaList((List<ServiceInstance<ServiceMeta>>) serviceInstances),
                 invokerHashCode, sourceIp);
     }
 
-    private ServiceMeta getServiceMetaInstance(int invokerHashCode, String sourceIp,
-                                               List<ServiceInstance<ServiceMeta>> serviceInstances) {
-        ServiceInstance<ServiceMeta> instance = serviceLoadBalancer.select(serviceInstances, invokerHashCode, sourceIp);
-        if (instance != null) {
-            return instance.getPayload();
-        }
-        return null;
+    @Override
+    public ServiceMeta select(List<ServiceMeta> serviceMetaList, int invokerHashCode, String sourceIp) {
+        return this.serviceLoadBalancer.select(serviceMetaList, invokerHashCode, sourceIp);
     }
 
     @Override
@@ -91,13 +81,7 @@ public class ZookeeperRegistryService implements RegistryService {
         this.serviceDiscovery = ServiceDiscoveryBuilder.builder(ServiceMeta.class).
                 client(client).serializer(serializer).basePath(ZK_BASE_PATH).build();
         this.serviceDiscovery.start();
-        if (registryConfig.getRegistryLoadBalanceType().toLowerCase().
-                contains(RpcConstants.SERVICE_ENHANCED_LOAD_BALANCER_PREFIX)) {
-            this.serviceEnhancedLoadBalancer = ExtensionLoader.getExtension(ServiceLoadBalancer.class,
-                    registryConfig.getRegistryLoadBalanceType());
-        } else {
-            this.serviceLoadBalancer = ExtensionLoader.getExtension(ServiceLoadBalancer.class,
-                    registryConfig.getRegistryLoadBalanceType());
-        }
+        this.serviceLoadBalancer = ExtensionLoader.getExtension(ServiceLoadBalancer.class,
+                registryConfig.getRegistryLoadBalanceType());
     }
 }

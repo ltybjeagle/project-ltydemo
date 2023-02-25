@@ -1,6 +1,7 @@
 package com.sunny.maven.rpc.protocol.meta;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author SUNNY
@@ -45,6 +46,28 @@ public class ServiceMeta implements Serializable {
         this.servicePort = servicePort;
         this.serviceGroup = serviceGroup;
         this.weight = weight;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(serviceName, serviceVersion, serviceAddr, servicePort, serviceGroup, weight);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o != null && getClass() != o.getClass()) {
+            return false;
+        }
+        ServiceMeta serviceMeta = (ServiceMeta) o;
+        return Objects.equals(serviceName, serviceMeta.getServiceName()) &&
+                Objects.equals(serviceVersion, serviceMeta.getServiceVersion()) &&
+                Objects.equals(serviceAddr, serviceMeta.getServiceAddr()) &&
+                servicePort == serviceMeta.getServicePort() &&
+                Objects.equals(serviceGroup, serviceMeta.getServiceGroup()) &&
+                weight == serviceMeta.getWeight();
     }
 
     public String getServiceName() {
