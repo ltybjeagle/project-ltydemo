@@ -34,6 +34,11 @@ public class EurekaRegistryService implements RegistryService {
     }
 
     @Override
+    public List<ServiceMeta> discoveryAll() throws Exception {
+        return null;
+    }
+
+    @Override
     public void destroy() throws IOException {
 
     }

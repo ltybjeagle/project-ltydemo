@@ -130,6 +130,9 @@ public class SpringBootConsumerAutoConfiguration {
                         !StringUtils.isEmpty(springBootConsumerConfig.getDirectServerUrl()))) {
             referenceBean.setDirectServerUrl(springBootConsumerConfig.getDirectServerUrl());
         }
+        if (!referenceBean.isEnableDelayConnection()) {
+            referenceBean.setEnableDelayConnection(springBootConsumerConfig.isEnableDelayConnection());
+        }
         return referenceBean;
     }
 }

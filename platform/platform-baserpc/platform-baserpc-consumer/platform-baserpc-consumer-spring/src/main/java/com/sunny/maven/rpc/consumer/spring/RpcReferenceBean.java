@@ -91,6 +91,10 @@ public class RpcReferenceBean implements FactoryBean<Object> {
      * 直连服务的地址
      */
     private String directServerUrl;
+    /**
+     * 是否开启延迟连接
+     */
+    private boolean enableDelayConnection;
 
     @Override
     public Object getObject() throws Exception {
@@ -105,7 +109,8 @@ public class RpcReferenceBean implements FactoryBean<Object> {
     public void init() {
         rpcClient = new RpcClient(registryAddress, registryType, version, group, serializationType,
                 loadbalancerType, timeout, proxy, async, oneWay, heartbeatInterval, scanNotActiveChannelInterval,
-                retryInterval, retryTimes, enableResultCache, resultCacheExpire, enableDirectServer, directServerUrl);
+                retryInterval, retryTimes, enableResultCache, resultCacheExpire, enableDirectServer, directServerUrl,
+                enableDelayConnection);
         this.object = rpcClient.create(interfaceClass);
     }
 
@@ -259,5 +264,13 @@ public class RpcReferenceBean implements FactoryBean<Object> {
 
     public void setDirectServerUrl(String directServerUrl) {
         this.directServerUrl = directServerUrl;
+    }
+
+    public boolean isEnableDelayConnection() {
+        return enableDelayConnection;
+    }
+
+    public void setEnableDelayConnection(boolean enableDelayConnection) {
+        this.enableDelayConnection = enableDelayConnection;
     }
 }

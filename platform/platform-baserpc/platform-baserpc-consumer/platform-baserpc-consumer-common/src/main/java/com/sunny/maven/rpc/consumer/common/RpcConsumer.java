@@ -73,6 +73,14 @@ public class RpcConsumer implements Consumer {
      * 直连服务的地址
      */
     private String directServerUrl;
+    /**
+     * 是否开启延迟连接
+     */
+    private boolean enableDelayConnection = false;
+    /**
+     * 未开启延迟连接时，是否已经初始化连接
+     */
+    private volatile boolean initConnection = false;
 
     private RpcConsumer() {
         localIp = IpUtils.getLocalHostIp();
@@ -115,6 +123,23 @@ public class RpcConsumer implements Consumer {
 
     public RpcConsumer setRetryTimes(int retryTimes) {
         this.retryTimes = retryTimes <= 0 ? RpcConstants.DEFAULT_RETRY_TIMES : retryTimes;
+        return this;
+    }
+
+    public RpcConsumer setEnableDelayConnection(boolean enableDelayConnection) {
+        this.enableDelayConnection = enableDelayConnection;
+        return this;
+    }
+
+    /**
+     * 初始化连接
+     */
+    public RpcConsumer buildConnection(RegistryService registryService) {
+        // 未开启延迟连接，并且未初始化连接
+        if (!enableDelayConnection && !initConnection) {
+            this.initConnection(registryService);
+            this.initConnection = true;
+        }
         return this;
     }
 
@@ -352,5 +377,36 @@ public class RpcConsumer implements Consumer {
             }
         });
         return channelFuture.channel().pipeline().get(RpcConsumerHandler.class);
+    }
+
+    /**
+     * 初始化连接
+     */
+    private void initConnection(RegistryService registryService) {
+        List<ServiceMeta> serviceMetaList = new ArrayList<>();
+        try {
+            if (enableDirectServer) {
+                if (!directServerUrl.contains(RpcConstants.RPC_MULTI_DIRECT_SERVERS_SEPARATOR)) {
+                    serviceMetaList.add(this.getDirectServiceMetaWithCheck(directServerUrl));
+                } else {
+                    serviceMetaList.addAll(this.getMultiServiceMeta(directServerUrl));
+                }
+            } else {
+                serviceMetaList.addAll(registryService.discoveryAll());
+            }
+        } catch (Exception e) {
+            log.error("init connection throws exception, the message is: {}", e.getMessage());
+        }
+        for (ServiceMeta serviceMeta : serviceMetaList) {
+            RpcConsumerHandler handler = null;
+            try {
+                handler = this.getRpcConsumerHandler(serviceMeta);
+            } catch (InterruptedException e) {
+                log.error("call getRpcConsumerHandler() method throws InterruptedException, the message is: {}",
+                        e.getMessage());
+                continue;
+            }
+            RpcConsumerHandlerHelper.put(serviceMeta, handler);
+        }
     }
 }

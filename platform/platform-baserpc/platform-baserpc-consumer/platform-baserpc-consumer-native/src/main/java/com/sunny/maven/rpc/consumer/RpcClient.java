@@ -83,12 +83,16 @@ public class RpcClient {
      * 直连服务的地址
      */
     private String directServerUrl;
+    /**
+     * 是否开启延迟连接
+     */
+    private boolean enableDelayConnection;
 
     public RpcClient(String registryAddress, String registryType, String serviceVersion, String serviceGroup,
                      String serializationType, String registryLoadBalanceType, long timeout, String proxy,
                      boolean async, boolean oneWay, int heartbeatInterval, int scanNotActiveChannelInterval,
                      int retryInterval, int retryTimes, boolean enableResultCache, int resultCacheExpire,
-                     boolean enableDirectServer, String directServerUrl) {
+                     boolean enableDirectServer, String directServerUrl, boolean enableDelayConnection) {
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
         this.serializationType = serializationType;
@@ -104,6 +108,7 @@ public class RpcClient {
         this.resultCacheExpire = resultCacheExpire;
         this.enableDirectServer = enableDirectServer;
         this.directServerUrl = directServerUrl;
+        this.enableDelayConnection = enableDelayConnection;
         this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
     }
 
@@ -131,7 +136,9 @@ public class RpcClient {
                         setRetryInterval(retryInterval).
                         setRetryTimes(retryTimes).
                         setEnableDirectServer(enableDirectServer).
-                        setDirectServerUrl(directServerUrl),
+                        setDirectServerUrl(directServerUrl).
+                        setEnableDelayConnection(enableDelayConnection).
+                        buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire));
         return proxyFactory.getProxy(interfaceClass);
     }
@@ -144,7 +151,9 @@ public class RpcClient {
                         setRetryInterval(retryInterval).
                         setRetryTimes(retryTimes).
                         setEnableDirectServer(enableDirectServer).
-                        setDirectServerUrl(directServerUrl),
+                        setDirectServerUrl(directServerUrl).
+                        setEnableDelayConnection(enableDelayConnection).
+                        buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire);
     }
 

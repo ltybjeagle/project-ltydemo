@@ -48,6 +48,13 @@ public interface RegistryService {
     ServiceMeta select(List<ServiceMeta> serviceMetaList, int invokerHashCode, String sourceIp);
 
     /**
+     * 获取所有的数据
+     * @return list
+     * @throws Exception 抛出异常
+     */
+    List<ServiceMeta> discoveryAll() throws Exception;
+
+    /**
      * 服务销毁
      * @throws IOException 抛出异常
      */

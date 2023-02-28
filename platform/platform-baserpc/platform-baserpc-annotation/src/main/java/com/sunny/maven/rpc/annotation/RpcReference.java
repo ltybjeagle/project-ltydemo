@@ -89,4 +89,8 @@ public @interface RpcReference {
      * 直连服务的地址
      */
     String directServerUrl() default RpcConstants.RPC_COMMON_DEFAULT_DIRECT_SERVER;
+    /**
+     * 是否开启延迟连接
+     */
+    boolean enableDelayConnection() default false;
 }
