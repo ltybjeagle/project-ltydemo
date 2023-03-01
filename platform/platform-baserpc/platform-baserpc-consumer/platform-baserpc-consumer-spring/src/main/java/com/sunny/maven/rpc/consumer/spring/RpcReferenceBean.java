@@ -95,6 +95,14 @@ public class RpcReferenceBean implements FactoryBean<Object> {
      * 是否开启延迟连接
      */
     private boolean enableDelayConnection;
+    /**
+     * 并发线程池核心线程数
+     */
+    private int corePoolSize;
+    /**
+     * 并发线程池最大线程数
+     */
+    private int maximumPoolSize;
 
     @Override
     public Object getObject() throws Exception {
@@ -110,7 +118,7 @@ public class RpcReferenceBean implements FactoryBean<Object> {
         rpcClient = new RpcClient(registryAddress, registryType, version, group, serializationType,
                 loadbalancerType, timeout, proxy, async, oneWay, heartbeatInterval, scanNotActiveChannelInterval,
                 retryInterval, retryTimes, enableResultCache, resultCacheExpire, enableDirectServer, directServerUrl,
-                enableDelayConnection);
+                enableDelayConnection, corePoolSize, maximumPoolSize);
         this.object = rpcClient.create(interfaceClass);
     }
 
@@ -272,5 +280,21 @@ public class RpcReferenceBean implements FactoryBean<Object> {
 
     public void setEnableDelayConnection(boolean enableDelayConnection) {
         this.enableDelayConnection = enableDelayConnection;
+    }
+
+    public int getCorePoolSize() {
+        return corePoolSize;
+    }
+
+    public void setCorePoolSize(int corePoolSize) {
+        this.corePoolSize = corePoolSize;
+    }
+
+    public int getMaximumPoolSize() {
+        return maximumPoolSize;
+    }
+
+    public void setMaximumPoolSize(int maximumPoolSize) {
+        this.maximumPoolSize = maximumPoolSize;
     }
 }

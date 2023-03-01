@@ -9,28 +9,19 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>platform-baserpc-common</artifactId>
+  <artifactId>platform-baserpc-threadpool</artifactId>
   <version>${platform-rpc.version}</version>
 
-  <name>platform-baserpc-common</name>
+  <name>platform-baserpc-threadpool</name>
   <packaging>jar</packaging>
   <url>http://www.example.com</url>
 
   <dependencies>
     <dependency>
       <groupId>com.sunny.maven</groupId>
-      <artifactId>platform-baserpc-annotation</artifactId>
-      <version>${platform-rpc.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sunny.maven</groupId>
       <artifactId>platform-baserpc-constants</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
-    <dependency>
-      <groupId>com.sunny.maven</groupId>
-      <artifactId>platform-baserpc-threadpool</artifactId>
-      <version>${platform-rpc.version}</version>
-    </dependency>
   </dependencies>
+
 </project>

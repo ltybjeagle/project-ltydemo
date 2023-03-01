@@ -9,6 +9,7 @@ import com.sunny.maven.rpc.proxy.api.object.ObjectProxy;
 import com.sunny.maven.rpc.registry.api.RegistryService;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
 import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
+import com.sunny.maven.rpc.threadpool.ConcurrentThreadPool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -87,12 +88,17 @@ public class RpcClient {
      * 是否开启延迟连接
      */
     private boolean enableDelayConnection;
+    /**
+     * 并发处理线程池
+     */
+    private ConcurrentThreadPool concurrentThreadPool;
 
     public RpcClient(String registryAddress, String registryType, String serviceVersion, String serviceGroup,
                      String serializationType, String registryLoadBalanceType, long timeout, String proxy,
                      boolean async, boolean oneWay, int heartbeatInterval, int scanNotActiveChannelInterval,
                      int retryInterval, int retryTimes, boolean enableResultCache, int resultCacheExpire,
-                     boolean enableDirectServer, String directServerUrl, boolean enableDelayConnection) {
+                     boolean enableDirectServer, String directServerUrl, boolean enableDelayConnection,
+                     int corePoolSize, int maximumPoolSize) {
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
         this.serializationType = serializationType;
@@ -110,6 +116,7 @@ public class RpcClient {
         this.directServerUrl = directServerUrl;
         this.enableDelayConnection = enableDelayConnection;
         this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
+        this.concurrentThreadPool = ConcurrentThreadPool.getInstance(corePoolSize, maximumPoolSize);
     }
 
     private RegistryService getRegistryService(String registryAddress, String registryType,
@@ -138,6 +145,8 @@ public class RpcClient {
                         setEnableDirectServer(enableDirectServer).
                         setDirectServerUrl(directServerUrl).
                         setEnableDelayConnection(enableDelayConnection).
+                        setConcurrentThreadPool(concurrentThreadPool).
+                        buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire));
         return proxyFactory.getProxy(interfaceClass);
@@ -153,6 +162,8 @@ public class RpcClient {
                         setEnableDirectServer(enableDirectServer).
                         setDirectServerUrl(directServerUrl).
                         setEnableDelayConnection(enableDelayConnection).
+                        setConcurrentThreadPool(concurrentThreadPool).
+                        buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire);
     }

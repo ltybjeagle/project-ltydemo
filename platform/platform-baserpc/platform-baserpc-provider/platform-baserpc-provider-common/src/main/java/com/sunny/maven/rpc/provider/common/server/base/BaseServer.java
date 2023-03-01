@@ -74,10 +74,19 @@ public class BaseServer implements Server {
      * 是否开启结果缓存
      */
     private boolean enableResultCache;
+    /**
+     * 核心线程数
+     */
+    private int corePoolSize;
+    /**
+     * 最大线程数
+     */
+    private int maximumPoolSize;
 
     public BaseServer(String serverAddress, String serverRegistryAddress, String reflectType, String registryAddress,
                       String registryType, String registryLoadBalanceType, int heartbeatInterval,
-                      int scanNotActiveChannelInterval, boolean enableResultCache, int resultCacheExpire) {
+                      int scanNotActiveChannelInterval, boolean enableResultCache, int resultCacheExpire,
+                      int corePoolSize, int maximumPoolSize) {
         if (StringUtils.isNotEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             host = serverArray[0];
@@ -103,6 +112,8 @@ public class BaseServer implements Server {
             this.resultCacheExpire = resultCacheExpire;
         }
         this.enableResultCache = enableResultCache;
+        this.corePoolSize = corePoolSize;
+        this.maximumPoolSize = maximumPoolSize;
     }
 
     private RegistryService getRegistryService(String registryAddress, String registryType,
@@ -136,7 +147,7 @@ public class BaseServer implements Server {
                                                     heartbeatInterval, TimeUnit.MILLISECONDS)).
                                     addLast(RpcConstants.CODEC_HANDLER,
                                             new RpcProviderHandler(reflectType, enableResultCache, resultCacheExpire,
-                                                    handlerMap));
+                                                    corePoolSize, maximumPoolSize, handlerMap));
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128).
                     childOption(ChannelOption.SO_KEEPALIVE, true);

@@ -24,5 +24,7 @@ baserpc:
       enableResultCache: true
       # resultCacheExpire
       resultCacheExpire: 10000
-
-
+      # corePoolSize
+      corePoolSize: 16
+      # maximumPoolSize
+      maximumPoolSize: 16

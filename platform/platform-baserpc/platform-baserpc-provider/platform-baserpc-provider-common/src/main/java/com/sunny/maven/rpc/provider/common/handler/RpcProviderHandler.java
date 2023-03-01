@@ -14,6 +14,7 @@ import com.sunny.maven.rpc.protocol.response.RpcResponse;
 import com.sunny.maven.rpc.provider.common.cache.ProviderChannelCache;
 import com.sunny.maven.rpc.reflect.api.ReflectInvoker;
 import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
+import com.sunny.maven.rpc.threadpool.ConcurrentThreadPool;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.handler.timeout.IdleStateEvent;
@@ -40,11 +41,17 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
      * 是否启用结果缓存
      */
     private final boolean enableResultCache;
-
+    /**
+     * 结果缓存管理器
+     */
     private final CacheResultManager<RpcProtocol<RpcResponse>> cacheResultManager;
+    /**
+     * 线程池
+     */
+    private final ConcurrentThreadPool concurrentThreadPool;
 
-    public RpcProviderHandler(String reflectType, boolean enableResultCache, int cacheResultExpire,
-                              Map<String, Object> handlerMap) {
+    public RpcProviderHandler(String reflectType, boolean enableResultCache, int cacheResultExpire, int corePoolSize,
+                              int maximumPoolSize, Map<String, Object> handlerMap) {
         this.handlerMap = handlerMap;
         this.reflectInvoker = ExtensionLoader.getExtension(ReflectInvoker.class, reflectType);
         this.enableResultCache = enableResultCache;
@@ -52,6 +59,7 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
             cacheResultExpire = RpcConstants.RPC_SCAN_RESULT_CACHE_EXPIRE;
         }
         this.cacheResultManager = CacheResultManager.getInstance(cacheResultExpire, enableResultCache);
+        this.concurrentThreadPool = ConcurrentThreadPool.getInstance(corePoolSize, maximumPoolSize);
     }
 
     @Override
@@ -88,7 +96,7 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcProtocol<RpcRequest> protocol) throws Exception {
-        ServerThreadPool.submit(() -> {
+        concurrentThreadPool.submit(() -> {
             RpcProtocol<RpcResponse> responseRpcProtocol = handlerMessage(protocol, ctx.channel());
             ctx.writeAndFlush(responseRpcProtocol).addListener((ChannelFutureListener) channelFuture ->
                     log.debug("Send response for request " + protocol.getHeader().getRequestId()));

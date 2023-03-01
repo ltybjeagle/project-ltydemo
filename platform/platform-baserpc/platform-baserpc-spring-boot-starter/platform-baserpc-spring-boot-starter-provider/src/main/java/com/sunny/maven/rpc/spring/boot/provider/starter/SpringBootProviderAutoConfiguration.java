@@ -29,6 +29,7 @@ public class SpringBootProviderAutoConfiguration {
                 springBootProviderConfig.getRegistryAddress(), springBootProviderConfig.getRegistryType(),
                 springBootProviderConfig.getRegistryLoadBalancerType(), springBootProviderConfig.getHeartbeatInterval(),
                 springBootProviderConfig.getScanNotActiveChannelInterval(),
-                springBootProviderConfig.isEnableResultCache(), springBootProviderConfig.getResultCacheExpire());
+                springBootProviderConfig.isEnableResultCache(), springBootProviderConfig.getResultCacheExpire(),
+                springBootProviderConfig.getCorePoolSize(), springBootProviderConfig.getMaximumPoolSize());
     }
 }

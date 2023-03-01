@@ -93,4 +93,12 @@ public @interface RpcReference {
      * 是否开启延迟连接
      */
     boolean enableDelayConnection() default false;
+    /**
+     * 默认并发线程池核心线程数
+     */
+    int corePoolSize() default RpcConstants.DEFAULT_CORE_POOL_SIZE;
+    /**
+     * 默认并发线程池最大线程数
+     */
+    int maximumPoolSize() default RpcConstants.DEFAULT_MAXI_MUM_POOL_SIZE;
 }

@@ -5,6 +5,7 @@ import com.sunny.maven.rpc.proxy.api.callback.AsyncRpcCallback;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.protocol.response.RpcResponse;
+import com.sunny.maven.rpc.threadpool.ConcurrentThreadPool;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -33,11 +34,13 @@ public class RpcFuture extends CompletableFuture<Object> {
 
     private List<AsyncRpcCallback> pendingCallbacks = new ArrayList<>();
     private ReentrantLock lock = new ReentrantLock();
+    private ConcurrentThreadPool concurrentThreadPool;
 
-    public RpcFuture(RpcProtocol<RpcRequest> requestRpcProtocol) {
+    public RpcFuture(RpcProtocol<RpcRequest> requestRpcProtocol, ConcurrentThreadPool concurrentThreadPool) {
         this.sync = new Sync();
         this.requestRpcProtocol = requestRpcProtocol;
         this.startTime = System.currentTimeMillis();
+        this.concurrentThreadPool = concurrentThreadPool;
     }
 
     @Override
@@ -121,7 +124,7 @@ public class RpcFuture extends CompletableFuture<Object> {
 
     private void runCallback(final AsyncRpcCallback callback) {
         final RpcResponse res = this.responseRpcProtocol.getBody();
-        ClientThreadPool.submit(() -> {
+        concurrentThreadPool.submit(() -> {
             if (!res.isError()) {
                 callback.onSuccess(res.getResult());
             } else {

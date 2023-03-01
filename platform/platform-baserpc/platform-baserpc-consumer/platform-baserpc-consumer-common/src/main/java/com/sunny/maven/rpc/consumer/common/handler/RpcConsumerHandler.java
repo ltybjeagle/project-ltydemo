@@ -12,6 +12,7 @@ import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.header.RpcHeader;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.protocol.response.RpcResponse;
+import com.sunny.maven.rpc.threadpool.ConcurrentThreadPool;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
@@ -40,6 +41,12 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
 //    private Map<Long, RpcProtocol<RpcResponse>> pendingResponse = new ConcurrentHashMap<>();
 
     private Map<Long, RpcFuture> pendingRpc = new ConcurrentHashMap<>();
+
+    private ConcurrentThreadPool concurrentThreadPool;
+
+    public RpcConsumerHandler(ConcurrentThreadPool concurrentThreadPool) {
+        this.concurrentThreadPool = concurrentThreadPool;
+    }
 
     public Channel getChannel() {
         return channel;
@@ -99,7 +106,9 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
             return;
         }
         log.info("服务消费者收到的数据为====>>> {}", JSONObject.toJSONString(protocol));
-        this.handlerMessage(protocol, channelHandlerContext.channel());
+        concurrentThreadPool.submit(() -> {
+            this.handlerMessage(protocol, channelHandlerContext.channel());
+        });
     }
 
     private void handlerMessage(RpcProtocol<RpcResponse> protocol, Channel channel) {
@@ -156,8 +165,10 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
      */
     public RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol, boolean async, boolean oneWay) {
         log.info("服务消费者发送的数据====>>> {}", JSONObject.toJSONString(protocol));
-        return oneWay ? this.sendRequestOneWay(protocol) : async ?
-                this.sendRequestAsync(protocol) : this.sendRequestSync(protocol);
+        return concurrentThreadPool.submit(() -> {
+            return oneWay ? this.sendRequestOneWay(protocol) : async ?
+                    this.sendRequestAsync(protocol) : this.sendRequestSync(protocol);
+        });
     }
 
     private RpcFuture sendRequestSync(RpcProtocol<RpcRequest> protocol) {
@@ -180,7 +191,7 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
     }
 
     private RpcFuture getRpcFuture(RpcProtocol<RpcRequest> protocol) {
-        RpcFuture rpcFuture = new RpcFuture(protocol);
+        RpcFuture rpcFuture = new RpcFuture(protocol, concurrentThreadPool);
         RpcHeader header = protocol.getHeader();
         long requestId = header.getRequestId();
         pendingRpc.put(requestId, rpcFuture);

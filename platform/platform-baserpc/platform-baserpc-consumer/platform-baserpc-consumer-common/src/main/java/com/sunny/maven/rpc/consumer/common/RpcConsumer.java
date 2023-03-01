@@ -17,6 +17,7 @@ import com.sunny.maven.rpc.consumer.common.initializer.RpcConsumerInitializer;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.registry.api.RegistryService;
+import com.sunny.maven.rpc.threadpool.ConcurrentThreadPool;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -81,15 +82,15 @@ public class RpcConsumer implements Consumer {
      * 未开启延迟连接时，是否已经初始化连接
      */
     private volatile boolean initConnection = false;
+    /**
+     * 并发处理线程池
+     */
+    private ConcurrentThreadPool concurrentThreadPool;
 
     private RpcConsumer() {
         localIp = IpUtils.getLocalHostIp();
         bootstrap = new Bootstrap();
         eventLoopGroup = new NioEventLoopGroup(4);
-        bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).
-                handler(new RpcConsumerInitializer(heartbeatInterval));
-        // TODO 启动心跳，后续优化
-        this.startHeartBeat();
     }
 
     public RpcConsumer setEnableDirectServer(boolean enableDirectServer) {
@@ -131,6 +132,17 @@ public class RpcConsumer implements Consumer {
         return this;
     }
 
+    public RpcConsumer setConcurrentThreadPool(ConcurrentThreadPool concurrentThreadPool) {
+        this.concurrentThreadPool = concurrentThreadPool;
+        return this;
+    }
+
+    public RpcConsumer buildNettyGroup() {
+        bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).handler(
+                new RpcConsumerInitializer(heartbeatInterval, concurrentThreadPool));
+        return this;
+    }
+
     /**
      * 初始化连接
      */
@@ -140,6 +152,8 @@ public class RpcConsumer implements Consumer {
             this.initConnection(registryService);
             this.initConnection = true;
         }
+        // TODO 启动心跳，后续优化
+        this.startHeartBeat();
         return this;
     }
 
