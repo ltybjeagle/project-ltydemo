@@ -16,15 +16,15 @@
     <module>platform-baserpc-loadbalancer-api</module>
     <module>platform-baserpc-loadbalancer-random</module>
     <module>platform-baserpc-loadbalancer-random-weight</module>
-      <module>platform-baserpc-loadbalancer-round-robin</module>
-      <module>platform-baserpc-loadbalancer-round-robin-weight</module>
-      <module>platform-baserpc-loadbalancer-hash</module>
+    <module>platform-baserpc-loadbalancer-round-robin</module>
+    <module>platform-baserpc-loadbalancer-round-robin-weight</module>
+    <module>platform-baserpc-loadbalancer-hash</module>
     <module>platform-baserpc-loadbalancer-hash-weight</module>
     <module>platform-baserpc-loadbalancer-sourceip-hash</module>
     <module>platform-baserpc-loadbalancer-sourceip-hash-weight</module>
-      <module>platform-baserpc-loadbalancer-consistenthash-zk</module>
-      <module>platform-baserpc-loadbalancer-random-weight-enhanced</module>
-      <module>platform-baserpc-loadbalancer-round-robin-weight-enhanced</module>
+    <module>platform-baserpc-loadbalancer-consistenthash-zk</module>
+    <module>platform-baserpc-loadbalancer-random-weight-enhanced</module>
+    <module>platform-baserpc-loadbalancer-round-robin-weight-enhanced</module>
     <module>platform-baserpc-loadbalancer-hash-weight-enhanced</module>
     <module>platform-baserpc-loadbalancer-sourceip-hash-weight-enhanced</module>
     <module>platform-baserpc-loadbalancer-consistenthash-zk-enhanced</module>

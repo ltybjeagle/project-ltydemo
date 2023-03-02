@@ -3,6 +3,7 @@ package com.sunny.maven.rpc.provider.common.server.base;
 import com.sunny.maven.rpc.codec.RpcDecoder;
 import com.sunny.maven.rpc.codec.RpcEncoder;
 import com.sunny.maven.rpc.constants.RpcConstants;
+import com.sunny.maven.rpc.flow.processor.FlowPostProcessor;
 import com.sunny.maven.rpc.provider.common.handler.RpcProviderHandler;
 import com.sunny.maven.rpc.provider.common.manager.ProviderConnectionManager;
 import com.sunny.maven.rpc.provider.common.server.api.Server;
@@ -24,6 +25,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.security.cert.Extension;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -82,11 +84,15 @@ public class BaseServer implements Server {
      * 最大线程数
      */
     private int maximumPoolSize;
+    /**
+     * 流控分析后置处理器
+     */
+    private FlowPostProcessor flowPostProcessor;
 
     public BaseServer(String serverAddress, String serverRegistryAddress, String reflectType, String registryAddress,
                       String registryType, String registryLoadBalanceType, int heartbeatInterval,
                       int scanNotActiveChannelInterval, boolean enableResultCache, int resultCacheExpire,
-                      int corePoolSize, int maximumPoolSize) {
+                      int corePoolSize, int maximumPoolSize, String flowType) {
         if (StringUtils.isNotEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             host = serverArray[0];
@@ -114,6 +120,7 @@ public class BaseServer implements Server {
         this.enableResultCache = enableResultCache;
         this.corePoolSize = corePoolSize;
         this.maximumPoolSize = maximumPoolSize;
+        this.flowPostProcessor = ExtensionLoader.getExtension(FlowPostProcessor.class, flowType);
     }
 
     private RegistryService getRegistryService(String registryAddress, String registryType,
@@ -140,8 +147,8 @@ public class BaseServer implements Server {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline().
-                                    addLast(RpcConstants.CODEC_DECODER, new RpcDecoder()).
-                                    addLast(RpcConstants.CODEC_ENCODER, new RpcEncoder()).
+                                    addLast(RpcConstants.CODEC_DECODER, new RpcDecoder(flowPostProcessor)).
+                                    addLast(RpcConstants.CODEC_ENCODER, new RpcEncoder(flowPostProcessor)).
                                     addLast(RpcConstants.CODEC_SERVER_IDLE_HANDLER,
                                             new IdleStateHandler(0, 0,
                                                     heartbeatInterval, TimeUnit.MILLISECONDS)).

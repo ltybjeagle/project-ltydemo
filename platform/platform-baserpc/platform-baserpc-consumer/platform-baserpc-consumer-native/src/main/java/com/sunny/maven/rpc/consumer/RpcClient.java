@@ -92,13 +92,17 @@ public class RpcClient {
      * 并发处理线程池
      */
     private ConcurrentThreadPool concurrentThreadPool;
+    /**
+     * 流控分析类型
+     */
+    private String flowType;
 
     public RpcClient(String registryAddress, String registryType, String serviceVersion, String serviceGroup,
                      String serializationType, String registryLoadBalanceType, long timeout, String proxy,
                      boolean async, boolean oneWay, int heartbeatInterval, int scanNotActiveChannelInterval,
                      int retryInterval, int retryTimes, boolean enableResultCache, int resultCacheExpire,
                      boolean enableDirectServer, String directServerUrl, boolean enableDelayConnection,
-                     int corePoolSize, int maximumPoolSize) {
+                     int corePoolSize, int maximumPoolSize, String flowType) {
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
         this.serializationType = serializationType;
@@ -115,6 +119,7 @@ public class RpcClient {
         this.enableDirectServer = enableDirectServer;
         this.directServerUrl = directServerUrl;
         this.enableDelayConnection = enableDelayConnection;
+        this.flowType = flowType;
         this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
         this.concurrentThreadPool = ConcurrentThreadPool.getInstance(corePoolSize, maximumPoolSize);
     }
@@ -146,6 +151,7 @@ public class RpcClient {
                         setDirectServerUrl(directServerUrl).
                         setEnableDelayConnection(enableDelayConnection).
                         setConcurrentThreadPool(concurrentThreadPool).
+                        setFlowPostProcessor(flowType).
                         buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire));
@@ -163,6 +169,7 @@ public class RpcClient {
                         setDirectServerUrl(directServerUrl).
                         setEnableDelayConnection(enableDelayConnection).
                         setConcurrentThreadPool(concurrentThreadPool).
+                        setFlowPostProcessor(flowType).
                         buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire);

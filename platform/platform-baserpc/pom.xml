@@ -31,6 +31,7 @@
         <module>platform-baserpc-spring-boot-starter</module>
         <module>platform-baserpc-cache</module>
         <module>platform-baserpc-threadpool</module>
+        <module>platform-baserpc-flow</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>

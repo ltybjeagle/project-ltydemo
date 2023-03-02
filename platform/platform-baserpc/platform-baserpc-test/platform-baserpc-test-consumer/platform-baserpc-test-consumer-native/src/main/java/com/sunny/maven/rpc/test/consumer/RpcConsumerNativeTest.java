@@ -22,7 +22,8 @@ public class RpcConsumerNativeTest {
                 "enhanced_leastconnections", 3000, "asm", false,
                 false, 30000, 60000, 1000,
                 3, true, 30000, false,
-                "127.0.0.1:27880", false, 16, 16);
+                "127.0.0.1:27880", false, 16, 16,
+                "print");
         DemoService demoService = rpcClient.create(DemoService.class);
         String result = demoService.hello("SUNNY");
         log.info("返回的结果数据===>>> {}", result);
@@ -42,7 +43,8 @@ public class RpcConsumerNativeTest {
                 "enhanced_leastconnections", 3000, "asm", false,
                 false, 30000, 60000, 1000,
                 3, true, 30000, false,
-                "127.0.0.1:27880", false, 16, 16);
+                "127.0.0.1:27880", false, 16, 16,
+                "print");
     }
 
     @Test

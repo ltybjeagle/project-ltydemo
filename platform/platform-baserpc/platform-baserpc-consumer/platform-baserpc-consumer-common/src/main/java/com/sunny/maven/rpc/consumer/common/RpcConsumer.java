@@ -8,6 +8,7 @@ import com.sunny.maven.rpc.common.utils.StringUtils;
 import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.consumer.common.helper.RpcConsumerHandlerHelper;
 import com.sunny.maven.rpc.consumer.common.manager.ConsumerConnectionManager;
+import com.sunny.maven.rpc.flow.processor.FlowPostProcessor;
 import com.sunny.maven.rpc.loadbalancer.context.ConnectionsContext;
 import com.sunny.maven.rpc.protocol.meta.ServiceMeta;
 import com.sunny.maven.rpc.proxy.api.consumer.Consumer;
@@ -17,6 +18,7 @@ import com.sunny.maven.rpc.consumer.common.initializer.RpcConsumerInitializer;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.registry.api.RegistryService;
+import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 import com.sunny.maven.rpc.threadpool.ConcurrentThreadPool;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -86,6 +88,10 @@ public class RpcConsumer implements Consumer {
      * 并发处理线程池
      */
     private ConcurrentThreadPool concurrentThreadPool;
+    /**
+     * 流控分析后置处理器
+     */
+    private FlowPostProcessor flowPostProcessor;
 
     private RpcConsumer() {
         localIp = IpUtils.getLocalHostIp();
@@ -137,9 +143,17 @@ public class RpcConsumer implements Consumer {
         return this;
     }
 
+    public RpcConsumer setFlowPostProcessor(String flowType) {
+        if (StringUtils.isEmpty(flowType)) {
+            flowType = RpcConstants.FLOW_POST_PROCESSOR_PRINT;
+        }
+        this.flowPostProcessor = ExtensionLoader.getExtension(FlowPostProcessor.class, flowType);
+        return this;
+    }
+
     public RpcConsumer buildNettyGroup() {
         bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).handler(
-                new RpcConsumerInitializer(heartbeatInterval, concurrentThreadPool));
+                new RpcConsumerInitializer(heartbeatInterval, concurrentThreadPool, flowPostProcessor));
         return this;
     }
 

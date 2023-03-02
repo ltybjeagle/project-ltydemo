@@ -1,8 +1,11 @@
 package com.sunny.maven.rpc.codec;
 
+import com.sunny.maven.rpc.flow.processor.FlowPostProcessor;
+import com.sunny.maven.rpc.protocol.header.RpcHeader;
 import com.sunny.maven.rpc.serialization.api.Serialization;
 import com.sunny.maven.rpc.serialization.jdk.JdkSerialization;
 import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
+import com.sunny.maven.rpc.threadpool.FlowPostProcessorThreadPool;
 
 /**
  * @author SUNNY
@@ -17,5 +20,16 @@ public interface RpcCodec {
      */
     default Serialization getSerialization(String serializationType) {
         return ExtensionLoader.getExtension(Serialization.class, serializationType);
+    }
+
+    /**
+     * 调用RPC框架流量分析后置处理器
+     * @param flowPostProcessor postProcessor 后置处理器
+     * @param rpcHeader 封装了流量信息的消息头
+     */
+    default void flowPostProcessor(FlowPostProcessor flowPostProcessor, RpcHeader rpcHeader) {
+        FlowPostProcessorThreadPool.submit(() -> {
+            flowPostProcessor.postRpcHeaderProcessor(rpcHeader);
+        });
     }
 }

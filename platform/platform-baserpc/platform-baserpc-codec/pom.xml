@@ -19,6 +19,11 @@
   <dependencies>
     <dependency>
       <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-flow-print</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
       <artifactId>platform-baserpc-protocol</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>

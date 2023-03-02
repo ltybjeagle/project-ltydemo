@@ -27,7 +27,8 @@ public class ConsumerNativeDemoTest {
                 "enhanced_leastconnections", 3000, "asm", false,
                 false, 30000, 60000, 1000,
                 3, false, 30000, true,
-                "127.0.0.1:27880", false, 16, 16);
+                "127.0.0.1:27880", false, 16, 16,
+                "print");
     }
 
     @Test

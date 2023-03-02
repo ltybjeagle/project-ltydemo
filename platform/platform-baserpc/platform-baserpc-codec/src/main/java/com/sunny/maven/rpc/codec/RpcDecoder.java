@@ -2,6 +2,7 @@ package com.sunny.maven.rpc.codec;
 
 import com.sunny.maven.rpc.common.utils.SerializationUtils;
 import com.sunny.maven.rpc.constants.RpcConstants;
+import com.sunny.maven.rpc.flow.processor.FlowPostProcessor;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.enumeration.RpcType;
 import com.sunny.maven.rpc.protocol.header.RpcHeader;
@@ -21,6 +22,12 @@ import java.util.List;
  * @create: 2022-12-28 17:36
  */
 public class RpcDecoder extends ByteToMessageDecoder implements RpcCodec {
+
+    private FlowPostProcessor flowPostProcessor;
+    public RpcDecoder(FlowPostProcessor flowPostProcessor) {
+        this.flowPostProcessor = flowPostProcessor;
+    }
+
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         if (in.readableBytes() < RpcConstants.HEADER_TOTAL_LEN) {
@@ -86,5 +93,7 @@ public class RpcDecoder extends ByteToMessageDecoder implements RpcCodec {
                 }
                 break;
         }
+        // 异步调用流控分析后置处理器
+        this.flowPostProcessor(flowPostProcessor, header);
     }
 }
