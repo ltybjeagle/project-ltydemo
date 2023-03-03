@@ -32,6 +32,8 @@
         <module>platform-baserpc-cache</module>
         <module>platform-baserpc-threadpool</module>
         <module>platform-baserpc-flow</module>
+        <module>platform-baserpc-disuse</module>
+        <module>platform-baserpc-connection</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>

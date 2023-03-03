@@ -4,6 +4,7 @@ import com.sunny.maven.rpc.cache.result.CacheResultKey;
 import com.sunny.maven.rpc.cache.result.CacheResultManager;
 import com.sunny.maven.rpc.common.helper.RpcServiceHelper;
 import com.sunny.maven.rpc.common.threadpool.ServerThreadPool;
+import com.sunny.maven.rpc.connection.manager.ConnectionManager;
 import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.enumeration.RpcStatus;
@@ -49,9 +50,14 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
      * 线程池
      */
     private final ConcurrentThreadPool concurrentThreadPool;
+    /**
+     * 连接管理器
+     */
+    private ConnectionManager connectionManager;
 
     public RpcProviderHandler(String reflectType, boolean enableResultCache, int cacheResultExpire, int corePoolSize,
-                              int maximumPoolSize, Map<String, Object> handlerMap) {
+                              int maximumPoolSize, int maxConnections, String disuseStrategyType,
+                              Map<String, Object> handlerMap) {
         this.handlerMap = handlerMap;
         this.reflectInvoker = ExtensionLoader.getExtension(ReflectInvoker.class, reflectType);
         this.enableResultCache = enableResultCache;
@@ -60,23 +66,27 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
         }
         this.cacheResultManager = CacheResultManager.getInstance(cacheResultExpire, enableResultCache);
         this.concurrentThreadPool = ConcurrentThreadPool.getInstance(corePoolSize, maximumPoolSize);
+        this.connectionManager = ConnectionManager.getInstance(maxConnections, disuseStrategyType);
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
         ProviderChannelCache.add(ctx.channel());
+        connectionManager.add(ctx.channel());
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         ProviderChannelCache.remove(ctx.channel());
+        connectionManager.remove(ctx.channel());
     }
 
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
         super.channelUnregistered(ctx);
         ProviderChannelCache.remove(ctx.channel());
+        connectionManager.remove(ctx.channel());
     }
 
     @Override
@@ -86,6 +96,7 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
             Channel channel= ctx.channel();
             try {
                 log.info("IdleStateEvent triggered, close channel {}", channel.remoteAddress());
+                connectionManager.remove(channel);
                 channel.close();
             } finally {
                 channel.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
@@ -97,6 +108,7 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcProtocol<RpcRequest> protocol) throws Exception {
         concurrentThreadPool.submit(() -> {
+            connectionManager.update(ctx.channel());
             RpcProtocol<RpcResponse> responseRpcProtocol = handlerMessage(protocol, ctx.channel());
             ctx.writeAndFlush(responseRpcProtocol).addListener((ChannelFutureListener) channelFuture ->
                     log.debug("Send response for request " + protocol.getHeader().getRequestId()));
@@ -234,6 +246,7 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         log.error("server caught exception", cause);
         ProviderChannelCache.remove(ctx.channel());
+        connectionManager.remove(ctx.channel());
         ctx.close();
     }
 }

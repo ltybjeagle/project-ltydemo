@@ -31,6 +31,7 @@ public class SpringBootProviderAutoConfiguration {
                 springBootProviderConfig.getScanNotActiveChannelInterval(),
                 springBootProviderConfig.isEnableResultCache(), springBootProviderConfig.getResultCacheExpire(),
                 springBootProviderConfig.getCorePoolSize(), springBootProviderConfig.getMaximumPoolSize(),
-                springBootProviderConfig.getFlowType());
+                springBootProviderConfig.getFlowType(), springBootProviderConfig.getMaxConnections(),
+                springBootProviderConfig.getDisuseStrategyType());
     }
 }

@@ -42,11 +42,15 @@ public class SpringAnnotationProviderConfig {
     private int maximumPoolSize;
     @Value("${server.flowType}")
     private String flowType;
+    @Value("${server.maxConnections}")
+    private int maxConnections;
+    @Value("${server.disuseStrategyType}")
+    private String disuseStrategyType;
 
     @Bean
     public RpcSpringServer rpcSpringServer() {
         return new RpcSpringServer(serverAddress, serverRegistryAddress, reflectType, registryAddress, registryType,
                 registryLoadBalanceType, heartbeatInterval, scanNotActiveChannelInterval, enableResultCache,
-                resultCacheExpire, corePoolSize, maximumPoolSize, flowType);
+                resultCacheExpire, corePoolSize, maximumPoolSize, flowType, maxConnections, disuseStrategyType);
     }
 }
