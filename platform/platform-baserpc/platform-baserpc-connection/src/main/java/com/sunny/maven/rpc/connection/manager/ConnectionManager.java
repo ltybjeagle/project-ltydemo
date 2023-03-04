@@ -1,5 +1,6 @@
 package com.sunny.maven.rpc.connection.manager;
 
+import com.sunny.maven.rpc.common.exception.RefuseException;
 import com.sunny.maven.rpc.common.utils.StringUtils;
 import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.disuse.api.DisuseStrategy;
@@ -84,7 +85,7 @@ public class ConnectionManager {
                     cacheConnectionInfo.getChannel().close();
                     connectionMap.remove(getKey(cacheConnectionInfo.getChannel()));
                 }
-            } catch (Exception e) {
+            } catch (RefuseException e) {
                 info.getChannel().close();
                 return false;
             }

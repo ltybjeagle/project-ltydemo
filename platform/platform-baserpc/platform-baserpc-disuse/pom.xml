@@ -15,6 +15,13 @@
   <modules>
     <module>platform-baserpc-disuse-api</module>
     <module>platform-baserpc-disuse-defult</module>
+      <module>platform-baserpc-disuse-first</module>
+    <module>platform-baserpc-disuse-last</module>
+    <module>platform-baserpc-disuse-fifo</module>
+    <module>platform-baserpc-disuse-lfu</module>
+    <module>platform-baserpc-disuse-lru</module>
+    <module>platform-baserpc-disuse-random</module>
+    <module>platform-baserpc-disuse-refuse</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>

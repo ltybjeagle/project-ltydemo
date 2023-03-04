@@ -22,5 +22,40 @@
       <artifactId>platform-baserpc-disuse-defult</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-disuse-first</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-disuse-last</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-disuse-fifo</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-disuse-lfu</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-disuse-lru</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-disuse-random</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-disuse-refuse</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
   </dependencies>
 </project>
