@@ -40,7 +40,7 @@ public class RpcSingleServerTest {
                         "zookeeper", "random", 3000,
                         6000, true, 5000,
                         16, 16, "print", 2,
-                        "strategy_default");
+                        "strategy_default", true, 2);
         singleServer.startNettyServer();
     }
 }

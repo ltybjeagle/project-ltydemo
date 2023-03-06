@@ -96,12 +96,20 @@ public class BaseServer implements Server {
      * 拒绝策略类型
      */
     private String disuseStrategyType;
+    /**
+     * 是否开启缓冲区
+     */
+    private boolean enableBuffer;
+    /**
+     * 缓冲区大小
+     */
+    private int bufferSize;
 
     public BaseServer(String serverAddress, String serverRegistryAddress, String reflectType, String registryAddress,
                       String registryType, String registryLoadBalanceType, int heartbeatInterval,
                       int scanNotActiveChannelInterval, boolean enableResultCache, int resultCacheExpire,
                       int corePoolSize, int maximumPoolSize, String flowType, int maxConnections,
-                      String disuseStrategyType) {
+                      String disuseStrategyType, boolean enableBuffer, int bufferSize) {
         if (StringUtils.isNotEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             host = serverArray[0];
@@ -131,6 +139,8 @@ public class BaseServer implements Server {
         this.maximumPoolSize = maximumPoolSize;
         this.maxConnections = maxConnections;
         this.disuseStrategyType = disuseStrategyType;
+        this.enableBuffer = enableBuffer;
+        this.bufferSize = bufferSize;
         this.flowPostProcessor = ExtensionLoader.getExtension(FlowPostProcessor.class, flowType);
     }
 
@@ -166,7 +176,7 @@ public class BaseServer implements Server {
                                     addLast(RpcConstants.CODEC_HANDLER,
                                             new RpcProviderHandler(reflectType, enableResultCache, resultCacheExpire,
                                                     corePoolSize, maximumPoolSize, maxConnections, disuseStrategyType,
-                                                    handlerMap));
+                                                    enableBuffer, bufferSize, handlerMap));
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128).
                     childOption(ChannelOption.SO_KEEPALIVE, true);

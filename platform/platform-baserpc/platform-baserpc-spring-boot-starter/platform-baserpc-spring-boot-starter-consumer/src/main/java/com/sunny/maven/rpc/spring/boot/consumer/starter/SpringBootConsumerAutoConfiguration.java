@@ -148,6 +148,14 @@ public class SpringBootConsumerAutoConfiguration {
                         !StringUtils.isEmpty(springBootConsumerConfig.getFlowType()))) {
             referenceBean.setFlowType(springBootConsumerConfig.getFlowType());
         }
+        if (!referenceBean.isEnableBuffer()) {
+            referenceBean.setEnableBuffer(springBootConsumerConfig.isEnableBuffer());
+        }
+        if (referenceBean.getBufferSize() <= 0 ||
+                (RpcConstants.DEFAULT_BUFFER_SIZE == referenceBean.getBufferSize() &&
+                        springBootConsumerConfig.getBufferSize() > 0)) {
+            referenceBean.setBufferSize(springBootConsumerConfig.getBufferSize());
+        }
         return referenceBean;
     }
 }

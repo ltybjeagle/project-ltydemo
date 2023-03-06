@@ -34,6 +34,7 @@
         <module>platform-baserpc-flow</module>
         <module>platform-baserpc-disuse</module>
         <module>platform-baserpc-connection</module>
+        <module>platform-baserpc-buffer</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>

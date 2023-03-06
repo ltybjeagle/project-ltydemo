@@ -1,6 +1,7 @@
 package com.sunny.maven.rpc.consumer.common.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sunny.maven.rpc.buffer.cache.BufferCacheManager;
 import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.consumer.common.cache.ConsumerChannelCache;
 import com.sunny.maven.rpc.consumer.common.context.RpcContext;
@@ -12,6 +13,7 @@ import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.header.RpcHeader;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.protocol.response.RpcResponse;
+import com.sunny.maven.rpc.threadpool.BufferCacheThreadPool;
 import com.sunny.maven.rpc.threadpool.ConcurrentThreadPool;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -43,9 +45,37 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
     private Map<Long, RpcFuture> pendingRpc = new ConcurrentHashMap<>();
 
     private ConcurrentThreadPool concurrentThreadPool;
+    /**
+     * 是否开启缓冲区
+     */
+    private boolean enableBuffer;
+    /**
+     * 缓冲区管理器
+     */
+    private BufferCacheManager<RpcProtocol<RpcResponse>> bufferCacheManager;
 
-    public RpcConsumerHandler(ConcurrentThreadPool concurrentThreadPool) {
+    public RpcConsumerHandler(boolean enableBuffer, int bufferSize, ConcurrentThreadPool concurrentThreadPool) {
         this.concurrentThreadPool = concurrentThreadPool;
+        this.enableBuffer = enableBuffer;
+        if (enableBuffer) {
+            this.bufferCacheManager = BufferCacheManager.getInstance(bufferSize);
+            BufferCacheThreadPool.submit(() -> {
+                consumerBufferCache();
+            });
+        }
+    }
+
+    /**
+     * 消费缓冲区数据
+     */
+    private void consumerBufferCache() {
+        // 不断消息缓冲区的数据
+        while (true) {
+            RpcProtocol<RpcResponse> protocol = this.bufferCacheManager.take();
+            if (protocol != null) {
+                this.handlerResponseMessage(protocol);
+            }
+        }
     }
 
     public Channel getChannel() {
@@ -120,7 +150,19 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
             handlerHeartbeatMessageFromProvider(protocol, channel);
         } else if (header.getMsgType() == RpcType.RESPONSE.getType()) {
             // 响应消息
-            this.handlerResponseMessage(protocol, header);
+            this.handlerResponseMessageOrBuffer(protocol);
+        }
+    }
+
+    /**
+     * 包含是否开启了缓冲区的响应消息
+     */
+    private void handlerResponseMessageOrBuffer(RpcProtocol<RpcResponse> protocol) {
+        if (enableBuffer) {
+            log.info("enable buffer...");
+            this.bufferCacheManager.put(protocol);
+        } else {
+            this.handlerResponseMessage(protocol);
         }
     }
 
@@ -151,8 +193,8 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
     /**
      * 处理响应消息
      */
-    private void handlerResponseMessage(RpcProtocol<RpcResponse> protocol, RpcHeader header) {
-        long requestId = header.getRequestId();
+    private void handlerResponseMessage(RpcProtocol<RpcResponse> protocol) {
+        long requestId = protocol.getHeader().getRequestId();
         RpcFuture future = pendingRpc.remove(requestId);
         if (future != null) {
             future.done(protocol);

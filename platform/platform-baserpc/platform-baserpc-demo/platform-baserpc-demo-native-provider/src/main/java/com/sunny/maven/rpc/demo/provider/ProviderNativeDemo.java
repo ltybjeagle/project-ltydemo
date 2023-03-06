@@ -39,7 +39,7 @@ public class ProviderNativeDemo {
                         "zookeeper", "random", 3000,
                         6000, true, 30000,
                         16, 16, "print", 1,
-                        "first");
+                        "first", true, 2);
         singleServer.startNettyServer();
     }
 }

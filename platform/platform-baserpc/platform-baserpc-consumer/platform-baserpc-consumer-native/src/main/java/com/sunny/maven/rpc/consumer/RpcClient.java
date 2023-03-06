@@ -96,13 +96,21 @@ public class RpcClient {
      * 流控分析类型
      */
     private String flowType;
+    /**
+     * 是否开启数据缓冲
+     */
+    private boolean enableBuffer;
+    /**
+     * 缓冲区大小
+     */
+    private int bufferSize;
 
     public RpcClient(String registryAddress, String registryType, String serviceVersion, String serviceGroup,
                      String serializationType, String registryLoadBalanceType, long timeout, String proxy,
                      boolean async, boolean oneWay, int heartbeatInterval, int scanNotActiveChannelInterval,
                      int retryInterval, int retryTimes, boolean enableResultCache, int resultCacheExpire,
                      boolean enableDirectServer, String directServerUrl, boolean enableDelayConnection,
-                     int corePoolSize, int maximumPoolSize, String flowType) {
+                     int corePoolSize, int maximumPoolSize, String flowType, boolean enableBuffer, int bufferSize) {
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
         this.serializationType = serializationType;
@@ -120,6 +128,8 @@ public class RpcClient {
         this.directServerUrl = directServerUrl;
         this.enableDelayConnection = enableDelayConnection;
         this.flowType = flowType;
+        this.enableBuffer = enableBuffer;
+        this.bufferSize = bufferSize;
         this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
         this.concurrentThreadPool = ConcurrentThreadPool.getInstance(corePoolSize, maximumPoolSize);
     }
@@ -152,6 +162,8 @@ public class RpcClient {
                         setEnableDelayConnection(enableDelayConnection).
                         setConcurrentThreadPool(concurrentThreadPool).
                         setFlowPostProcessor(flowType).
+                        setEnableBuffer(enableBuffer).
+                        setBufferSize(bufferSize).
                         buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire));
@@ -170,6 +182,8 @@ public class RpcClient {
                         setEnableDelayConnection(enableDelayConnection).
                         setConcurrentThreadPool(concurrentThreadPool).
                         setFlowPostProcessor(flowType).
+                        setEnableBuffer(enableBuffer).
+                        setBufferSize(bufferSize).
                         buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire);
