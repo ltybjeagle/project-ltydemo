@@ -1,6 +1,7 @@
 package com.sunny.maven.rpc.proxy.api.future;
 
-import com.sunny.maven.rpc.common.threadpool.ClientThreadPool;
+import com.sunny.maven.rpc.protocol.enumeration.RpcStatus;
+import com.sunny.maven.rpc.protocol.header.RpcHeader;
 import com.sunny.maven.rpc.proxy.api.callback.AsyncRpcCallback;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.request.RpcRequest;
@@ -51,28 +52,45 @@ public class RpcFuture extends CompletableFuture<Object> {
     @Override
     public Object get() throws InterruptedException, ExecutionException {
         sync.acquire(-1);
-        if (this.responseRpcProtocol != null) {
-            return this.responseRpcProtocol.getBody().getResult();
-        } else {
-            return null;
-        }
+//        if (this.responseRpcProtocol != null) {
+//            return this.responseRpcProtocol.getBody().getResult();
+//        } else {
+//            return null;
+//        }
+        return this.getResult(this.responseRpcProtocol);
     }
 
     @Override
     public Object get(long timeOut, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
         boolean success = sync.tryAcquireNanos(-1, unit.toNanos(timeOut));
         if (success) {
-            if (this.responseRpcProtocol != null) {
-                return this.responseRpcProtocol.getBody().getResult();
-            } else {
-                return null;
-            }
+//            if (this.responseRpcProtocol != null) {
+//                return this.responseRpcProtocol.getBody().getResult();
+//            } else {
+//                return null;
+//            }
+            return this.getResult(this.responseRpcProtocol);
         } else {
             throw new RuntimeException("TimeOut exception. Request id: " +
                     this.requestRpcProtocol.getHeader().getRequestId() + ". Request class name: " +
                     this.requestRpcProtocol.getBody().getClassName() + ". Request method: " +
                     this.requestRpcProtocol.getBody().getMethodName());
         }
+    }
+
+    /**
+     * 获取最终结果
+     */
+    private Object getResult(RpcProtocol<RpcResponse> responseRpcProtocol) {
+        if (responseRpcProtocol == null) {
+            return null;
+        }
+        RpcHeader header = responseRpcProtocol.getHeader();
+        // 服务提供者抛出了异常
+        if ((byte) RpcStatus.FAIL.getCode() == header.getStatus()) {
+            throw new RuntimeException("rpc provider throws exception...");
+        }
+        return responseRpcProtocol.getBody().getResult();
     }
 
     @Override

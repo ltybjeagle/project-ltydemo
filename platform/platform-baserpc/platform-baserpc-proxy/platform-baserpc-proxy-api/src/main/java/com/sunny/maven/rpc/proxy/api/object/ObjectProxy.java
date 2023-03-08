@@ -2,6 +2,7 @@ package com.sunny.maven.rpc.proxy.api.object;
 
 import com.sunny.maven.rpc.cache.result.CacheResultKey;
 import com.sunny.maven.rpc.cache.result.CacheResultManager;
+import com.sunny.maven.rpc.common.utils.StringUtils;
 import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.enumeration.RpcType;
@@ -10,7 +11,9 @@ import com.sunny.maven.rpc.protocol.request.RpcRequest;
 import com.sunny.maven.rpc.proxy.api.async.IAsyncObjectProxy;
 import com.sunny.maven.rpc.proxy.api.consumer.Consumer;
 import com.sunny.maven.rpc.proxy.api.future.RpcFuture;
+import com.sunny.maven.rpc.reflect.api.ReflectInvoker;
 import com.sunny.maven.rpc.registry.api.RegistryService;
+import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
@@ -65,8 +68,18 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
      * 是否开启结果缓存
      */
     private boolean enableResultCache;
-
+    /**
+     * 结果缓存管理器
+     */
     private CacheResultManager<Object> cacheResultManager;
+    /**
+     * 反射调用方法
+     */
+    private ReflectInvoker reflectInvoker;
+    /**
+     * 容错Class类
+     */
+    private Class<?> fallbackClass;
 
     public ObjectProxy(Class<T> clazz) {
         this.clazz = clazz;
@@ -74,7 +87,8 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
 
     public ObjectProxy(Class<T> clazz, String serviceVersion, String serviceGroup, long timeout, Consumer consumer,
                        String serializationType, boolean async, boolean oneWay, RegistryService registryService,
-                       boolean enableResultCache, int resultCacheExpire) {
+                       boolean enableResultCache, int resultCacheExpire, String reflectType, String fallbackClassName,
+                       Class<?> fallbackClass) {
         this.clazz = clazz;
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
@@ -89,6 +103,33 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
             resultCacheExpire = RpcConstants.RPC_SCAN_RESULT_CACHE_EXPIRE;
         }
         this.cacheResultManager = CacheResultManager.getInstance(resultCacheExpire, enableResultCache);
+        this.reflectInvoker = ExtensionLoader.getExtension(ReflectInvoker.class, reflectType);
+        this.fallbackClass = this.getFallbackClass(fallbackClassName, fallbackClass);
+
+    }
+
+    /**
+     * 优先使用fallbackClass，如果fallbackClass为空，则使用fallbackClassName
+     */
+    private Class<?> getFallbackClass(String fallbackClassName, Class<?> fallbackClass) {
+        if (this.isFallbackClassEmpty(fallbackClass)) {
+            try {
+                if (!StringUtils.isEmpty(fallbackClassName)) {
+                    fallbackClass = Class.forName(fallbackClassName);
+                }
+            } catch (ClassNotFoundException e) {
+                log.error(e.getMessage());
+            }
+        }
+        return fallbackClass;
+    }
+
+    /**
+     * 容错class为空
+     */
+    private boolean isFallbackClassEmpty(Class<?> fallbackClass) {
+        return fallbackClass == null || fallbackClass == RpcConstants.DEFAULT_FALLBACK_CLASS ||
+                RpcConstants.DEFAULT_FALLBACK_CLASS.equals(fallbackClass);
     }
 
     @Override
@@ -131,7 +172,38 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
     /**
      * 真正发送请求调用远程方法
      */
-    private Object invokeSendRequestMethod(Method method, Object[] args) throws Throwable {
+    private Object invokeSendRequestMethod(Method method, Object[] args) throws Exception {
+        try {
+            RpcProtocol<RpcRequest> requestRpcProtocol = getSendRequest(method, args);
+            RpcFuture rpcFuture = this.consumer.sendRequest(requestRpcProtocol, registryService);
+            return rpcFuture == null ? null : timeout > 0 ? rpcFuture.get(timeout, TimeUnit.MILLISECONDS) :
+                    rpcFuture.get();
+        } catch (Throwable t) {
+            // fallbackClass不为空，则执行容错处理
+            if (isFallbackClassEmpty(fallbackClass)) {
+                return null;
+            }
+            return this.getFallbackResult(method, args);
+        }
+    }
+
+    /**
+     * 获取容错结果
+     */
+    private Object getFallbackResult(Method method, Object[] args) {
+        try {
+            return reflectInvoker.invokeMethod(fallbackClass.newInstance(), fallbackClass, method.getName(),
+                    method.getParameterTypes(), args);
+        } catch (Throwable ex) {
+            log.error(ex.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 封装请求协议对象
+     */
+    private RpcProtocol<RpcRequest> getSendRequest(Method method, Object[] args) {
         RpcProtocol<RpcRequest> requestRpcProtocol = new RpcProtocol<>();
 
         requestRpcProtocol.setHeader(RpcHeaderFactory.getRequestHeader(serializationType, RpcType.REQUEST.getType()));
@@ -162,9 +234,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
                 log.debug(args[i].toString());
             }
         }
-
-        RpcFuture rpcFuture = this.consumer.sendRequest(requestRpcProtocol, registryService);
-        return rpcFuture == null ? null : timeout > 0 ? rpcFuture.get(timeout, TimeUnit.MILLISECONDS) : rpcFuture.get();
+        return requestRpcProtocol;
     }
 
     @Override

@@ -56,13 +56,26 @@ public class ProxyConfig<T> implements Serializable {
      * 缓存结果的时长，单位是毫秒
      */
     private int resultCacheExpire;
+    /**
+     * 反射类型
+     */
+    private String reflectType;
+    /**
+     * 容错class名称
+     */
+    private String fallbackClassName;
+    /**
+     * 容错class
+     */
+    private Class<?> fallbackClass;
 
     public ProxyConfig() {
     }
 
     public ProxyConfig(Class<T> clazz, String serviceVersion, String serviceGroup, long timeout, Consumer consumer,
                        String serializationType, boolean async, boolean oneWay, RegistryService registryService,
-                       boolean enableResultCache, int resultCacheExpire) {
+                       boolean enableResultCache, int resultCacheExpire, String reflectType, String fallbackClassName,
+                       Class<?> fallbackClass) {
         this.clazz = clazz;
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
@@ -74,6 +87,9 @@ public class ProxyConfig<T> implements Serializable {
         this.registryService = registryService;
         this.enableResultCache = enableResultCache;
         this.resultCacheExpire = resultCacheExpire;
+        this.reflectType = reflectType;
+        this.fallbackClassName = fallbackClassName;
+        this.fallbackClass = fallbackClass;
     }
 
     public Class<T> getClazz() {
@@ -162,5 +178,29 @@ public class ProxyConfig<T> implements Serializable {
 
     public void setResultCacheExpire(int resultCacheExpire) {
         this.resultCacheExpire = resultCacheExpire;
+    }
+
+    public String getReflectType() {
+        return reflectType;
+    }
+
+    public void setReflectType(String reflectType) {
+        this.reflectType = reflectType;
+    }
+
+    public String getFallbackClassName() {
+        return fallbackClassName;
+    }
+
+    public void setFallbackClassName(String fallbackClassName) {
+        this.fallbackClassName = fallbackClassName;
+    }
+
+    public Class<?> getFallbackClass() {
+        return fallbackClass;
+    }
+
+    public void setFallbackClass(Class<?> fallbackClass) {
+        this.fallbackClass = fallbackClass;
     }
 }
