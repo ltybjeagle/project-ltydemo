@@ -115,6 +115,18 @@ public class RpcReferenceBean implements FactoryBean<Object> {
      * 缓冲区大小
      */
     private int bufferSize;
+    /**
+     * 反射类型
+     */
+    private String reflectType;
+    /**
+     * 容错class名称
+     */
+    private String fallbackClassName;
+    /**
+     * 容错class
+     */
+    private Class<?> fallbackClass;
 
     @Override
     public Object getObject() throws Exception {
@@ -130,7 +142,9 @@ public class RpcReferenceBean implements FactoryBean<Object> {
         rpcClient = new RpcClient(registryAddress, registryType, version, group, serializationType,
                 loadbalancerType, timeout, proxy, async, oneWay, heartbeatInterval, scanNotActiveChannelInterval,
                 retryInterval, retryTimes, enableResultCache, resultCacheExpire, enableDirectServer, directServerUrl,
-                enableDelayConnection, corePoolSize, maximumPoolSize, flowType, enableBuffer, bufferSize);
+                enableDelayConnection, corePoolSize, maximumPoolSize, flowType, enableBuffer, bufferSize, reflectType,
+                fallbackClassName);
+        rpcClient.setFallbackClass(fallbackClass);
         this.object = rpcClient.create(interfaceClass);
     }
 
@@ -332,5 +346,29 @@ public class RpcReferenceBean implements FactoryBean<Object> {
 
     public void setBufferSize(int bufferSize) {
         this.bufferSize = bufferSize;
+    }
+
+    public String getReflectType() {
+        return reflectType;
+    }
+
+    public void setReflectType(String reflectType) {
+        this.reflectType = reflectType;
+    }
+
+    public String getFallbackClassName() {
+        return fallbackClassName;
+    }
+
+    public void setFallbackClassName(String fallbackClassName) {
+        this.fallbackClassName = fallbackClassName;
+    }
+
+    public Class<?> getFallbackClass() {
+        return fallbackClass;
+    }
+
+    public void setFallbackClass(Class<?> fallbackClass) {
+        this.fallbackClass = fallbackClass;
     }
 }
