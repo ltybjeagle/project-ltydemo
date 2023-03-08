@@ -234,7 +234,9 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
             cacheResultKey.setCacheTimeStamp(System.currentTimeMillis());
             this.cacheResultManager.put(cacheResultKey, responseRpcProtocol);
         }
-        responseRpcProtocol.setHeader(header);
+        RpcHeader responseHeader = responseRpcProtocol.getHeader();
+        responseHeader.setRequestId(header.getRequestId());
+        responseRpcProtocol.setHeader(responseHeader);
         return responseRpcProtocol;
     }
 

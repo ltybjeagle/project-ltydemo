@@ -37,5 +37,30 @@
             <artifactId>platform-baserpc-cache</artifactId>
             <version>${platform-rpc.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sunny.maven</groupId>
+            <artifactId>platform-baserpc-reflect-jdk</artifactId>
+            <version>${platform-rpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sunny.maven</groupId>
+            <artifactId>platform-baserpc-reflect-cglib</artifactId>
+            <version>${platform-rpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sunny.maven</groupId>
+            <artifactId>platform-baserpc-reflect-javassist</artifactId>
+            <version>${platform-rpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sunny.maven</groupId>
+            <artifactId>platform-baserpc-reflect-bytebuddy</artifactId>
+            <version>${platform-rpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sunny.maven</groupId>
+            <artifactId>platform-baserpc-reflect-asm</artifactId>
+            <version>${platform-rpc.version}</version>
+        </dependency>
     </dependencies>
 </project>

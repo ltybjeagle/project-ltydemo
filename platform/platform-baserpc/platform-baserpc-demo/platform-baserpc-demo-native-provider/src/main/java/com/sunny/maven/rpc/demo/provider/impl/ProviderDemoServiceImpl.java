@@ -1,6 +1,7 @@
 package com.sunny.maven.rpc.demo.provider.impl;
 
 import com.sunny.maven.rpc.annotation.RpcService;
+import com.sunny.maven.rpc.common.exception.RpcException;
 import com.sunny.maven.rpc.demo.api.DemoService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,6 +18,9 @@ public class ProviderDemoServiceImpl implements DemoService {
     @Override
     public String hello(String name) {
         log.info("调用hello方法传入的参数为====>>> {}", name);
+        if ("SUNNY".equals(name)) {
+            throw new RpcException("rpc provider throws exception");
+        }
         return "hello " + name;
     }
 }
