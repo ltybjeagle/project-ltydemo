@@ -35,6 +35,7 @@
         <module>platform-baserpc-disuse</module>
         <module>platform-baserpc-connection</module>
         <module>platform-baserpc-buffer</module>
+        <module>platform-baserpc-ratelimiter</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>

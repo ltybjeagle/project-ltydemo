@@ -29,7 +29,8 @@ public class ConsumerNativeDemoTest {
                 3, false, 30000, true,
                 "127.0.0.1:27880", false, 16, 16,
                 "print", true, 2, "jdk",
-                "com.sunny.maven.rpc.demo.consumer.hello.FallbackDemoServiceImpl");
+                "com.sunny.maven.rpc.demo.consumer.hello.FallbackDemoServiceImpl",
+                true, "counter", 100, 1000);
     }
 
     @Test

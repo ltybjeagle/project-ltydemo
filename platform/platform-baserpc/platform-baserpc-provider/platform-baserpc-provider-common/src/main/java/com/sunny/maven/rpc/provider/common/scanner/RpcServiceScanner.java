@@ -33,7 +33,7 @@ public class RpcServiceScanner extends ClassScanner {
                                                               RegistryService registryService)
             throws Exception {
         Map<String, Object> handlerMap = new HashMap<>();
-        List<String> classNameList = getClassNameList(scanPackage);
+        List<String> classNameList = getClassNameList(scanPackage, true);
         if (classNameList.isEmpty()) {
             return handlerMap;
         }

@@ -26,10 +26,12 @@ public class RpcSpringServer extends BaseServer implements ApplicationContextAwa
                            String registryAddress, String registryType, String registryLoadBalanceType,
                            int heartbeatInterval, int scanNotActiveChannelInterval, boolean enableResultCache,
                            int resultCacheExpire, int corePoolSize, int maximumPoolSize, String flowType,
-                           int maxConnections, String disuseStrategyType, boolean enableBuffer, int bufferSize) {
+                           int maxConnections, String disuseStrategyType, boolean enableBuffer, int bufferSize,
+                           boolean enableRateLimiter, String rateLimiterType, int permits, int milliSeconds) {
         super(serverAddress, serverRegistryAddress, reflectType, registryAddress, registryType, registryLoadBalanceType,
                 heartbeatInterval, scanNotActiveChannelInterval, enableResultCache, resultCacheExpire, corePoolSize,
-                maximumPoolSize, flowType, maxConnections, disuseStrategyType, enableBuffer, bufferSize);
+                maximumPoolSize, flowType, maxConnections, disuseStrategyType, enableBuffer, bufferSize,
+                enableRateLimiter, rateLimiterType, permits, milliSeconds);
     }
     @Override
     public void afterPropertiesSet() throws Exception {

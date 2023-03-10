@@ -9,7 +9,6 @@ import com.sunny.maven.rpc.provider.common.manager.ProviderConnectionManager;
 import com.sunny.maven.rpc.provider.common.server.api.Server;
 import com.sunny.maven.rpc.registry.api.RegistryService;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
-import com.sunny.maven.rpc.registry.zookeeper.ZookeeperRegistryService;
 import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -19,13 +18,10 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.security.cert.Extension;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -104,12 +100,29 @@ public class BaseServer implements Server {
      * 缓冲区大小
      */
     private int bufferSize;
+    /**
+     * 是否开启限流
+     */
+    private boolean enableRateLimiter;
+    /**
+     * 限流类型
+     */
+    private String rateLimiterType;
+    /**
+     * 在milliSeconds毫秒内最多能够通过的请求个数
+     */
+    private int permits;
+    /**
+     * 毫秒数
+     */
+    private int milliSeconds;
 
     public BaseServer(String serverAddress, String serverRegistryAddress, String reflectType, String registryAddress,
                       String registryType, String registryLoadBalanceType, int heartbeatInterval,
                       int scanNotActiveChannelInterval, boolean enableResultCache, int resultCacheExpire,
                       int corePoolSize, int maximumPoolSize, String flowType, int maxConnections,
-                      String disuseStrategyType, boolean enableBuffer, int bufferSize) {
+                      String disuseStrategyType, boolean enableBuffer, int bufferSize, boolean enableRateLimiter,
+                      String rateLimiterType, int permits, int milliSeconds) {
         if (StringUtils.isNotEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             host = serverArray[0];
@@ -141,6 +154,10 @@ public class BaseServer implements Server {
         this.disuseStrategyType = disuseStrategyType;
         this.enableBuffer = enableBuffer;
         this.bufferSize = bufferSize;
+        this.enableRateLimiter = enableRateLimiter;
+        this.rateLimiterType = rateLimiterType;
+        this.permits = permits;
+        this.milliSeconds = milliSeconds;
         this.flowPostProcessor = ExtensionLoader.getExtension(FlowPostProcessor.class, flowType);
     }
 
@@ -176,7 +193,8 @@ public class BaseServer implements Server {
                                     addLast(RpcConstants.CODEC_HANDLER,
                                             new RpcProviderHandler(reflectType, enableResultCache, resultCacheExpire,
                                                     corePoolSize, maximumPoolSize, maxConnections, disuseStrategyType,
-                                                    enableBuffer, bufferSize, handlerMap));
+                                                    enableBuffer, bufferSize, enableRateLimiter, rateLimiterType,
+                                                    permits, milliSeconds, handlerMap));
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128).
                     childOption(ChannelOption.SO_KEEPALIVE, true);

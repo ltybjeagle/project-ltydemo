@@ -26,7 +26,7 @@ public class RpcReferenceScanner extends ClassScanner {
      */
     public static Map<String, Object> doScannerWithRpcReferenceAnnotationFilter(String scanPackage) throws Exception {
         Map<String, Object> handlerMap = new HashMap<>();
-        List<String> classNameList = getClassNameList(scanPackage);
+        List<String> classNameList = getClassNameList(scanPackage, true);
         if (classNameList.isEmpty()) {
             return handlerMap;
         }

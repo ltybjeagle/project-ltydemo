@@ -19,7 +19,8 @@ public class ScannerTest {
      */
     @Test
     public void testScannerClassNameList() throws Exception {
-        List<String> classNameList = ClassScanner.getClassNameList("com.sunny.maven.rpc.test.scanner");
+        List<String> classNameList = ClassScanner.getClassNameList("com.sunny.maven.rpc.test.scanner",
+                true);
         classNameList.forEach(System.out::println);
     }
 
