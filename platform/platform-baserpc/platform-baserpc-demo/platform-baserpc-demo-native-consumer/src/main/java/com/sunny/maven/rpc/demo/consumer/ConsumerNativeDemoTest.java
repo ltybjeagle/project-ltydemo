@@ -30,14 +30,17 @@ public class ConsumerNativeDemoTest {
                 "127.0.0.1:27880", false, 16, 16,
                 "print", true, 2, "jdk",
                 "com.sunny.maven.rpc.demo.consumer.hello.FallbackDemoServiceImpl",
-                true, "guava", 100, 1000);
+                true, "guava", 1, 5000,
+                "fallback");
     }
 
     @Test
     public void testInterfaceRpc() throws Exception {
         DemoService demoService = rpcClient.create(DemoService.class);
-        String result = demoService.hello("SUNNY");
-        log.info("返回的结果数据===>>> {}", result);
+        for (int i = 0; i < 5; i++) {
+            String result = demoService.hello("SUNNY");
+            log.info("返回的结果数据===>>> {}", result);
+        }
         while (true) {
             Thread.sleep(1000);
         }

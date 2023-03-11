@@ -58,12 +58,15 @@ public class SpringAnnotationProviderConfig {
     private int permits;
     @Value("${server.milliSeconds}")
     private int milliSeconds;
+    @Value("${server.rateLimiterFailStrategy}")
+    private String rateLimiterFailStrategy;
 
     @Bean
     public RpcSpringServer rpcSpringServer() {
         return new RpcSpringServer(serverAddress, serverRegistryAddress, reflectType, registryAddress, registryType,
                 registryLoadBalanceType, heartbeatInterval, scanNotActiveChannelInterval, enableResultCache,
                 resultCacheExpire, corePoolSize, maximumPoolSize, flowType, maxConnections, disuseStrategyType,
-                enableBuffer, bufferSize, enableRateLimiter, rateLimiterType, permits, milliSeconds);
+                enableBuffer, bufferSize, enableRateLimiter, rateLimiterType, permits, milliSeconds,
+                rateLimiterFailStrategy);
     }
 }

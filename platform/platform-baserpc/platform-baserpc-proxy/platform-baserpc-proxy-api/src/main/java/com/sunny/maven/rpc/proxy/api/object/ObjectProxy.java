@@ -90,6 +90,10 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
      * 限流SPI接口
      */
     private RateLimiterInvoker rateLimiterInvoker;
+    /**
+     * 当限流失败时的处理策略
+     */
+    private String rateLimiterFailStrategy;
 
     public ObjectProxy(Class<T> clazz) {
         this.clazz = clazz;
@@ -99,7 +103,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
                        String serializationType, boolean async, boolean oneWay, RegistryService registryService,
                        boolean enableResultCache, int resultCacheExpire, String reflectType, String fallbackClassName,
                        boolean enableRateLimiter, String rateLimiterType, int permits, int milliSeconds,
-                       Class<?> fallbackClass) {
+                       String rateLimiterFailStrategy, Class<?> fallbackClass) {
         this.clazz = clazz;
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
@@ -118,6 +122,10 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
         this.fallbackClass = this.getFallbackClass(fallbackClassName, fallbackClass);
         this.enableRateLimiter = enableRateLimiter;
         this.initRateLimiter(rateLimiterType, permits, milliSeconds);
+        if (StringUtils.isEmpty(rateLimiterFailStrategy)) {
+            rateLimiterFailStrategy = RpcConstants.RATE_LIMITER_FAIL_STRATEGY_DIRECT;
+        }
+        this.rateLimiterFailStrategy = rateLimiterFailStrategy;
     }
 
     /**
@@ -221,12 +229,27 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
                     rateLimiterInvoker.release();
                 }
             } else {
-                //TODO 执行各种策略
+                result = this.invokeFailRateLimiterMethod(method, args);
             }
         } else {
             result = invokeSendRequestMethod(method, args);
         }
         return result;
+    }
+
+    /**
+     * 执行限流失败时的处理逻辑
+     */
+    private Object invokeFailRateLimiterMethod(Method method, Object[] args) throws Exception {
+        log.info("execute {} fail rate limiter strategy...", rateLimiterFailStrategy);
+        switch (rateLimiterFailStrategy) {
+            case RpcConstants.RATE_LIMITER_FAIL_STRATEGY_EXCEPTION:
+            case RpcConstants.RATE_LIMITER_FAIL_STRATEGY_FALLBACK:
+                return this.getFallbackResult(method, args);
+            case RpcConstants.RATE_LIMITER_FAIL_STRATEGY_DIRECT:
+                return this.invokeSendRequestMethod(method, args);
+        }
+        return this.invokeSendRequestMethod(method, args);
     }
 
     /**

@@ -132,6 +132,10 @@ public class RpcClient {
      * 毫秒数
      */
     private int milliSeconds;
+    /**
+     * 当限流失败时的处理策略
+     */
+    private String rateLimiterFailStrategy;
 
     public RpcClient(String registryAddress, String registryType, String serviceVersion, String serviceGroup,
                      String serializationType, String registryLoadBalanceType, long timeout, String proxy,
@@ -140,7 +144,7 @@ public class RpcClient {
                      boolean enableDirectServer, String directServerUrl, boolean enableDelayConnection,
                      int corePoolSize, int maximumPoolSize, String flowType, boolean enableBuffer, int bufferSize,
                      String reflectType, String fallbackClassName, boolean enableRateLimiter, String rateLimiterType,
-                     int permits, int milliSeconds) {
+                     int permits, int milliSeconds, String rateLimiterFailStrategy) {
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
         this.serializationType = serializationType;
@@ -166,6 +170,7 @@ public class RpcClient {
         this.rateLimiterType = rateLimiterType;
         this.permits = permits;
         this.milliSeconds = milliSeconds;
+        this.rateLimiterFailStrategy = rateLimiterFailStrategy;
         this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
         this.concurrentThreadPool = ConcurrentThreadPool.getInstance(corePoolSize, maximumPoolSize);
     }
@@ -207,7 +212,8 @@ public class RpcClient {
                         buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire, reflectType,
-                fallbackClassName, fallbackClass, enableRateLimiter, rateLimiterType, permits, milliSeconds));
+                fallbackClassName, fallbackClass, enableRateLimiter, rateLimiterType, permits, milliSeconds,
+                rateLimiterFailStrategy));
         return proxyFactory.getProxy(interfaceClass);
     }
 
@@ -228,7 +234,8 @@ public class RpcClient {
                         buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire, reflectType,
-                fallbackClassName, enableRateLimiter, rateLimiterType, permits, milliSeconds, fallbackClass);
+                fallbackClassName, enableRateLimiter, rateLimiterType, permits, milliSeconds, rateLimiterFailStrategy,
+                fallbackClass);
     }
 
     public void shutdown() {
