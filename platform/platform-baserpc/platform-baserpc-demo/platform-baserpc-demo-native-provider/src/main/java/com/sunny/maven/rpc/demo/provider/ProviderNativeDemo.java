@@ -40,7 +40,7 @@ public class ProviderNativeDemo {
                         6000, true, 30000,
                         16, 16, "print", 1,
                         "first", false, 2, true,
-                        "counter", 100, 1000);
+                        "guava", 100, 1000);
         singleServer.startNettyServer();
     }
 }

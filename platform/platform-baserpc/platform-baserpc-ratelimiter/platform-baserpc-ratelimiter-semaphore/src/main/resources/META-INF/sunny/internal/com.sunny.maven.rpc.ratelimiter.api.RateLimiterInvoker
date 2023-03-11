@@ -1,0 +1,1 @@
+semaphore=com.sunny.maven.rpc.ratelimiter.semaphore.SemaphoreRateLimiterInvoker

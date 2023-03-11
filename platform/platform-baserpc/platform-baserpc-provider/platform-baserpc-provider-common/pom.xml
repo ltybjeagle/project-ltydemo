@@ -82,5 +82,15 @@
       <artifactId>platform-baserpc-ratelimiter-counter</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-ratelimiter-semaphore</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-ratelimiter-guava</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
   </dependencies>
 </project>
