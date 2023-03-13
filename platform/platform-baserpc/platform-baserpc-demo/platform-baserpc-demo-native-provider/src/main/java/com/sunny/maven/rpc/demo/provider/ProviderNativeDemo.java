@@ -37,10 +37,11 @@ public class ProviderNativeDemo {
                 new RpcSingleServer("127.0.0.1:27880", "127.0.0.1:27880",
                         "com.sunny.maven.rpc", "asm", "127.0.0.1:2181",
                         "zookeeper", "random", 3000,
-                        6000, true, 30000,
+                        6000, false, 30000,
                         16, 16, "print", 1,
-                        "first", false, 2, true,
-                        "guava", 1, 5000, "fallback");
+                        "first", false, 2, false,
+                        "guava", 1, 5000, "fallback",
+                        false, "percent", 1, 5000);
         singleServer.startNettyServer();
     }
 }

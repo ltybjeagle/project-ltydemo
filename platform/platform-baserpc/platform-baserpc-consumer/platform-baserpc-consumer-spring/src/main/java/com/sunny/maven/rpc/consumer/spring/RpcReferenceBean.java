@@ -147,6 +147,22 @@ public class RpcReferenceBean implements FactoryBean<Object> {
      * 当限流失败时的处理策略
      */
     private String rateLimiterFailStrategy;
+    /**
+     * 是否开启熔断策略
+     */
+    private boolean enableFusing;
+    /**
+     * 熔断规则标识
+     */
+    private String fusingType;
+    /**
+     * 在fusingMilliSeconds毫秒内触发熔断操作的上限值
+     */
+    private double totalFailure;
+    /**
+     * 熔断的毫秒时长
+     */
+    private int fusingMilliSeconds;
 
     @Override
     public Object getObject() throws Exception {
@@ -163,7 +179,8 @@ public class RpcReferenceBean implements FactoryBean<Object> {
                 loadbalancerType, timeout, proxy, async, oneWay, heartbeatInterval, scanNotActiveChannelInterval,
                 retryInterval, retryTimes, enableResultCache, resultCacheExpire, enableDirectServer, directServerUrl,
                 enableDelayConnection, corePoolSize, maximumPoolSize, flowType, enableBuffer, bufferSize, reflectType,
-                fallbackClassName, enableRateLimiter, rateLimiterType, permits, milliSeconds, rateLimiterFailStrategy);
+                fallbackClassName, enableRateLimiter, rateLimiterType, permits, milliSeconds, rateLimiterFailStrategy,
+                enableFusing, fusingType, totalFailure, fusingMilliSeconds);
         rpcClient.setFallbackClass(fallbackClass);
         this.object = rpcClient.create(interfaceClass);
     }
@@ -430,5 +447,37 @@ public class RpcReferenceBean implements FactoryBean<Object> {
 
     public void setRateLimiterFailStrategy(String rateLimiterFailStrategy) {
         this.rateLimiterFailStrategy = rateLimiterFailStrategy;
+    }
+
+    public boolean isEnableFusing() {
+        return enableFusing;
+    }
+
+    public void setEnableFusing(boolean enableFusing) {
+        this.enableFusing = enableFusing;
+    }
+
+    public String getFusingType() {
+        return fusingType;
+    }
+
+    public void setFusingType(String fusingType) {
+        this.fusingType = fusingType;
+    }
+
+    public double getTotalFailure() {
+        return totalFailure;
+    }
+
+    public void setTotalFailure(double totalFailure) {
+        this.totalFailure = totalFailure;
+    }
+
+    public int getFusingMilliSeconds() {
+        return fusingMilliSeconds;
+    }
+
+    public void setFusingMilliSeconds(int fusingMilliSeconds) {
+        this.fusingMilliSeconds = fusingMilliSeconds;
     }
 }

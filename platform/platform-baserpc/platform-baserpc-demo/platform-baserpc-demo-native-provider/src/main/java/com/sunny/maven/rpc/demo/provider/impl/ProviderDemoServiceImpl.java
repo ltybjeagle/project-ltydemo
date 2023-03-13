@@ -18,9 +18,9 @@ public class ProviderDemoServiceImpl implements DemoService {
     @Override
     public String hello(String name) {
         log.info("调用hello方法传入的参数为====>>> {}", name);
-//        if ("SUNNY".equals(name)) {
-//            throw new RpcException("rpc provider throws exception");
-//        }
+        if ("SUNNY".equals(name)) {
+            throw new RpcException("rpc provider throws exception");
+        }
         return "hello " + name;
     }
 }

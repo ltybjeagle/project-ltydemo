@@ -26,12 +26,13 @@ public class ConsumerNativeDemoTest {
                 "SUNNY", "protostuff",
                 "enhanced_leastconnections", 3000, "asm", false,
                 false, 30000, 60000, 1000,
-                3, false, 30000, true,
-                "127.0.0.1:27880", false, 16, 16,
-                "print", true, 2, "jdk",
+                3, false, 30000, false,
+                "127.0.0.1:27880", true, 16, 16,
+                "print", false, 2, "jdk",
                 "com.sunny.maven.rpc.demo.consumer.hello.FallbackDemoServiceImpl",
-                true, "guava", 1, 5000,
-                "fallback");
+                false, "guava", 1, 5000,
+                "fallback", true, "percent", 1,
+                5000);
     }
 
     @Test
