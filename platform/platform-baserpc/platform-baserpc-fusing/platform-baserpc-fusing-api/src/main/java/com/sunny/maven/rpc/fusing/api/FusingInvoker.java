@@ -19,7 +19,6 @@ public interface FusingInvoker {
      * 4.在半开启状态下，如果服务能力未能恢复，则断路器再次触发服务熔断，进入熔断时间。
      * @return 是否要触发熔断，true：触发熔断，false：不触发熔断
      */
-
     boolean invokeFusingStrategy();
 
     /**
@@ -28,9 +27,14 @@ public interface FusingInvoker {
     void incrementCount();
 
     /**
-     * 处理请求失败的次数
+     * 访问成功
      */
-    void incrementFailureCount();
+    void markSuccess();
+
+    /**
+     * 访问失败
+     */
+    void markFail();
 
     /**
      * 在milliSeconds毫秒内错误数量或者错误百分比达到totalFailure，则触发熔断操作

@@ -410,7 +410,9 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
         }
         // 如果是调用失败，则失败次数加1
         if (responseRpcProtocol.getHeader().getStatus() == (byte) RpcStatus.FAIL.getCode()) {
-            fusingInvoker.incrementFailureCount();
+            fusingInvoker.markFail();
+        } else {
+            fusingInvoker.markSuccess();
         }
         return responseRpcProtocol;
     }
