@@ -111,6 +111,10 @@ public final class SpringBootProviderConfig {
      * 熔断的毫秒时长
      */
     private int fusingMilliSeconds;
+    /**
+     * 异常后置处理器标识
+     */
+    private String exceptionPostProcessorType;
 
     public SpringBootProviderConfig() {
     }
@@ -125,7 +129,8 @@ public final class SpringBootProviderConfig {
                                     final boolean enableBuffer, final int bufferSize, final boolean enableRateLimiter,
                                     final String rateLimiterType, final int permits, final int milliSeconds,
                                     final String rateLimiterFailStrategy, final boolean enableFusing,
-                                    final String fusingType, final double totalFailure, final int fusingMilliSeconds) {
+                                    final String fusingType, final double totalFailure, final int fusingMilliSeconds,
+                                    final String exceptionPostProcessorType) {
         this.serverAddress = serverAddress;
         this.registryAddress = registryAddress;
         this.registryType = registryType;
@@ -154,6 +159,7 @@ public final class SpringBootProviderConfig {
         this.fusingType = fusingType;
         this.totalFailure = totalFailure;
         this.fusingMilliSeconds = fusingMilliSeconds;
+        this.exceptionPostProcessorType = exceptionPostProcessorType;
     }
 
     public String getServerAddress() {
@@ -362,5 +368,13 @@ public final class SpringBootProviderConfig {
 
     public void setFusingMilliSeconds(int fusingMilliSeconds) {
         this.fusingMilliSeconds = fusingMilliSeconds;
+    }
+
+    public String getExceptionPostProcessorType() {
+        return exceptionPostProcessorType;
+    }
+
+    public void setExceptionPostProcessorType(String exceptionPostProcessorType) {
+        this.exceptionPostProcessorType = exceptionPostProcessorType;
     }
 }

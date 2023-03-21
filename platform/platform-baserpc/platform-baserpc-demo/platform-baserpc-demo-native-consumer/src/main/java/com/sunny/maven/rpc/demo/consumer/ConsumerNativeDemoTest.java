@@ -32,7 +32,7 @@ public class ConsumerNativeDemoTest {
                 "com.sunny.maven.rpc.demo.consumer.hello.FallbackDemoServiceImpl",
                 false, "guava", 1, 5000,
                 "fallback", true, "percent", 1,
-                5000);
+                5000, "print");
     }
 
     @Test

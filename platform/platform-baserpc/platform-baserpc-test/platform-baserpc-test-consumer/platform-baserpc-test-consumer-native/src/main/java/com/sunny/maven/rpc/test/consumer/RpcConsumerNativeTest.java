@@ -26,7 +26,7 @@ public class RpcConsumerNativeTest {
                 "print", true, 2, "jdk", "",
                 true, "counter", 100, 1000,
                 "fallback", true, "counter", 1,
-                5000);
+                5000, "print");
         DemoService demoService = rpcClient.create(DemoService.class);
         String result = demoService.hello("SUNNY");
         log.info("返回的结果数据===>>> {}", result);
@@ -50,7 +50,7 @@ public class RpcConsumerNativeTest {
                 "print", true, 2, "jdk", "",
                 true, "counter", 100, 1000,
                 "fallback", true, "counter", 1,
-                5000);
+                5000, "print");
     }
 
     @Test

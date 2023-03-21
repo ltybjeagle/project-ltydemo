@@ -102,5 +102,10 @@
       <artifactId>platform-baserpc-fusing-percent</artifactId>
       <version>${platform-rpc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-baserpc-exception-print</artifactId>
+      <version>${platform-rpc.version}</version>
+    </dependency>
   </dependencies>
 </project>

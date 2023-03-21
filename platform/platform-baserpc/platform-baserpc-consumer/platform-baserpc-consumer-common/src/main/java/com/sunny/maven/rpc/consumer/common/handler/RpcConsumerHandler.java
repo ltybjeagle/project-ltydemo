@@ -5,6 +5,7 @@ import com.sunny.maven.rpc.buffer.cache.BufferCacheManager;
 import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.consumer.common.cache.ConsumerChannelCache;
 import com.sunny.maven.rpc.consumer.common.context.RpcContext;
+import com.sunny.maven.rpc.exception.processor.ExceptionPostProcessor;
 import com.sunny.maven.rpc.protocol.enumeration.RpcStatus;
 import com.sunny.maven.rpc.protocol.enumeration.RpcType;
 import com.sunny.maven.rpc.protocol.header.RpcHeaderFactory;
@@ -53,9 +54,15 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
      * 缓冲区管理器
      */
     private BufferCacheManager<RpcProtocol<RpcResponse>> bufferCacheManager;
+    /**
+     * 异常后置处理器
+     */
+    private ExceptionPostProcessor exceptionPostProcessor;
 
-    public RpcConsumerHandler(boolean enableBuffer, int bufferSize, ConcurrentThreadPool concurrentThreadPool) {
+    public RpcConsumerHandler(boolean enableBuffer, int bufferSize, ConcurrentThreadPool concurrentThreadPool,
+                              ExceptionPostProcessor exceptionPostProcessor) {
         this.concurrentThreadPool = concurrentThreadPool;
+        this.exceptionPostProcessor = exceptionPostProcessor;
         this.enableBuffer = enableBuffer;
         if (enableBuffer) {
             this.bufferCacheManager = BufferCacheManager.getInstance(bufferSize);
@@ -243,5 +250,11 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
     public void close() {
         channel.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
         ConsumerChannelCache.remove(channel);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        exceptionPostProcessor.postExceptionProcessor(cause);
+        super.exceptionCaught(ctx, cause);
     }
 }

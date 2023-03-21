@@ -8,6 +8,7 @@ import com.sunny.maven.rpc.common.utils.StringUtils;
 import com.sunny.maven.rpc.constants.RpcConstants;
 import com.sunny.maven.rpc.consumer.common.helper.RpcConsumerHandlerHelper;
 import com.sunny.maven.rpc.consumer.common.manager.ConsumerConnectionManager;
+import com.sunny.maven.rpc.exception.processor.ExceptionPostProcessor;
 import com.sunny.maven.rpc.flow.processor.FlowPostProcessor;
 import com.sunny.maven.rpc.loadbalancer.context.ConnectionsContext;
 import com.sunny.maven.rpc.protocol.meta.ServiceMeta;
@@ -93,6 +94,10 @@ public class RpcConsumer implements Consumer {
      */
     private FlowPostProcessor flowPostProcessor;
     /**
+     * 异常后置处理器
+     */
+    private ExceptionPostProcessor exceptionPostProcessor;
+    /**
      * 是否开启数据缓冲
      */
     private boolean enableBuffer;
@@ -159,6 +164,15 @@ public class RpcConsumer implements Consumer {
         return this;
     }
 
+    public RpcConsumer setExceptionPostProcessor(String exceptionPostProcessorType) {
+        if (StringUtils.isEmpty(exceptionPostProcessorType)) {
+            exceptionPostProcessorType = RpcConstants.EXCEPTION_POST_PROCESSOR_PRINT;
+        }
+        this.exceptionPostProcessor = ExtensionLoader.getExtension(ExceptionPostProcessor.class,
+                exceptionPostProcessorType);
+        return this;
+    }
+
     public RpcConsumer setEnableBuffer(boolean enableBuffer) {
         this.enableBuffer = enableBuffer;
         return this;
@@ -174,12 +188,12 @@ public class RpcConsumer implements Consumer {
         try {
             bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).handler(
                     new RpcConsumerInitializer(heartbeatInterval, enableBuffer, bufferSize, concurrentThreadPool,
-                            flowPostProcessor));
+                            flowPostProcessor, exceptionPostProcessor));
         } catch (IllegalStateException e) {
             bootstrap = new Bootstrap();
             bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).handler(
                     new RpcConsumerInitializer(heartbeatInterval, enableBuffer, bufferSize, concurrentThreadPool,
-                            flowPostProcessor));
+                            flowPostProcessor, exceptionPostProcessor));
         }
         return this;
     }

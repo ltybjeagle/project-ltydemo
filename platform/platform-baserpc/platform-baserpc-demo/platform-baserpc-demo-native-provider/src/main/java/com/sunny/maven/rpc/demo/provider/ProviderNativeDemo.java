@@ -41,7 +41,8 @@ public class ProviderNativeDemo {
                         16, 16, "print", 1,
                         "first", false, 2, false,
                         "guava", 1, 5000, "fallback",
-                        false, "percent", 1, 5000);
+                        false, "percent", 1, 5000,
+                        "print");
         singleServer.startNettyServer();
     }
 }

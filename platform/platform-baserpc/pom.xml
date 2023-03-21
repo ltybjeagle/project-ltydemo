@@ -37,6 +37,7 @@
         <module>platform-baserpc-buffer</module>
         <module>platform-baserpc-ratelimiter</module>
         <module>platform-baserpc-fusing</module>
+        <module>platform-baserpc-exception</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>

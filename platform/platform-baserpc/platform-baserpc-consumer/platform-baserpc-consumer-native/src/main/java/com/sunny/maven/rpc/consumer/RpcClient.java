@@ -152,6 +152,10 @@ public class RpcClient {
      * 熔断的毫秒时长
      */
     private int fusingMilliSeconds;
+    /**
+     * 异常处理后置处理器类型
+     */
+    private String exceptionPostProcessorType;
 
     public RpcClient(String registryAddress, String registryType, String serviceVersion, String serviceGroup,
                      String serializationType, String registryLoadBalanceType, long timeout, String proxy,
@@ -161,7 +165,8 @@ public class RpcClient {
                      int corePoolSize, int maximumPoolSize, String flowType, boolean enableBuffer, int bufferSize,
                      String reflectType, String fallbackClassName, boolean enableRateLimiter, String rateLimiterType,
                      int permits, int milliSeconds, String rateLimiterFailStrategy, boolean enableFusing,
-                     String fusingType, double totalFailure, int fusingMilliSeconds) {
+                     String fusingType, double totalFailure, int fusingMilliSeconds,
+                     String exceptionPostProcessorType) {
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
         this.serializationType = serializationType;
@@ -192,6 +197,7 @@ public class RpcClient {
         this.fusingType = fusingType;
         this.totalFailure = totalFailure;
         this.fusingMilliSeconds = fusingMilliSeconds;
+        this.exceptionPostProcessorType = exceptionPostProcessorType;
         this.registryService = this.getRegistryService(registryAddress, registryType, registryLoadBalanceType);
         this.concurrentThreadPool = ConcurrentThreadPool.getInstance(corePoolSize, maximumPoolSize);
     }
@@ -230,11 +236,13 @@ public class RpcClient {
                         setFlowPostProcessor(flowType).
                         setEnableBuffer(enableBuffer).
                         setBufferSize(bufferSize).
+                        setExceptionPostProcessor(exceptionPostProcessorType).
                         buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire, reflectType,
                 fallbackClassName, fallbackClass, enableRateLimiter, rateLimiterType, permits, milliSeconds,
-                rateLimiterFailStrategy, enableFusing, fusingType, totalFailure, fusingMilliSeconds));
+                rateLimiterFailStrategy, enableFusing, fusingType, totalFailure, fusingMilliSeconds,
+                exceptionPostProcessorType));
         return proxyFactory.getProxy(interfaceClass);
     }
 
@@ -252,11 +260,12 @@ public class RpcClient {
                         setFlowPostProcessor(flowType).
                         setEnableBuffer(enableBuffer).
                         setBufferSize(bufferSize).
+                        setExceptionPostProcessor(exceptionPostProcessorType).
                         buildNettyGroup().
                         buildConnection(registryService),
                 serializationType, async, oneWay, registryService, enableResultCache, resultCacheExpire, reflectType,
                 fallbackClassName, enableRateLimiter, rateLimiterType, permits, milliSeconds, rateLimiterFailStrategy,
-                enableFusing, fusingType, totalFailure, fusingMilliSeconds, fallbackClass);
+                enableFusing, fusingType, totalFailure, fusingMilliSeconds, exceptionPostProcessorType, fallbackClass);
     }
 
     public void shutdown() {

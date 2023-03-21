@@ -5,6 +5,7 @@ import com.sunny.maven.rpc.cache.result.CacheResultManager;
 import com.sunny.maven.rpc.common.exception.RpcException;
 import com.sunny.maven.rpc.common.utils.StringUtils;
 import com.sunny.maven.rpc.constants.RpcConstants;
+import com.sunny.maven.rpc.exception.processor.ExceptionPostProcessor;
 import com.sunny.maven.rpc.fusing.api.FusingInvoker;
 import com.sunny.maven.rpc.protocol.RpcProtocol;
 import com.sunny.maven.rpc.protocol.enumeration.RpcType;
@@ -104,6 +105,10 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
      * 熔断SPI接口
      */
     private FusingInvoker fusingInvoker;
+    /**
+     * 异常后置处理器
+     */
+    private ExceptionPostProcessor exceptionPostProcessor;
 
     public ObjectProxy(Class<T> clazz) {
         this.clazz = clazz;
@@ -114,7 +119,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
                        boolean enableResultCache, int resultCacheExpire, String reflectType, String fallbackClassName,
                        boolean enableRateLimiter, String rateLimiterType, int permits, int milliSeconds,
                        String rateLimiterFailStrategy, boolean enableFusing, String fusingType, double totalFailure,
-                       int fusingMilliSeconds, Class<?> fallbackClass) {
+                       int fusingMilliSeconds, String exceptionPostProcessorType, Class<?> fallbackClass) {
         this.clazz = clazz;
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
@@ -138,6 +143,11 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
         }
         this.rateLimiterFailStrategy = rateLimiterFailStrategy;
         this.enableFusing = enableFusing;
+        if (StringUtils.isEmpty(exceptionPostProcessorType)) {
+            exceptionPostProcessorType = RpcConstants.EXCEPTION_POST_PROCESSOR_PRINT;
+        }
+        this.exceptionPostProcessor = ExtensionLoader.getExtension(ExceptionPostProcessor.class,
+                exceptionPostProcessorType);
         this.initFusing(fusingType, totalFailure, fusingMilliSeconds);
     }
 
@@ -174,6 +184,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
                     fallbackClass = Class.forName(fallbackClassName);
                 }
             } catch (ClassNotFoundException e) {
+                exceptionPostProcessor.postExceptionProcessor(e);
                 log.error(e.getMessage());
             }
         }
@@ -232,6 +243,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
         try {
             return this.invokeSendRequestMethodWithRateLimiter(method, args);
         } catch (Throwable t) {
+            exceptionPostProcessor.postExceptionProcessor(t);
             // fallbackClass不为空，则执行容错处理
             if (isFallbackClassEmpty(fallbackClass)) {
                 return null;
@@ -303,6 +315,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
             result = this.invokeSendRequestMethod(method, args);
             fusingInvoker.markSuccess();
         } catch (Throwable e) {
+            exceptionPostProcessor.postExceptionProcessor(e);
             fusingInvoker.markFail();
             throw new RpcException(e.getMessage());
         }
@@ -327,6 +340,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
             return reflectInvoker.invokeMethod(fallbackClass.newInstance(), fallbackClass, method.getName(),
                     method.getParameterTypes(), args);
         } catch (Throwable ex) {
+            exceptionPostProcessor.postExceptionProcessor(ex);
             log.error(ex.getMessage());
         }
         return null;
@@ -376,6 +390,7 @@ public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
         try {
             rpcFuture = this.consumer.sendRequest(request, registryService);
         } catch (Exception e) {
+            exceptionPostProcessor.postExceptionProcessor(e);
             log.error("async all throws exception:{}", e.getMessage());
         }
         return rpcFuture;

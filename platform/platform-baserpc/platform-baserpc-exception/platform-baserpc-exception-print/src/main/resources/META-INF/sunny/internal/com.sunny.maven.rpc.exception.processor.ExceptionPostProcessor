@@ -1,0 +1,1 @@
+print=com.sunny.maven.rpc.exception.processor.print.PrintExceptionPostProcessor
