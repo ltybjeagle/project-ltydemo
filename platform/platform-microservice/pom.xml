@@ -19,12 +19,18 @@
         <module>platform-microservice-middle</module>
         <module>platform-basecommon-config</module>
         <module>platform-microservice-eureka</module>
+        <module>platform-microservice-bean</module>
+        <module>platform-microservice-order</module>
+        <module>platform-microservice-product</module>
+        <module>platform-microservice-user</module>
+        <module>platform-microservice-utils</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
 
     <properties>
         <eureka-service.version>1.0-SNAPSHOT</eureka-service.version>
+        <platform-micro.version>1.0-SNAPSHOT</platform-micro.version>
     </properties>
 
 
