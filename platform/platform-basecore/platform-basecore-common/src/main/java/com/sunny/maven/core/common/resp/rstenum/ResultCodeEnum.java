@@ -1,6 +1,6 @@
-package com.sunny.maven.core.common.rstenum;
+package com.sunny.maven.core.common.resp.rstenum;
 
-import com.sunny.maven.core.common.constants.HttpCode;
+import com.sunny.maven.core.common.constants.CommonConstant;
 import lombok.Getter;
 
 /**
@@ -10,11 +10,11 @@ import lombok.Getter;
  */
 @Getter
 public enum ResultCodeEnum {
-    SUCCESS(true, HttpCode.SUCCESS, "执行成功!"),
-    UNKNOWN_ERROR(false, HttpCode.FAILURE, "未知错误!"),
-    TOKEN_INVALID(false, HttpCode.FAILURE, "认证已经失效!"),
-    TOKEN_MISS(false, HttpCode.FAILURE, "未提供认证Token!"),
-    USER_SESSION_LOSE(false, HttpCode.FAILURE, "用户会话信息丢失!");
+    SUCCESS(true, CommonConstant.SUCCESS, "执行成功!"),
+    UNKNOWN_ERROR(false, CommonConstant.FAILURE, "未知错误!"),
+    TOKEN_INVALID(false, CommonConstant.FAILURE, "认证已经失效!"),
+    TOKEN_MISS(false, CommonConstant.FAILURE, "未提供认证Token!"),
+    USER_SESSION_LOSE(false, CommonConstant.FAILURE, "用户会话信息丢失!");
 
 
     /**
