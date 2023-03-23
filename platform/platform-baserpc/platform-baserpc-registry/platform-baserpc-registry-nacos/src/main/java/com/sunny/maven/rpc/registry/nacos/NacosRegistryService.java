@@ -4,16 +4,18 @@ import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
+import com.alibaba.nacos.api.naming.pojo.ServiceInfo;
 import com.sunny.maven.rpc.common.helper.RpcServiceHelper;
-import com.sunny.maven.rpc.common.json.JsonUtils;
 import com.sunny.maven.rpc.loadbalancer.api.ServiceLoadBalancer;
 import com.sunny.maven.rpc.protocol.meta.ServiceMeta;
 import com.sunny.maven.rpc.registry.api.RegistryService;
 import com.sunny.maven.rpc.registry.api.config.RegistryConfig;
+import com.sunny.maven.rpc.registry.nacos.instance.RegisterInstance;
 import com.sunny.maven.rpc.spi.annotation.SPIClass;
 import com.sunny.maven.rpc.spi.loader.ExtensionLoader;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -24,7 +26,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 @SPIClass
 public class NacosRegistryService implements RegistryService {
-    private static final String METADATA_KEY = "serviceMeta";
     private NamingService namingService;
     /**
      * 负载均衡接口
@@ -34,10 +35,8 @@ public class NacosRegistryService implements RegistryService {
     public void register(ServiceMeta serviceMeta) throws Exception {
         String serviceName = RpcServiceHelper.buildServiceKey(
                 serviceMeta.getServiceName(), serviceMeta.getServiceVersion(), serviceMeta.getServiceGroup());
-        Instance instance = new Instance();
-        instance.setIp(serviceMeta.getServiceAddr());
-        instance.setPort(serviceMeta.getServicePort());
-        instance.addMetadata(METADATA_KEY, JsonUtils.toJson(serviceMeta));
+        RegisterInstance<ServiceMeta> instance = new RegisterInstance.RegisterInstanceBuilder<ServiceMeta>(
+                serviceMeta.getServiceAddr(), serviceMeta.getServicePort()).payload(serviceMeta).build();
         namingService.registerInstance(serviceName, instance);
     }
 
@@ -45,10 +44,8 @@ public class NacosRegistryService implements RegistryService {
     public void unRegister(ServiceMeta serviceMeta) throws Exception {
         String serviceName = RpcServiceHelper.buildServiceKey(
                 serviceMeta.getServiceName(), serviceMeta.getServiceVersion(), serviceMeta.getServiceGroup());
-        Instance instance = new Instance();
-        instance.setIp(serviceMeta.getServiceAddr());
-        instance.setPort(serviceMeta.getServicePort());
-        instance.addMetadata(METADATA_KEY, JsonUtils.toJson(serviceMeta));
+        RegisterInstance<ServiceMeta> instance = new RegisterInstance.RegisterInstanceBuilder<ServiceMeta>(
+                serviceMeta.getServiceAddr(), serviceMeta.getServicePort()).payload(serviceMeta).build();
         namingService.deregisterInstance(serviceName, instance);
     }
 
@@ -56,19 +53,27 @@ public class NacosRegistryService implements RegistryService {
     public ServiceMeta discovery(String serviceName, int invokerHashCode, String sourceIp) throws Exception {
         List<Instance> instances = namingService.getAllInstances(serviceName);
         List<ServiceMeta> serviceMetas = new CopyOnWriteArrayList<>();
-        instances.forEach(instance ->
-                serviceMetas.add(JsonUtils.parse(instance.getMetadata().get(METADATA_KEY), ServiceMeta.class)));
+        instances.forEach(instance -> serviceMetas.add(((RegisterInstance<ServiceMeta>) instance).getPayload()));
         return this.serviceLoadBalancer.select(serviceMetas, invokerHashCode, sourceIp);
     }
 
     @Override
     public ServiceMeta select(List<ServiceMeta> serviceMetaList, int invokerHashCode, String sourceIp) {
-        return null;
+        return this.serviceLoadBalancer.select(serviceMetaList, invokerHashCode, sourceIp);
     }
 
     @Override
     public List<ServiceMeta> discoveryAll() throws Exception {
-        return null;
+        List<ServiceMeta> serviceMetaList = new ArrayList<>();
+        List<ServiceInfo> serviceInfos = namingService.getSubscribeServices();
+        if (serviceInfos == null || serviceInfos.isEmpty()) {
+            return serviceMetaList;
+        }
+        for (ServiceInfo serviceInfo : serviceInfos) {
+            List<Instance> instances = serviceInfo.getHosts();
+            instances.forEach(instance -> serviceMetaList.add(((RegisterInstance<ServiceMeta>) instance).getPayload()));
+        }
+        return serviceMetaList;
     }
 
     @Override
