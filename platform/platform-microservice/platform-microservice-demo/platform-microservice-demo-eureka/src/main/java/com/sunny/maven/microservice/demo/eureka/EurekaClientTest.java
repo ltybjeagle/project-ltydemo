@@ -1,12 +1,15 @@
-package com.sunny.maven;
+package com.sunny.maven.microservice.demo.eureka;
 
-import com.netflix.appinfo.*;
-import com.netflix.appinfo.providers.EurekaConfigBasedInstanceInfoProvider;
+import com.netflix.appinfo.ApplicationInfoManager;
+import com.netflix.appinfo.EurekaInstanceConfig;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.appinfo.MyDataCenterInstanceConfig;
 import com.netflix.config.ConfigurationManager;
 import com.netflix.discovery.DefaultEurekaClientConfig;
 import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.EurekaClient;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
@@ -15,13 +18,13 @@ import java.util.Properties;
 /**
  * @author SUNNY
  * @description: EurekaClientTest
- * @create: 2023-02-14 10:47
+ * @create: 2023-03-24 23:48
  */
 @Slf4j
 public class EurekaClientTest {
-
     private ApplicationInfoManager applicationInfoManager;
 
+    @Test
     public void testEurekaClient() throws InterruptedException {
         Properties properties = new Properties();
         properties.setProperty("eureka.serviceUrl.default", "http://localhost:8761/eureka");
@@ -47,6 +50,7 @@ public class EurekaClientTest {
 
         applicationInfoManager = new ApplicationInfoManager(instanceConfig, instanceInfo);
         log.info("Registering service to eureka with status STARTING");
+
         EurekaClient eurekaClient = new DiscoveryClient(applicationInfoManager, clientConfig);
         // 注册
         applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.UP);
@@ -71,6 +75,4 @@ public class EurekaClientTest {
         //eurekaClient.getApplicationInfoManager().registerAppMetadata();
 
     }
-
-
 }

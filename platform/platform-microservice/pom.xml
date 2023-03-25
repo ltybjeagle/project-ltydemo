@@ -19,6 +19,7 @@
         <module>platform-microservice-product</module>
         <module>platform-microservice-user</module>
         <module>platform-microservice-utils</module>
+        <module>platform-microservice-demo</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>

@@ -9,22 +9,30 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>platform-microservice-product</artifactId>
-  <version>${platform-micro.version}</version>
+  <artifactId>platform-microservice-demo</artifactId>
 
-  <name>platform-microservice-product</name>
-  <packaging>jar</packaging>
+  <name>platform-microservice-demo</name>
+  <modules>
+    <module>platform-microservice-demo-eureka</module>
+  </modules>
+  <packaging>pom</packaging>
   <url>http://www.example.com</url>
 
   <dependencies>
     <dependency>
-      <groupId>com.sunny.maven</groupId>
-      <artifactId>platform-microservice-bean</artifactId>
-      <version>${platform-micro.version}</version>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13-beta-3</version>
+    </dependency>
+    <!-- SLF4J -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
     </dependency>
   </dependencies>
 </project>

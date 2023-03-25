@@ -24,8 +24,8 @@ import java.math.BigDecimal;
  * @create: 2023-03-23 12:35
  */
 @Slf4j
-@Service
-public class OrderServiceImpl implements OrderService {
+@Service("orderServiceV1")
+public class OrderServiceV1Impl implements OrderService {
     @Autowired
     private OrderMapper orderMapper;
     @Autowired

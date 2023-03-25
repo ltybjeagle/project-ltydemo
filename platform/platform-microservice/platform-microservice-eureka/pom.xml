@@ -21,23 +21,5 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.netflix.eureka</groupId>
-      <artifactId>eureka-core</artifactId>
-      <version>1.10.11</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.netflix.eureka</groupId>
-      <artifactId>eureka-client</artifactId>
-      <version>1.10.11</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.netflix.archaius</groupId>
-      <artifactId>archaius-core</artifactId>
-      <version>0.7.7</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 </project>
