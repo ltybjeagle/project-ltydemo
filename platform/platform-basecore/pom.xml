@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>platform-spring-core</module>
         <module>platform-basecore-common</module>
     </modules>
     <artifactId>platform-basecore</artifactId>
