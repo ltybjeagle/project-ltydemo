@@ -1,12 +1,23 @@
 package com.sunny.maven.springframework.test;
 
+import cn.hutool.core.io.IoUtil;
+import com.sunny.maven.springframework.beans.PropertyValue;
+import com.sunny.maven.springframework.beans.PropertyValues;
 import com.sunny.maven.springframework.beans.factory.config.BeanDefinition;
+import com.sunny.maven.springframework.beans.factory.config.BeanReference;
 import com.sunny.maven.springframework.beans.factory.support.DefaultListableBeanFactory;
+import com.sunny.maven.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import com.sunny.maven.springframework.core.io.DefaultResourceLoader;
+import com.sunny.maven.springframework.core.io.Resource;
+import com.sunny.maven.springframework.test.bean.UserDao;
 import com.sunny.maven.springframework.test.bean.UserService;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -18,16 +29,55 @@ import java.lang.reflect.InvocationTargetException;
 public class ApiTest {
     @Test
     public void test_BeanFactory() {
+        // 1、初始化BeanFactory接口
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2、注册 UserDao
+        beanFactory.registerBeanDefinition("userDao", new BeanDefinition(UserDao.class));
+
+        // 3、使用 UserService填充属性（id、userDao）
+        PropertyValues propertyValues = new PropertyValues();
+        propertyValues.addPropertyValue(new PropertyValue("id", "10001"));
+        propertyValues.addPropertyValue(new PropertyValue("userDao", new BeanReference("userDao")));
+
+        // 4、注册Bean对象
+        BeanDefinition beanDefinition = new BeanDefinition(UserService.class, propertyValues);
+        beanFactory.registerBeanDefinition("userService", beanDefinition);
+
+        // 5、获取Bean对象
+        UserService userService = (UserService) beanFactory.getBean("userService", "SUNNY");
+        userService.queryUserInfo();
+    }
+
+    @Test
+    public void test_xml() {
         // 1.初始化 BeanFactory
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-        // 2.注入bean
-        BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
-        beanFactory.registerBeanDefinition("userService", beanDefinition);
+        // 2. 读取配置文件&注册Bean
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions("classpath:spring.xml");
 
-        // 3.第一次获取 bean
-        UserService userService = (UserService) beanFactory.getBean("userService", "SUNNY");
-        userService.queryUserInfo();
+        // 3. 获取Bean对象调用方法
+        UserService userService = beanFactory.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo();
+        System.out.println("测试结果：" + result);
+    }
+
+
+    private DefaultResourceLoader resourceLoader;
+
+    @Before
+    public void init() {
+        resourceLoader = new DefaultResourceLoader();
+    }
+
+    @Test
+    public void test_classpath() throws IOException {
+        Resource resource = resourceLoader.getResource("classpath:important.properties");
+        InputStream inputStream = resource.getInputStream();
+        String content = IoUtil.readUtf8(inputStream);
+        System.out.println(content);
     }
 
     @Test

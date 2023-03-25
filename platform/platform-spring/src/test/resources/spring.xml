@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <bean id="userDao" class="com.sunny.maven.springframework.test.bean.UserDao"/>
+
+    <bean id="userService" class="com.sunny.maven.springframework.test.bean.UserService">
+        <property name="id" value="10001"/>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+</beans>

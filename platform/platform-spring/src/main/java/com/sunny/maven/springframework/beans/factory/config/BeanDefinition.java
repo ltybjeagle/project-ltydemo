@@ -1,5 +1,7 @@
 package com.sunny.maven.springframework.beans.factory.config;
 
+import com.sunny.maven.springframework.beans.PropertyValues;
+
 /**
  * @author SUNNY
  * @description: Bean 对象信息定义
@@ -7,6 +9,7 @@ package com.sunny.maven.springframework.beans.factory.config;
  */
 public class BeanDefinition {
     private Class beanClass;
+    private PropertyValues propertyValues;
 
     /**
      * 构造函数
@@ -14,6 +17,17 @@ public class BeanDefinition {
      */
     public BeanDefinition(Class beanClass) {
         this.beanClass = beanClass;
+        this.propertyValues = new PropertyValues();
+    }
+
+    /**
+     * 构造函数
+     * @param beanClass
+     * @param propertyValues
+     */
+    public BeanDefinition(Class beanClass, PropertyValues propertyValues) {
+        this.beanClass = beanClass;
+        this.propertyValues = propertyValues != null ? propertyValues : new PropertyValues();
     }
 
     /**
@@ -30,5 +44,13 @@ public class BeanDefinition {
      */
     public void setBeanClass(Class beanClass) {
         this.beanClass = beanClass;
+    }
+
+    public PropertyValues getPropertyValues() {
+        return propertyValues;
+    }
+
+    public void setPropertyValues(PropertyValues propertyValues) {
+        this.propertyValues = propertyValues;
     }
 }

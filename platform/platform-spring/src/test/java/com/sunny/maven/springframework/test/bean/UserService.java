@@ -3,25 +3,31 @@ package com.sunny.maven.springframework.test.bean;
 /**
  * @author SUNNY
  * @description: 模拟用户 Bean 对象
- * @create: 2023-02-25 22:41
+ * @create: 2022-12-14 10:17
  */
 public class UserService {
 
-    private String name;
+    private String id;
 
-    public UserService(String name) {
-        this.name = name;
+    private UserDao userDao;
+
+    public String queryUserInfo() {
+        return userDao.queryUserName(id);
     }
 
-    public void queryUserInfo() {
-        System.out.println("查询用户信息：" + name);
+    public String getId() {
+        return id;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("");
-        sb.append(name);
-        return sb.toString();
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public UserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 }
