@@ -8,11 +8,12 @@ package com.sunny.maven.springframework.test.bean;
 public class UserService {
 
     private String id;
-
+    private String company;
+    private String location;
     private UserDao userDao;
 
     public String queryUserInfo() {
-        return userDao.queryUserName(id);
+        return userDao.queryUserName(id) + "," + company + "," + location;
     }
 
     public String getId() {
@@ -21,6 +22,22 @@ public class UserService {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public UserDao getUserDao() {

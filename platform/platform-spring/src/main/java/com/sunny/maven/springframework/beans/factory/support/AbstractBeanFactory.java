@@ -1,15 +1,24 @@
 package com.sunny.maven.springframework.beans.factory.support;
 
 import com.sunny.maven.springframework.beans.BeansException;
-import com.sunny.maven.springframework.beans.factory.BeanFactory;
 import com.sunny.maven.springframework.beans.factory.config.BeanDefinition;
+import com.sunny.maven.springframework.beans.factory.config.BeanPostProcessor;
+import com.sunny.maven.springframework.beans.factory.config.ConfigurableBeanFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author SUNNY
  * @description: 抽象的 Bean 工厂基类，定义模板方法
  * @create: 2022-12-15 09:15
  */
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+
+    /**
+     * BeanPostProcessors to apply in createBean
+     */
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     /**
      * 返回 Bean 的实例对象
@@ -68,4 +77,17 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     protected abstract Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args)
             throws BeansException;
 
+    @Override
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+        this.beanPostProcessors.remove(beanPostProcessor);
+        this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+    /**
+     * Return the list of BeanPostProcessors that will get applied to beans created with this factory.
+     * @return
+     */
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.beanPostProcessors;
+    }
 }
