@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * @author SUNNY
  * @description: 订单服务启动类
+ * JVM日志参数：
+ * -Xlog:gc*=error,heap*=debug
+ * -Xlog:gc*=trace:gc-trace.log -Xlog:async -XX:AsyncLogBufferSize=102400
  * @create: 2023-03-23 12:12
  */
 @SpringBootApplication

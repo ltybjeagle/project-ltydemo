@@ -1,5 +1,9 @@
 server:
   port: 8080
+  tomcat:
+    # 限制Tomcat一次最多只能处理20个请求
+    threads:
+      max: 20
   servlet:
     context-path: /order
 
@@ -25,11 +29,11 @@ spring:
       # 配置一个连接在池中最小生存的时间，单位是毫秒
       min-evictable-idle-time-millis: 3600000
       validation-query: select 1 from dual
-      test-while-idle: true
+      test-while-idle: on
       test-on-borrow: false
       test-on-return: false
       # 打开PSCache，并且指定每个连接上PSCache的大小
-      pool-prepared-statements: true
+      pool-prepared-statements: on
       max-pool-prepared-statement-per-connection-size: 20
       max-open-prepared-statements: 20
       # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
@@ -38,6 +42,13 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 9999  # 指定和Sentinel控制台交互的端口，任意指定一个未使用的端口即可
+        dashboard: 127.0.0.1:8888  # Sentinel控制台服务地址
+      web-context-unify: false
+      log:
+        dir: D:\microservice\softlog\sentinel\service-logs
 
 http:
   encoding:
@@ -50,10 +61,14 @@ mybatis-plus:
     db-config:
       id-type: auto
       field-strategy: not-empty
-      table-underline: true
       db-type: oracle
       logic-delete-value: 1
       logic-not-delete-value: 0
+      table-underline: on
   mapper-locations: classpath:/mapper/*.xml
   configuration:
     jdbc-type-for-null: 'null'
+
+feign:
+  sentinel:
+    enabled: on
