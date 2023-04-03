@@ -20,6 +20,8 @@
         <module>platform-microservice-user</module>
         <module>platform-microservice-utils</module>
         <module>platform-microservice-demo</module>
+        <module>platform-microservice-authentication</module>
+        <module>platform-microservice-gateway</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>

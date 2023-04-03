@@ -1,0 +1,23 @@
+server:
+  port: 10001
+spring:
+  application:
+    name: microservice-gateway
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      # 此节点下的配置是为了解决SpringCloud Gateway跨域的问题
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowCredentials: true
+            allowedHeaders: "*"
+      discovery:
+        locator:
+          enabled: on
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

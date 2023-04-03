@@ -1,0 +1,50 @@
+server:
+  port: 10001
+spring:
+  application:
+    name: microservice-gateway
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      # 此节点下的配置是为了解决SpringCloud Gateway跨域的问题
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowCredentials: true
+            allowedHeaders: "*"
+      discovery:
+        locator:
+          enabled: on
+      # 表示一个路由数组，可以在此节点下配置多个路由信息
+      routes:
+        - id: user-gateway  # 当前路由的唯一标识
+          uri: lb://microservice-user
+          order: 1   # 路由的优先级，数字越小表示优先级越高
+          predicates:  # 网关断言，也就是路由转发的条件，也是一个数组，可以配置多个路由转发条件
+            - Path=/microservice-user/**    # 当客户端请求的路径满足Path的规则时，进行路由转发操作
+          # 网关过滤器，在过滤器中可以修改请求的参数和header信息，以及响应的结果和header信息，
+          # 网关过滤器也是一个数组，可以配置多个过滤规则
+          filters:
+            - StripPrefix=1     # 网关在进行路由转发之前，会去掉1层访问路径
+
+        - id: product-gateway
+          uri: lb://microservice-product
+          order: 1
+          predicates:
+            - Path=/microservice-product/**
+          filters:
+            - StripPrefix=1
+
+        - id: order-gateway
+          uri: lb://microservice-order
+          order: 1
+          predicates:
+            - Path=/microservice-order/**
+          filters:
+            - StripPrefix=1
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

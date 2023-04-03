@@ -1,0 +1,32 @@
+server:
+  port: 10001
+spring:
+  application:
+    name: microservice-gateway
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      # 此节点下的配置是为了解决SpringCloud Gateway跨域的问题
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowCredentials: true
+            allowedHeaders: "*"
+      discovery:
+        locator:
+          enabled: on
+          # 生成流控规则API名称的前缀
+          route-id-prefix: gateway-
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 7777
+        dashboard: 127.0.0.1:8888
+      web-context-unify: false
+      # 表示程序启动时，流控规则是否立即注册到Sentinel，配置为true表示立即注册到Sentinel
+      eager: true
