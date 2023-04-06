@@ -21,7 +21,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     /**
      * 不拦截的 url 集合
      */
-    List<String> excludes = new ArrayList<String>() {{
+    List<String> excludes = new ArrayList<>() {
+        private static final long serialVersionUID = -6091858404653724029L;
+
+        {
         add("/**/*.html");
         add("/js/**");
         add("/editor.md/**");
