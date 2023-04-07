@@ -22,6 +22,7 @@
         <module>platform-microservice-demo</module>
         <module>platform-microservice-authentication</module>
         <module>platform-microservice-gateway</module>
+        <module>platform-microservice-middle</module>
     </modules>
     <packaging>pom</packaging>
     <url>http://www.example.com</url>
