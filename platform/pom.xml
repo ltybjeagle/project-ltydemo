@@ -12,6 +12,7 @@
     <module>platform-microservice</module>
     <module>platform-baserpc</module>
     <module>platform-spring</module>
+    <module>platform-middle</module>
   </modules>
 
   <name>platform</name>
@@ -40,6 +41,8 @@
     <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
 
     <platform-core.version>1.0-SNAPSHOT</platform-core.version>
+    <platform-middle.version>1.0-SNAPSHOT</platform-middle.version>
+    <proguard-jdk.home>C:\software\java\jdk11</proguard-jdk.home>
 
     <spring.version>5.3.20</spring.version>
     <common.logging>1.2</common.logging>
