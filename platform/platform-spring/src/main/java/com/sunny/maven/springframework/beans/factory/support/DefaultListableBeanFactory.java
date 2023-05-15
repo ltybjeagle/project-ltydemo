@@ -31,18 +31,13 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     }
 
     @Override
-    public boolean containsBeanDefinition(String beanName) {
-        return beanDefinitionMap.containsKey(beanName);
-    }
-
-    @Override
-    public String[] getBeanDefinitionNames() {
-        return beanDefinitionMap.keySet().toArray(new String[0]);
-    }
-
-    @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
         beanDefinitionMap.put(beanName, beanDefinition);
+    }
+
+    @Override
+    public boolean containsBeanDefinition(String beanName) {
+        return beanDefinitionMap.containsKey(beanName);
     }
 
     @Override
@@ -55,5 +50,10 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
             }
         });
         return result;
+    }
+
+    @Override
+    public String[] getBeanDefinitionNames() {
+        return beanDefinitionMap.keySet().toArray(new String[0]);
     }
 }

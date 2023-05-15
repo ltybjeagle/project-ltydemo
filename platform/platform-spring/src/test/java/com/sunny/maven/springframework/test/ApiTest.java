@@ -7,7 +7,6 @@ import com.sunny.maven.springframework.beans.factory.config.BeanDefinition;
 import com.sunny.maven.springframework.beans.factory.config.BeanReference;
 import com.sunny.maven.springframework.beans.factory.support.DefaultListableBeanFactory;
 import com.sunny.maven.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import com.sunny.maven.springframework.context.ApplicationContext;
 import com.sunny.maven.springframework.context.support.ClassPathXmlApplicationContext;
 import com.sunny.maven.springframework.core.io.DefaultResourceLoader;
 import com.sunny.maven.springframework.core.io.Resource;
@@ -31,6 +30,19 @@ import java.lang.reflect.InvocationTargetException;
  * @create: 2023-02-25 22:40
  */
 public class ApiTest {
+
+    @Test
+    public void test_init_destroy_xml() {
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
+
+        // 2. 获取Bean对象调用方法
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo();
+        System.out.println("测试结果：" + result);
+    }
 
     @Test
     public void test_BeanFactoryPostProcessorAndBeanPostProcessor() {

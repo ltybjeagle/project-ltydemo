@@ -2,8 +2,6 @@ package com.sunny.maven.springframework.context.support;
 
 import com.sunny.maven.springframework.beans.BeansException;
 
-import java.beans.Beans;
-
 /**
  * @author SUNNY
  * @description: XML 文件应用上下文 Standalone XML application context, taking the context definition files

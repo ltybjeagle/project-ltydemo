@@ -64,7 +64,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
      * @return
      * @throws BeansException
      */
-    protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
+    protected abstract BeanDefinition getBeanDefinition(String beanName);
 
     /**
      * 生成 Bean 的实例对象
@@ -74,8 +74,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
      * @return
      * @throws BeansException
      */
-    protected abstract Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args)
-            throws BeansException;
+    protected abstract Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args);
 
     @Override
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
