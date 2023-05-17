@@ -14,7 +14,7 @@
 ###### 2）、认证模式设计（进行中）
 2. 服务网格设计文档（进行中）
 3. 数据同步解决方案（开源工具研究）
-###### 1）、Kettle研究（进行中）
+###### 1）、Datax研究（进行中）
 * platform：微服务技术平台
 1. platform-baserpc：RPC框架
 2. platform-spring：简易Spring框架学习 （进行中）
