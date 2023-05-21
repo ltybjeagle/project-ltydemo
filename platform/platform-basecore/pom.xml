@@ -11,6 +11,8 @@
     <modules>
         <module>platform-basecore-common</module>
         <module>platform-basecore-demo</module>
+        <module>platform-basecore-annotation</module>
+        <module>platform-basecore-dal</module>
     </modules>
     <artifactId>platform-basecore</artifactId>
 
