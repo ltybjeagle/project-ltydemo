@@ -2,12 +2,9 @@
 ---
 ***&&目录简介***
 ---
-# 一、design：技术平台设计及解决方案
-## 1.微服务技术平台设计文档
-- 用户模型设计（完成）
-- 认证模式设计（未开始）
-## 2.服务网格设计文档（计划中）
-## 3.数据同步解决方案（开源工具研究）
+# 一、design：系统设计及解决方案
+## 1.服务网格设计文档（计划中）
+## 2.数据同步解决方案（进行中，6月完成）
 - Datax研究（进行中）
 # 二、doc：技术体系（技术栈、技术原理）整理
 ## 1.编程基础
@@ -20,14 +17,24 @@
 - 深入理解高并发编程（第1版）（进行中、6月完成）
 ## 2.platform-basecore：公共核心框架（计划中）
 ## 3.platform-baserpc：RPC框架学习（[冰河·RPC实战项目]）（完成）
-## 4.platform-microservice：《SpringCloud Alibaba实战》学习([冰河·SA实战项目](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=Mzg4MjU0OTM1OA==&action=getalbum&album_id=2337104419664084992&scene=173&from_msgid=2247500464&from_itemidx=1&count=3&nolastread=1#wechat_redirect))（进行中）
+## 4.platform-microservice：《SpringCloud Alibaba实战》学习([冰河·SA实战项目](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=Mzg4MjU0OTM1OA==&action=getalbum&album_id=2337104419664084992&scene=173&from_msgid=2247500464&from_itemidx=1&count=3&nolastread=1#wechat_redirect))（进行中，7月完成）
 - SA实战·《SpringCloud Alibaba实战》专栏开篇 (完成)
 - SA实战·《SpringCloud Alibaba实战》专栏设计 (完成)
 - SA实战·《SpringCloud Alibaba实战》微服务介绍 (完成)
 - SA实战·《SpringCloud Alibaba实战》项目说明、流程设计、技术选型与模块划分 (完成)
 - SA实战·《SpringCloud Alibaba实战》开撸：完成通用模块的开发（进行中）
-## 5.platform-middle：公共服务中台实战项目（计划中）
-## 6.platform-spring：简易Spring框架学习（进行中）
+## 5.platform-middle：微服务技术平台（启动...）
+- 技术栈
+  - 后端：Java(JDK17)、Spring Boot(3.0.7)、Spring FrameWork(6.0.9)、Spring Cloud（2022.0.2）
+  - 前端：Vue（版本待确定）
+>**_一期目标_**
+- 功能设计
+  - 用户模型设计（进行中）
+  - 认证模式设计（计划中）
+  - 数据模型设计（计划中）
+  - ......
+- 功能开发
+## 6.platform-spring：简易Spring框架学习（进行中，7月完成）
 - 实现一个简单的Spring Bean容器(完成)
 - 实现Bean对象的定义、注册和获取(完成)
 - 基于Cglib实现含构造函数的类实例化策略(完成)
@@ -41,15 +48,9 @@
 
 ***&&23年项目学习目标***
 ---
-#### 1、简易Spring框架完成（4月——6月完成）
-#### 2、数据同步解决方案及实现（5月——6月完成）
-#### 3、SpringCloud Alibaba实战项目完成（5月——6月完成）
-#### 4、服务网格整体设计（7月——8月完成）
-#### 5、服务网格功能开发（9月——12月完成，基于Go实现）
-#### 6、阅读4本技术书籍（纸质、电子）
-- 深入理解高并发编程（第1版）
-#### 7、基础框架版本升级（6月完成）
-- JDK11——>JDK17、Spring Boot(2.6.8)——>Spring Boot(3.\*)、Spring FrameWork(5.3.20)——>Spring FrameWork(6.\*)
+#### 1、简易Spring框架
+#### 2、SpringCloud Alibaba实战项目
+#### 3、基于Go语言实现服务网格
 
 ***&&Documentation***
 ---
