@@ -18,10 +18,7 @@
 
     <name>platform-basecore</name>
     <packaging>pom</packaging>
+    <description>微服务学习-公共核心框架</description>
     <url>http://www.example.com</url>
-
-    <properties>
-
-    </properties>
 
 </project>

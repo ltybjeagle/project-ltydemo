@@ -17,34 +17,47 @@
 
   <name>platform</name>
   <packaging>pom</packaging>
+  <description>微服务学习项目</description>
   <url>http://www.example.com</url>
 
-  <!-- 版本对应 spring boot 2.6.8 => spring cloud 2021.0.3 -->
+  <!-- 版本对应 spring boot 3.0.7 => spring cloud 2022.0.2 -->
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.6.8</version>
+    <version>3.0.7</version>
     <relativePath/>
   </parent>
 
   <developers>
     <developer>
       <name>Sunny</name>
+      <email>lty.bjeagle.net@163.com</email>
     </developer>
   </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>11</java.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <!-- JDK17引入依赖包 -->
     <jaxb.version>2.3.1</jaxb.version>
-    <spring-cloud.version>2021.0.3</spring-cloud.version>
-    <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
+    <!-- spring-cloud -->
+    <spring-cloud.version>2022.0.2</spring-cloud.version>
+    <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+    <!-- 代码混淆依赖JDK -->
+    <proguard-jdk.home>C:\software\java\jdk1.8</proguard-jdk.home>
 
+    <!-- 微服务学习项目 -->
+    <!-- 公共核心框架 -->
     <platform-core.version>1.0-SNAPSHOT</platform-core.version>
+    <!-- 技术中台 -->
     <platform-middle.version>1.0-SNAPSHOT</platform-middle.version>
-    <proguard-jdk.home>C:\software\java\jdk11</proguard-jdk.home>
 
-    <spring.version>5.3.20</spring.version>
+    <!-- Spring FrameWork -->
+    <spring.version>6.0.9</spring.version>
+    <!-- YAML解析器和生成器 -->
+    <snakeyaml.version>2.0</snakeyaml.version>
+
     <common.logging>1.2</common.logging>
     <commons.collections4.version>4.0</commons.collections4.version>
     <httpcomponents.version>4.5.13</httpcomponents.version>
@@ -63,7 +76,6 @@
   </properties>
 
   <dependencies>
-    <!-- JDK11引入依赖包 -->
     <dependency>
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
@@ -82,7 +94,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13-beta-3</version>
+      <version>4.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -274,23 +286,23 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <fork>true</fork><!-- devtools 结合使用 -->
-        </configuration>
+<!--        <configuration>-->
+<!--          <fork>true</fork>&lt;!&ndash; devtools 结合使用 &ndash;&gt;-->
+<!--        </configuration>-->
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>3.2.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.8.1</version>
         <configuration>
           <compilerArgument>-parameters</compilerArgument>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
