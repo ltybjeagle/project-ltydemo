@@ -14,6 +14,14 @@
 
   <name>platform-basecore-dal-api</name>
   <packaging>jar</packaging>
+  <description>微服务学习-公共核心框架-数据访问层-接口抽象</description>
   <url>http://www.example.com</url>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.sunny.maven</groupId>
+      <artifactId>platform-basecore-annotation</artifactId>
+      <version>${platform-core.version}</version>
+    </dependency>
+  </dependencies>
 </project>

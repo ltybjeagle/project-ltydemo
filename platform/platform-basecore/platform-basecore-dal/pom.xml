@@ -13,10 +13,12 @@
   <version>${platform-core.version}</version>
   <modules>
     <module>platform-basecore-dal-api</module>
+    <module>platform-basecore-dal-mybatis</module>
   </modules>
 
   <name>platform-basecore-dal</name>
   <packaging>pom</packaging>
+  <description>微服务学习-公共核心框架-数据访问层</description>
   <url>http://www.example.com</url>
 
 </project>

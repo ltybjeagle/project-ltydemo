@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.sunny.maven</groupId>
+        <artifactId>platform-basecore-demo</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>platform-basecore-demo-dal</artifactId>
+
+    <name>platform-basecore-demo-dal</name>
+    <packaging>jar</packaging>
+    <description>微服务学习-公共核心框架-测试-数据访问层</description>
+    <url>http://www.example.com</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sunny.maven</groupId>
+            <artifactId>platform-basecore-dal-mybatis</artifactId>
+            <version>${platform-core.version}</version>
+        </dependency>
+    </dependencies>
+</project>

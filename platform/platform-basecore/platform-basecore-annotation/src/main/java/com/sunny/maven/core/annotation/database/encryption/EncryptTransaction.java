@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  */
 @Documented
 @Inherited
-@Target({ElementType.TYPE,ElementType.PARAMETER})
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EncryptTransaction {
 }
