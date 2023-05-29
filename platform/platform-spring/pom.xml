@@ -13,16 +13,29 @@
 
   <name>platform-spring</name>
   <packaging>jar</packaging>
+  <description>微服务学习项目-简易Spring框架</description>
   <url>http://www.example.com</url>
 
   <dependencies>
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
+      <version>3.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>1.10.22</version>
     </dependency>
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>
+      <version>${hutool.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
     </dependency>
   </dependencies>
 </project>

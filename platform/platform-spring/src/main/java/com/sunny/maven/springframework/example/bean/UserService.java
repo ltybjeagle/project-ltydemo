@@ -1,4 +1,4 @@
-package com.sunny.maven.springframework.test.bean;
+package com.sunny.maven.springframework.example.bean;
 
 import com.sunny.maven.springframework.beans.BeansException;
 import com.sunny.maven.springframework.beans.factory.*;
