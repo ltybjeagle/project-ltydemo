@@ -25,7 +25,7 @@
 - SA实战·《SpringCloud Alibaba实战》开撸：完成通用模块的开发（进行中）
 ## 5.platform-middle：微服务技术平台（启动...）
 - 技术栈
-  - 后端：Java(JDK17)、Spring Boot(3.0.7)、Spring FrameWork(6.0.9)、Spring Cloud（2022.0.2）
+  - 后端：Java(JDK11)、Spring Boot(2.7.12)、Spring FrameWork(5.3.27)、Spring Cloud（2021.0.7）
   - 前端：Vue（版本待确定）
 >**_一期目标_**
 - 功能设计
