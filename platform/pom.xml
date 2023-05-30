@@ -20,11 +20,11 @@
   <description>微服务学习项目</description>
   <url>http://www.example.com</url>
 
-  <!-- 版本对应 spring boot 3.0.7 => spring cloud 2022.0.2 -->
+  <!-- 版本对应 spring boot 2.7.12 => spring cloud 2021.0.7 -->
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.0.7</version>
+    <version>2.7.12</version>
     <relativePath/>
   </parent>
 
@@ -37,12 +37,12 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <!-- JDK17引入依赖包 -->
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <!-- JDK11引入依赖包 -->
     <jaxb.version>2.3.1</jaxb.version>
     <!-- spring-cloud -->
-    <spring-cloud.version>2022.0.2</spring-cloud.version>
+    <spring-cloud.version>2021.0.7</spring-cloud.version>
     <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
     <!-- 代码混淆依赖JDK -->
     <proguard-jdk.home>C:\software\java\jdk1.8</proguard-jdk.home>
@@ -54,11 +54,12 @@
     <platform-middle.version>1.0-SNAPSHOT</platform-middle.version>
 
     <!-- Spring FrameWork -->
-    <spring.version>6.0.9</spring.version>
+    <spring.version>5.3.27</spring.version>
     <!-- YAML解析器和生成器 -->
     <snakeyaml.version>2.0</snakeyaml.version>
     <!-- hutool工具包 -->
     <hutool.version>5.8.11</hutool.version>
+    <cglib.version>3.3.0</cglib.version>
 
     <common.logging>1.2</common.logging>
     <commons.collections4.version>4.0</commons.collections4.version>
