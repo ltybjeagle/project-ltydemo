@@ -2,8 +2,6 @@ package com.sunny.maven.microservice.utils.password;
 
 import com.sunny.maven.microservice.utils.md5.Md5Hash;
 
-import java.util.Objects;
-
 /**
  * @author SUNNY
  * @description: 密码的加密
@@ -17,10 +15,10 @@ public class PasswordUtils {
      * @return String
      */
     public static String getPassWord(String password) {
-        byte[] pwd = password.getBytes();
-        try {
-            pwd = Md5Hash.encryptMd5(password.getBytes());
-        } catch (Exception e) {}
-        return Objects.isNull(pwd) ? password : new String(pwd);
+        if (password == null || password.trim().isEmpty()) return password;
+        for (int i = 0; i < 5; i++) {
+            password = Md5Hash.md5Java(password);
+        }
+        return password;
     }
 }

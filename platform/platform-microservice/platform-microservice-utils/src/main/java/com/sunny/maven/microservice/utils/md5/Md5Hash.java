@@ -2,7 +2,9 @@ package com.sunny.maven.microservice.utils.md5;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author SUNNY
@@ -23,6 +25,24 @@ public class Md5Hash {
         MessageDigest md5 = MessageDigest.getInstance(KEY_MD5);
         md5.update(data);
         return md5.digest();
+    }
+
+    public static String md5Java(String message) {
+        String digest = null;
+        try {
+            MessageDigest md5 = MessageDigest.getInstance(KEY_MD5);
+            byte[] hash = md5.digest(message.getBytes("UTF-8"));
+
+            // converting byte array to Hexadecimal String
+            StringBuilder sb = new StringBuilder(2 * hash.length);
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            digest = sb.toString();
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
+            log.error("MD5加密异常{}", ex.getMessage());
+        }
+        return digest;
     }
 
     /**

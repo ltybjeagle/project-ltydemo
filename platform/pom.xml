@@ -52,6 +52,10 @@
     <platform-core.version>1.0-SNAPSHOT</platform-core.version>
     <!-- 技术中台 -->
     <platform-middle.version>1.0-SNAPSHOT</platform-middle.version>
+    <!-- eureka注册中心 -->
+    <eureka-service.version>1.0-SNAPSHOT</eureka-service.version>
+    <!-- Spring Cloud alibaba项目版本 -->
+    <platform-micro.version>1.0-SNAPSHOT</platform-micro.version>
 
     <!-- Spring FrameWork -->
     <spring.version>5.3.27</spring.version>
@@ -59,19 +63,25 @@
     <snakeyaml.version>2.0</snakeyaml.version>
     <!-- hutool工具包 -->
     <hutool.version>5.8.11</hutool.version>
+    <!-- cglib -->
     <cglib.version>3.3.0</cglib.version>
-
-    <common.logging>1.2</common.logging>
-    <commons.collections4.version>4.0</commons.collections4.version>
-    <httpcomponents.version>4.5.13</httpcomponents.version>
+    <!-- mybatis -->
+    <com-baomidou-mybatis.version>3.5.3.1</com-baomidou-mybatis.version>
+    <!-- oracle驱动 -->
+    <oracle.version>12.1.0.1-atlassian-hosted</oracle.version>
+    <!-- druid连接池 -->
+    <druid.version>1.2.8</druid.version>
+    <druid-spring.version>1.2.11</druid-spring.version>
+    <common-logging.version>1.2</common-logging.version>
     <slf4j.version>1.7.36</slf4j.version>
     <logback.version>1.2.11</logback.version>
     <fastjson.version>1.2.83</fastjson.version>
+    <junit.version>4.13.2</junit.version>
+
+    <commons.collections4.version>4.0</commons.collections4.version>
+    <httpcomponents.version>4.5.13</httpcomponents.version>
     <jackson.version>2.10.0</jackson.version>
-    <com-baomidou-mybatis.version>3.5.1</com-baomidou-mybatis.version>
-    <oracle.version>12.1.0.1-atlassian-hosted</oracle.version>
     <netty.version>4.1.59.Final</netty.version>
-    <druid.version>1.2.8</druid.version>
     <minio.version>8.0.3</minio.version>
     <reactor.version>3.4.23</reactor.version>
     <objenesis.version>2.1</objenesis.version>
@@ -97,7 +107,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13.2</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

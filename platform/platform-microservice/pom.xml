@@ -25,12 +25,7 @@
         <module>platform-microservice-middle</module>
     </modules>
     <packaging>pom</packaging>
+    <description>微服务学习项目-SpringCloud Alibaba实战</description>
     <url>http://www.example.com</url>
-
-    <properties>
-        <eureka-service.version>1.0-SNAPSHOT</eureka-service.version>
-        <platform-micro.version>1.0-SNAPSHOT</platform-micro.version>
-    </properties>
-
 
 </project>

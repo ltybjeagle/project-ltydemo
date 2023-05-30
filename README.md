@@ -22,7 +22,8 @@
 - SA实战·《SpringCloud Alibaba实战》专栏设计 (完成)
 - SA实战·《SpringCloud Alibaba实战》微服务介绍 (完成)
 - SA实战·《SpringCloud Alibaba实战》项目说明、流程设计、技术选型与模块划分 (完成)
-- SA实战·《SpringCloud Alibaba实战》开撸：完成通用模块的开发（进行中）
+- SA实战·《SpringCloud Alibaba实战》开撸：完成通用模块的开发（完成）
+- SA实战·《SpringCloud Alibaba实战》快速搭建三大微服务并完成交互开发与测试（进行中）
 ## 5.platform-middle：微服务技术平台（启动...）
 - 技术栈
   - 后端：Java(JDK11)、Spring Boot(2.7.12)、Spring FrameWork(5.3.27)、Spring Cloud（2021.0.7）
@@ -42,7 +43,7 @@
 - 资源加载器解析文件注册对象(完成)
 - 实现应用上下文(完成)
 - Bean 对象的初始化和销毁(完成)
-- 感知容器对象(进行中)
+- 感知容器对象(完成)
 - 对象作用域和FactoryBean(进行中)
 # ~~四、project-manager：早期学习项目（不在维护，年底删除）~~
 

@@ -68,7 +68,7 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>${common.logging}</version>
+            <version>${common-logging.version}</version>
         </dependency>
         <!-- Spring -->
         <dependency>
