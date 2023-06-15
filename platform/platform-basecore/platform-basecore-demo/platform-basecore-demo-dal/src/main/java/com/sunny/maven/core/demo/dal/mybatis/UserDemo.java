@@ -4,7 +4,6 @@ import com.sunny.maven.core.annotation.database.encryption.EncryptTransaction;
 import com.sunny.maven.core.annotation.database.encryption.SensitiveData;
 import lombok.*;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -19,7 +18,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @SensitiveData
 public class UserDemo implements Serializable {
-    @Serial
     private static final long serialVersionUID = 4810489817112532213L;
 
     /**

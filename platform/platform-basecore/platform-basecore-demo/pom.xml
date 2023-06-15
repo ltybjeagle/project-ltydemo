@@ -11,6 +11,7 @@
     <module>platform-basecore-demo-dal</module>
     <module>platform-basecore-demo-common</module>
     <module>platform-basecore-demo-proguard</module>
+    <module>platform-basecore-demo-ratelimiter</module>
   </modules>
   <modelVersion>4.0.0</modelVersion>
 
@@ -25,7 +26,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.2</version>
+      <version>${junit.version}</version>
     </dependency>
   </dependencies>
 </project>

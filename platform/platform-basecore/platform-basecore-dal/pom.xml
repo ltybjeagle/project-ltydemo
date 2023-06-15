@@ -10,7 +10,6 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>platform-basecore-dal</artifactId>
-  <version>${platform-core.version}</version>
   <modules>
     <module>platform-basecore-dal-api</module>
     <module>platform-basecore-dal-mybatis</module>
