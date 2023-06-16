@@ -14,6 +14,9 @@
   <name>platform-middle</name>
   <modules>
     <module>platform-middle-servlet</module>
+    <module>platform-middle-eureka</module>
+    <module>platform-middle-authentication</module>
+    <module>platform-middle-demo</module>
   </modules>
   <packaging>pom</packaging>
   <url>http://www.example.com</url>
