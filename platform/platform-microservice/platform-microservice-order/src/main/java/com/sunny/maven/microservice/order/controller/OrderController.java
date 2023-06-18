@@ -41,6 +41,12 @@ public class OrderController {
         return "sentinel";
     }
 
+    @GetMapping(value = "/test_sentinel2")
+    public String testSentinel2() {
+        log.info("测试Sentinel2");
+        return "sentinel2";
+    }
+
     @GetMapping(value = "/test_sentinel4")
     public String testSentinel4() {
         log.info("测试Sentinel4");
@@ -56,7 +62,8 @@ public class OrderController {
     @GetMapping(value = "/test_sentinel6")
     public String testSentinel6() {
         log.info("测试Sentinel6");
-        return sentinelService.sendMessage();
+        //return sentinelService.sendMessage();
+        return "success";
     }
 
     /**

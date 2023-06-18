@@ -17,7 +17,7 @@ spring:
             allowedHeaders: "*"
       discovery:
         locator:
-          enabled: on
+          enabled: true
       # 表示一个路由数组，可以在此节点下配置多个路由信息
       routes:
         - id: user-gateway  # 当前路由的唯一标识

@@ -14,6 +14,7 @@
 
   <name>platform-microservice-product</name>
   <packaging>jar</packaging>
+  <description>微服务学习项目-SpringCloud Alibaba实战-商品服务模块</description>
   <url>http://www.example.com</url>
 
   <dependencies>
@@ -25,6 +26,17 @@
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.alibaba.nacos</groupId>
+          <artifactId>nacos-client</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba.nacos</groupId>
+      <artifactId>nacos-client</artifactId>
+      <version>${nacos.version}</version>
     </dependency>
   </dependencies>
 </project>

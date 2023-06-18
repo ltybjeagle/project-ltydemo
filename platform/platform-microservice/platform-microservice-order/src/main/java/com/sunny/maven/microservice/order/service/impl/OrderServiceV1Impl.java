@@ -14,6 +14,7 @@ import com.sunny.maven.microservice.utils.resp.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -33,6 +34,7 @@ public class OrderServiceV1Impl implements OrderService {
     @Autowired
     private RestTemplate restTemplate;
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveOrder(OrderParams orderParams) {
         if (orderParams.isEmpty()) {
             throw new RuntimeException("参数异常: " + JSONObject.toJSONString(orderParams));

@@ -13,16 +13,12 @@
 
     <name>platform-microservice</name>
     <modules>
-        <module>platform-microservice-eureka</module>
         <module>platform-microservice-bean</module>
         <module>platform-microservice-order</module>
         <module>platform-microservice-product</module>
         <module>platform-microservice-user</module>
         <module>platform-microservice-utils</module>
-        <module>platform-microservice-demo</module>
-        <module>platform-microservice-authentication</module>
         <module>platform-microservice-gateway</module>
-        <module>platform-microservice-middle</module>
     </modules>
     <packaging>pom</packaging>
     <description>微服务学习项目-SpringCloud Alibaba实战</description>

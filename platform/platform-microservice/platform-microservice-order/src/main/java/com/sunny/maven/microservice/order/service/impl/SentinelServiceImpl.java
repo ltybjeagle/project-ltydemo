@@ -2,6 +2,8 @@ package com.sunny.maven.microservice.order.service.impl;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.sunny.maven.microservice.order.handler.MyBlockHandlerClass;
+import com.sunny.maven.microservice.order.handler.MyFallbackClass;
 import com.sunny.maven.microservice.order.service.SentinelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,9 @@ public class SentinelServiceImpl implements SentinelService {
     @Override
     @SentinelResource(
             value = "sendMessage",
+            blockHandlerClass = MyBlockHandlerClass.class,
             blockHandler = "blockHandler",
+            fallbackClass = MyFallbackClass.class,
             fallback = "fallback"
     )
     public String sendMessage() {
@@ -30,6 +34,7 @@ public class SentinelServiceImpl implements SentinelService {
             throw new RuntimeException("25%的异常率");
         }
         return "sendMessage";
+//        System.out.println("测试Sentinel的链路流控模式");
     }
 
     public String blockHandler(BlockException e) {

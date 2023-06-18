@@ -1,7 +1,0 @@
-##逗号分隔多个自动配置类。注：多配置类间不能有空格，以免加载不到类
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sunny.maven.microservice.authentication.jwt.config.JwtTokenWebSecurityConfig
-
-##密码加密
-com.sunny.maven.microservice.authentication.jwt.password.codec.PasswordCodec=\
-  com.sunny.maven.microservice.authentication.jwt.password.codec.aes.AesPasswordCodec
