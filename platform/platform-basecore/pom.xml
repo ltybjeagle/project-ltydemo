@@ -13,6 +13,7 @@
         <module>platform-basecore-demo</module>
         <module>platform-basecore-annotation</module>
         <module>platform-basecore-dal</module>
+        <module>platform-basecore-ratelimiter</module>
     </modules>
     <artifactId>platform-basecore</artifactId>
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>platform-basecore</artifactId>
+        <groupId>com.sunny.maven</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>platform-basecore-ratelimiter</artifactId>
+
+    <name>platform-basecore-ratelimiter</name>
+    <modules>
+        <module>platform-basecore-ratelimiter-api</module>
+        <module>platform-basecore-ratelimiter-fixedwindow</module>
+        <module>platform-basecore-ratelimiter-slidingwindow</module>
+    </modules>
+    <packaging>pom</packaging>
+    <description>微服务学习项目-公共核心框架-限流模块</description>
+    <url>http://www.example.com</url>
+
+</project>

@@ -1,0 +1,3 @@
+# slidingWindow
+com.sunny.maven.core.ratelimiter.api.RateLimiterInvoker=\
+  com.sunny.maven.core.ratelimiter.slidingwindow.SlidingWindowRateLimiterInvoker
