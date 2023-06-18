@@ -1,0 +1,6 @@
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.sunny.maven.middle.authentication.jwt.config.JwtTokenWebSecurityConfig
+
+com.sunny.maven.microservice.authentication.jwt.password.codec.PasswordCodec=\
+  com.sunny.maven.middle.authentication.jwt.password.codec.aes.AesPasswordCodec
