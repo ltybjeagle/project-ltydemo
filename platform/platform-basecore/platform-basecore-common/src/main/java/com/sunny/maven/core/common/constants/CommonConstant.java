@@ -13,5 +13,9 @@ public class CommonConstant {
     /**
      * 错误状态码
      */
-    public static final int FAILURE = 500;
+    public static final int SERVER_FAILURE = 500;
+    /**
+     * 请求参数错误状态码
+     */
+    public static final int VALIDATE_FAILED = 400;
 }

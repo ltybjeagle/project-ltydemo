@@ -33,7 +33,7 @@ public class LogInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-        //防止内存泄露
+        // 防止内存泄露
         MDC.remove("traceId");
     }
 }

@@ -31,7 +31,8 @@ public class EncryptImpl implements IEncrypt {
                 Object object = field.get(paramsObject);
                 // 暂时只实现String类型的加密
                 // TODO 扩展其他类型
-                if (object instanceof String value) {
+                if (object instanceof String) {
+                    String value = (String) object;
                     try {
                         // 对注解的字段进行加密
                         // TODO 扩展实现字段加密并赋值

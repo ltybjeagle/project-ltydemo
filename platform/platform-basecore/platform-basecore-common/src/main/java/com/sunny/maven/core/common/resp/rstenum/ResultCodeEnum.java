@@ -11,24 +11,25 @@ import lombok.Getter;
 @Getter
 public enum ResultCodeEnum {
     SUCCESS(true, CommonConstant.SUCCESS, "执行成功!"),
-    UNKNOWN_ERROR(false, CommonConstant.FAILURE, "未知错误!"),
-    TOKEN_INVALID(false, CommonConstant.FAILURE, "认证已经失效!"),
-    TOKEN_MISS(false, CommonConstant.FAILURE, "未提供认证Token!"),
-    USER_SESSION_LOSE(false, CommonConstant.FAILURE, "用户会话信息丢失!");
+    UNKNOWN_ERROR(false, CommonConstant.SERVER_FAILURE, "未知错误!"),
+    TOKEN_INVALID(false, CommonConstant.SERVER_FAILURE, "认证已经失效!"),
+    TOKEN_MISS(false, CommonConstant.SERVER_FAILURE, "未提供认证Token!"),
+    VALIDATE_FAILED(false, CommonConstant.VALIDATE_FAILED, "参数校验失败"),
+    USER_SESSION_LOSE(false, CommonConstant.SERVER_FAILURE, "用户会话信息丢失!");
 
 
     /**
      * 响应是否成功
      */
-    private Boolean success;
+    private final Boolean success;
     /**
      * 响应状态码
      */
-    private Integer code;
+    private final Integer code;
     /**
      * 响应信息
      */
-    private String codeMsg;
+    private final String codeMsg;
 
     /**
      * 构造函数

@@ -1,8 +1,7 @@
 package com.sunny.maven.core.handle;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sunny.maven.core.common.annotation.NotControllerResponseAdvice;
+import com.alibaba.fastjson.JSON;
+import com.sunny.maven.core.annotation.common.NotControllerResponseAdvice;
 import com.sunny.maven.core.common.resp.R;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -32,13 +31,8 @@ public class RestResponseAdvice implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request, ServerHttpResponse response) {
         // String类型不能直接包装
         if (returnType.getGenericParameterType().equals(String.class)) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            try {
-                // 将数据包装在 R 里后转换为json串进行返回
-                return objectMapper.writeValueAsString(R.ok().data(body));
-            } catch (JsonProcessingException e) {
-
-            }
+            // 将数据包装在 R 里后转换为json串进行返回
+            return JSON.toJSON(R.ok().data(body));
         }
         // 否则直接包装成 R 返回
         return R.ok().data(body);

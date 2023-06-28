@@ -32,7 +32,8 @@ public class DecryptImpl implements IDecrypt {
                 field.setAccessible(true);
                 Object object = field.get(result);
                 // String值解密
-                if (object instanceof String value) {
+                if (object instanceof String) {
+                    String value = (String) object;
                     try {
                         // 对注解的字段进行逐一解密
                         // TODO 扩展实现字段加密并赋值

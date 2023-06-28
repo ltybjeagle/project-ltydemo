@@ -3,8 +3,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>platform</artifactId>
     <groupId>com.sunny.maven</groupId>
+    <artifactId>platform</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -17,57 +17,11 @@
     <module>platform-middle-eureka</module>
     <module>platform-middle-authentication</module>
     <module>platform-middle-demo</module>
+    <module>platform-middle-starter</module>
+      <module>platform-middle-user</module>
   </modules>
   <packaging>pom</packaging>
+  <description>微服务学习-中台服务项目</description>
   <url>http://www.example.com</url>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-zipkin</artifactId>
-      <version>2.2.8.RELEASE</version>
-    </dependency>
-    <!-- 缓存框架 -->
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>30.1.1-jre</version>
-    </dependency>
-    <dependency>
-      <groupId>redis.clients</groupId>
-      <artifactId>jedis</artifactId>
-      <version>3.9.0</version>
-      <exclusions>
-        <exclusion>
-          <artifactId>commons-pool2</artifactId>
-          <groupId>org.apache.commons</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!-- 基于ASM字节码类库 -->
-    <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
-      <version>3.3.0</version>
-    </dependency>
-    <!-- minio oss-->
-    <dependency>
-      <groupId>io.minio</groupId>
-      <artifactId>minio</artifactId>
-      <version>${minio.version}</version>
-      <optional>true</optional>
-    </dependency>
-    <!--  lua交互 -->
-    <dependency>
-      <groupId>org.luaj</groupId>
-      <artifactId>luaj-jse</artifactId>
-      <version>3.0.1</version>
-    </dependency>
-    <!-- JimuReport -->
-    <dependency>
-      <groupId>org.jeecgframework.jimureport</groupId>
-      <artifactId>jimureport-spring-boot-starter</artifactId>
-      <version>1.5.0</version>
-    </dependency>
-  </dependencies>
 </project>

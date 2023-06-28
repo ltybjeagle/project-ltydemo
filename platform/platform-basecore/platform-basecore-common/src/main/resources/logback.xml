@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- spirng boot 默认使用logback，默认会读取resources文件夹下的名为logback.xml的文件 -->
+<!-- 日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果设置为WARN，则低于WARN的信息都不会输出 -->
+<!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
+<configuration debug="false">
+    <contextName>logback</contextName>
+    <!-- 定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径
+    <property name="LOG_HOME" value="D:/logs" /> -->
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 设置字符集 -->
+        <param name="encoding" value="UTF-8" />
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出:%d表示日期，%thread表示线程名，%-5level:级别从左显示5个字符宽度%msg:日志消息,%n是换行符 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} >> %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志输出级别 -->
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

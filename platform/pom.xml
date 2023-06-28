@@ -66,18 +66,21 @@
     <!-- cglib -->
     <cglib.version>3.3.0</cglib.version>
     <!-- mybatis -->
-    <com-baomidou-mybatis.version>3.5.3.1</com-baomidou-mybatis.version>
+    <com-baomidou-mybatis.version>3.5.3</com-baomidou-mybatis.version>
     <!-- oracle驱动 -->
     <oracle.version>12.1.0.1-atlassian-hosted</oracle.version>
     <!-- druid连接池 -->
     <druid.version>1.2.8</druid.version>
     <druid-spring.version>1.2.11</druid-spring.version>
     <common-logging.version>1.2</common-logging.version>
+    <commons-lang3.version>3.12.0</commons-lang3.version>
     <slf4j.version>1.7.36</slf4j.version>
     <logback.version>1.2.11</logback.version>
     <fastjson.version>1.2.83</fastjson.version>
     <junit.version>4.13.2</junit.version>
     <nacos.version>2.1.1</nacos.version>
+    <servlet-api.version>3.0-alpha-1</servlet-api.version>
+    <validator.version>6.2.5.Final</validator.version>
 
     <commons.collections4.version>4.0</commons.collections4.version>
     <httpcomponents.version>4.5.13</httpcomponents.version>

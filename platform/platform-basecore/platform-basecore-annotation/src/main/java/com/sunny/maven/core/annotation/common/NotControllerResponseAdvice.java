@@ -1,4 +1,4 @@
-package com.sunny.maven.core.common.annotation;
+package com.sunny.maven.core.annotation.common;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
