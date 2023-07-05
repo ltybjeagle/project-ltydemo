@@ -32,7 +32,7 @@ public class RestResponseAdvice implements ResponseBodyAdvice<Object> {
         // String类型不能直接包装
         if (returnType.getGenericParameterType().equals(String.class)) {
             // 将数据包装在 R 里后转换为json串进行返回
-            return JSON.toJSON(R.ok().data(body));
+            return JSON.toJSONString(R.ok().data(body));
         }
         // 否则直接包装成 R 返回
         return R.ok().data(body);
