@@ -1,0 +1,53 @@
+server:
+  port: 10001
+spring:
+  application:
+    name: microservice-gateway
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      # 此节点下的配置是为了解决SpringCloud Gateway跨域的问题
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowCredentials: true
+            allowedHeaders: "*"
+      discovery:
+        locator:
+          enabled: on
+          # 生成流控规则API名称的前缀
+          route-id-prefix: gateway-
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 7777
+        dashboard: 127.0.0.1:8888
+      web-context-unify: false
+      # 表示程序启动时，流控规则是否立即注册到Sentinel，配置为true表示立即注册到Sentinel
+      eager: true
+# 内置断言
+# 基于日期时间类型的断言：
+# 1.AfterRoutePredicateFactory：接收一个日期时间参数，判断当前请求的日期时间是否晚于指定的日期时间
+# 2.BeforeRoutePredicateFactory：接收一个日期时间参数，判断当前请求的日期时间是否早于指定的日期时间
+# 3.BetweenRoutePredicateFactory：接收两个日期时间参数，判断当前请求的日期时间是否在指定的时间时间段内
+#
+# 基于远程地址的断言：RemoteAddrRoutePredicateFactory：接收一个IP地址段，判断发出请求的客户端的IP地址是否在指定的IP地址段内
+#
+# 基于Cookie的断言：CookieRoutePredicateFactory：接收两个参数， Cookie的名称和一个正则表达式。判断请求的Cookie是否具有给定名称且值与正则表达式匹配
+#
+# 基于Header的断言：HeaderRoutePredicateFactory：接收两个参数，请求Header的名称和正则表达式。判断请求Header中是否具有给定的名称且值与正则表达式匹配
+#
+# 基于Host的断言：HostRoutePredicateFactory：接收一个参数，这个参数通常是主机名或者域名的模式，判断发出请求的主机是否满足匹配规则
+#
+# 基于Method请求方法的断言：MethodRoutePredicateFactory：接收一个参数，判断请求的类型是否跟指定的类型匹配，通常指的是请求方式。例如，POST、GET、PUT等请求方式
+#
+# 基于Path请求路径的断言：PathRoutePredicateFactory：接收一个参数，判断请求的链接地址是否满足路径规则，通常指的是请求的URI部分
+#
+# 基于Query请求参数的断言：QueryRoutePredicateFactory ：接收两个参数，请求参数和正则表达式， 判断请求的参数是否具有给定的名称并且参数值是否与正则表达式匹配
+#
+# 基于路由权重的断言：WeightRoutePredicateFactory：接收一个[组名,权重]格式的数组，然后对于同一个组内的路由按照权重转发
