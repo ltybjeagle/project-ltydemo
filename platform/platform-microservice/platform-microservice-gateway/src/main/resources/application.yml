@@ -15,21 +15,33 @@ spring:
             allowedMethods: "*"
             allowCredentials: true
             allowedHeaders: "*"
-      # 表示一个路由数组，可以在此节点下配置多个路由信息
-      routes:
-        - id: user-gateway  # 当前路由的唯一标识
-          uri: http://localhost:8060
-          order: 1   # 路由的优先级，数字越小表示优先级越高
-          predicates:  # 网关断言，也就是路由转发的条件，也是一个数组，可以配置多个路由转发条件
-            - Path=/microservice-user/**    # 当客户端请求的路径满足Path的规则时，进行路由转发操作
-            - Name=sunny
-          # 网关过滤器，在过滤器中可以修改请求的参数和header信息，以及响应的结果和header信息，
-          # 网关过滤器也是一个数组，可以配置多个过滤规则
-          filters:
-            - StripPrefix=1     # 网关在进行路由转发之前，会去掉1层访问路径
-            - Grayscale=true
-
+      discovery:
+        locator:
+          enabled: on
+          # 生成流控规则API名称的前缀
+          route-id-prefix: gateway-
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 7777
+        dashboard: 127.0.0.1:8888
+      web-context-unify: false
+      # 表示程序启动时，流控规则是否立即注册到Sentinel，配置为true表示立即注册到Sentinel
+      eager: true
+      log:
+        dir: D:\microservice\softlog\sentinel\service-logs
+  sleuth:
+    sampler:
+      # 配置抽样采集数据
+      probability: 1.0
+  zipkin:
+    # ZipKin服务端的地址
+    base-url: http://127.0.0.1:9411
+    # 配置成false，使Nacos将其当成一个URL，不要按服务名处理
+    discovery-client-enabled: false
 gateway:
   router:
     config:
-      enable: false
+      enable: true

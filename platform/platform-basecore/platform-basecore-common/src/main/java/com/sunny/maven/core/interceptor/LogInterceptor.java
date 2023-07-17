@@ -22,11 +22,9 @@ public class LogInterceptor implements HandlerInterceptor {
             throws Exception {
         String traceId = request.getHeader(TRACE_ID);
         if (StringUtils.isEmpty(traceId)) {
-            MDC.put("traceId", UUID.randomUUID().toString());
-        } else {
-            MDC.put(TRACE_ID, traceId);
+            traceId = UUID.randomUUID().toString().replace("-", "");
         }
-
+        MDC.put(TRACE_ID, traceId);
         return true;
     }
 
@@ -34,6 +32,6 @@ public class LogInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
         // 防止内存泄露
-        MDC.remove("traceId");
+        MDC.remove(TRACE_ID);
     }
 }

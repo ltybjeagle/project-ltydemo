@@ -49,7 +49,6 @@ spring:
       web-context-unify: false
       log:
         dir: D:\microservice\softlog\sentinel\service-logs
-
 http:
   encoding:
     enabled: true

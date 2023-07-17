@@ -10,7 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @create: 2023-04-01 15:11
  */
 @SpringBootApplication
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 public class GateWayStarter {
     public static void main(String[] args) {
         System.setProperty("csp.sentinel.app.type", "1");

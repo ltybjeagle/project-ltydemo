@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author SUNNY
  * @description: 用户接口
@@ -19,6 +21,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @GetMapping(value = "/async/api")
+    public String asyncApi() {
+        log.info("执行异步任务开始...");
+        userService.asyncMethod();
+        log.info("异步任务执行结束...");
+        return "asyncApi";
+    }
+
+    @GetMapping(value = "/sleuth/filter/api")
+    public String sleuthFilter(HttpServletRequest request) {
+        Object traceIdObj = request.getAttribute("traceId");
+        String traceId = traceIdObj == null ? "" : traceIdObj.toString();
+        log.info("获取到的traceId为: " + traceId);
+        return "sleuthFilter";
+    }
 
     @GetMapping(value = "/get/{uid}")
     public User getUser(@PathVariable("uid") Long uid) {
