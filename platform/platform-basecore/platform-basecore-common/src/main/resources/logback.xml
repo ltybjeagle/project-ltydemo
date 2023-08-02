@@ -37,7 +37,7 @@
     <root level="DEBUG">
         <appender-ref ref="console"/>
     </root>
-    <root level="INFO">
+    <logger name="com.sunny.maven" level="INFO">
         <appender-ref ref="file"/>
-    </root>
+    </logger>
 </configuration>

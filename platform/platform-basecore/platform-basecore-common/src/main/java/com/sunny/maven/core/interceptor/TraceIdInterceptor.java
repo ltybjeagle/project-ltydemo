@@ -1,5 +1,6 @@
 package com.sunny.maven.core.interceptor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,7 +15,8 @@ import java.util.UUID;
  * @description: 日志拦截器
  * @create: 2022-10-31 22:15
  */
-public class LogInterceptor implements HandlerInterceptor {
+@Slf4j
+public class TraceIdInterceptor implements HandlerInterceptor {
     private static final String TRACE_ID = "traceId";
 
     @Override
@@ -33,5 +35,11 @@ public class LogInterceptor implements HandlerInterceptor {
                            ModelAndView modelAndView) throws Exception {
         // 防止内存泄露
         MDC.remove(TRACE_ID);
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+                                Exception ex) throws Exception {
+        log.debug("LogInterceptor>>>afterCompletion");
     }
 }

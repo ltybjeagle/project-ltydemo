@@ -84,6 +84,7 @@
     <validator.version>6.2.5.Final</validator.version>
     <jmh.version>1.36</jmh.version>
     <joda-time.version>2.10.2</joda-time.version>
+    <aspect.version>1.9.4</aspect.version>
 
     <commons.collections4.version>4.0</commons.collections4.version>
     <httpcomponents.version>4.5.13</httpcomponents.version>
