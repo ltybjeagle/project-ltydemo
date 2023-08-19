@@ -85,6 +85,12 @@
     <jmh.version>1.36</jmh.version>
     <joda-time.version>2.10.2</joda-time.version>
     <aspect.version>1.9.4</aspect.version>
+    <jedis.version>3.9.0</jedis.version>
+    <spring-security-oauth2.version>2.5.1.RELEASE</spring-security-oauth2.version>
+    <sockjs-client.version>1.1.2</sockjs-client.version>
+    <stomp-websocket.version>2.3.3</stomp-websocket.version>
+    <jquery.version>3.3.1</jquery.version>
+    <swagger2.version>3.0.0</swagger2.version>
 
     <commons.collections4.version>4.0</commons.collections4.version>
     <httpcomponents.version>4.5.13</httpcomponents.version>

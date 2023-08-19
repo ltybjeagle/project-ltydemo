@@ -45,5 +45,15 @@
             <artifactId>platform-middle-user</artifactId>
             <version>${platform-middle.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sunny.maven</groupId>
+            <artifactId>platform-middle-authentication-oauth2</artifactId>
+            <version>${platform-middle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sunny.maven</groupId>
+            <artifactId>platform-middle-websocket</artifactId>
+            <version>${platform-middle.version}</version>
+        </dependency>
     </dependencies>
 </project>

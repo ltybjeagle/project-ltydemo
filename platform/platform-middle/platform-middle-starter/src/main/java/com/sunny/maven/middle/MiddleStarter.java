@@ -1,5 +1,6 @@
 package com.sunny.maven.middle;
 
+//import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
                 "com.sunny.maven.user",
                 "com.sunny.maven.middle.thymeleaf",
                 "com.sunny.maven.middle.aspect"})
+//@MapperScan(value = {"com.sunny.maven.middle.authentication.security.mapper"})
 @ServletComponentScan
 @EnableAspectJAutoProxy
 public class MiddleStarter {

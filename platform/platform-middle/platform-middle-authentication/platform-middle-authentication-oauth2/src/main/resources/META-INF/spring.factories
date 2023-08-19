@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.sunny.maven.middle.authentication.oauth2.config.AuthorizationServerConfig,\
+  com.sunny.maven.middle.authentication.oauth2.config.ResourceServerConfig,\
+  com.sunny.maven.middle.authentication.oauth2.config.WebSecurityConfig

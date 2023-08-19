@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunny.maven.middle.authentication.security.mapper.UserMapper">
+
+    <select id="loadUserByUsername" resultType="com.sunny.maven.middle.authentication.security.entity.User">
+        select * from fasp_t_causer_self where username = #{username}
+    </select>
+
+    <select id="getUserRolesByUserId" resultType="com.sunny.maven.middle.authentication.security.entity.Role">
+        select * from fasp_t_carole_self r, fasp_t_causerrole_self ur where r.id = ur.roleid and ur.userid = #{userId}
+    </select>
+</mapper>

@@ -14,6 +14,8 @@
     <name>platform-middle-authentication</name>
     <modules>
         <module>platform-middle-authentication-jwt</module>
+        <module>platform-middle-authentication-security</module>
+        <module>platform-middle-authentication-oauth2</module>
     </modules>
     <packaging>pom</packaging>
     <description>微服务学习-中台服务项目-认证服务</description>

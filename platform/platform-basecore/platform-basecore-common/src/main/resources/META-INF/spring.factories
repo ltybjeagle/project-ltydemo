@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.sunny.maven.core.config.WebMvcConfig,\
-  com.sunny.maven.core.config.ThreadPoolConfig
+  com.sunny.maven.core.config.ThreadPoolConfig,\
+  com.sunny.maven.core.config.SwaggerConfig

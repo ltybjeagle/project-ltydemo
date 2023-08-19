@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.sunny.maven.middle.authentication.security.config.MemoryWebSecurityConfig,\
+  com.sunny.maven.middle.authentication.security.config.DatabaseWebSecurityConfig

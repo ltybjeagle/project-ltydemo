@@ -105,5 +105,10 @@
       <artifactId>aspectjrt</artifactId>
       <version>${aspect.version}</version>
     </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>${swagger2.version}</version>
+    </dependency>
   </dependencies>
 </project>

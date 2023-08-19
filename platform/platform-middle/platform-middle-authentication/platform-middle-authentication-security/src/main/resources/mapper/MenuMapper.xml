@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunny.maven.middle.authentication.security.mapper.MenuMapper">
+
+    <resultMap id="BaseResultMap" type="com.sunny.maven.middle.authentication.security.entity.Menu">
+        <id property="id" column="id"/>
+        <result property="pattern" column="pattern"/>
+        <collection property="roles" ofType="com.sunny.maven.middle.authentication.security.entity.Role">
+            <id property="id" column="rid"/>
+            <result property="name" column="rname"/>
+            <result property="nameZh" column="rnameZh"/>
+        </collection>
+    </resultMap>
+
+    <select id="getAllMenus" resultMap="BaseResultMap">
+        select m.*, r.id as rid, r.name as rname, r.nameZh as rnameZh from fasp_t_pubmenu_self m
+            left join fasp_t_carolemenu_self mr on m.id = mr.menuid
+            left join fasp_t_carole_self r on mr.roleid = r.id
+    </select>
+
+</mapper>

@@ -18,7 +18,8 @@
     <module>platform-middle-authentication</module>
     <module>platform-middle-demo</module>
     <module>platform-middle-starter</module>
-      <module>platform-middle-user</module>
+    <module>platform-middle-user</module>
+    <module>platform-middle-websocket</module>
   </modules>
   <packaging>pom</packaging>
   <description>微服务学习-中台服务项目</description>

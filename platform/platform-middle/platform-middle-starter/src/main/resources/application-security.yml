@@ -1,0 +1,91 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /middle
+    session:
+      timeout: 1800 # 会话超时时间（秒）
+    # https配置
+    # 证书命令：keytool -genkey -alias webhttps -keyalg RSA -keysize 2048 -keystore sang.p12 -validity 365
+#  ssl:
+#    key-store: sang.p12 # 保存到根目录
+#    key-alias: webhttps
+#    key-store-password: 123456
+
+spring:
+  application:
+    name: middle-server
+  thymeleaf:
+    # 是否开启缓存，开发时可设置为 false ，默认为 true
+    cache: false
+    # 检查模板是否存在，默认为 true
+    check-template: true
+    # 检查模板位置是否存在，默认为 true
+    check-template-location: true
+    # 模板文件编码
+    encoding: UTF-8
+    # 模板文件位置
+    prefix: classpath:/templates/
+    # Content Type 配置
+    servlet:
+      content-type: text/html
+    # 模板文件后缀
+    suffix: .html
+  servlet:
+    # 附件上传设置
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      location: E:\\tmp
+      max-file-size: 1MB
+      max-request-size: 10MB
+      resolve-lazily: false
+  datasource:
+    druid:
+      db-type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:oracle:thin:@192.168.100.80:1521/orcl
+      username: fasp_34dev
+      password: 1
+      driver-class-name: oracle.jdbc.OracleDriver
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      # 初始化大小，最小，最大
+      initial-size: 10
+      min-idle: 5
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 3600000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 3600000
+      validation-query: select 1 from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      max-open-prepared-statements: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat
+  # 配置用户信息
+#  security:
+#    user:
+#      name: sunny
+#      password: 123456
+#      roles: admin
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not-empty
+      table-underline: true
+      db-type: oracle
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    jdbc-type-for-null: 'null'
+sunny:
+  security:
+    authentication:
+      type: db

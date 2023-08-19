@@ -1,7 +1,7 @@
 server:
   port: 9000
   servlet:
-    context-path: /middle
+#    context-path: /middle
     session:
       timeout: 1800 # 会话超时时间（秒）
     # https配置
@@ -39,3 +39,17 @@ spring:
       max-file-size: 1MB
       max-request-size: 10MB
       resolve-lazily: false
+  redis:
+    database: 15
+    host: 192.168.100.148
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
